@@ -1,0 +1,51 @@
+<% include ../partials/company/header %>
+
+<div class="page-description">
+  <h2>Bulletin Board</h2>
+  <p>
+    The bulletin page is where you can communicate directly with the rest of the team.
+    This is to post high-level messages (ex. completed milestones or contact information)
+    and is not meant to handle real-time messaging. We recommend using a tool like
+    <a href="http://www.slack.com">Slack</a> for this functionality.
+  </p>
+</div>
+
+<div class="bulletins">
+
+  <ul class="bulletin-board">
+
+    <% if (company.bulletin[0].bulletins.length === 0) { %>
+      <li class="bulletin-message-container">
+        <h3 class="bulletin-timestamp">
+          No bulletins have been posted yet...
+        </h3>
+      </li>
+    <% } else { %>
+      <% for (bulletin of company.bulletin[0].bulletins){ %>
+        <li class="bulletin-message-container">
+          <h3 class="bulletin-timestamp">
+            <%= bulletin.date %> at <%= bulletin.time %> - <%= bulletin.name.split(' ')[0] %>
+          </h3>
+          <p class="bulletin-message">
+            <%= bulletin.message %>
+          </p>
+        </li>
+        <hr>
+      <% } %>
+    <% } %>
+
+  </ul>
+
+  <form class="post-bulletin-message-form" action="/user_profile/<%= currentUser._id %>/company_dashboard/<%= company._id %>/bulletin-board" method="post">
+    <textarea class="post-bulletin-message" name="bulletin[message]" placeholder="Post a message..."></textarea>
+    <input type="hidden" name="bulletinId" value="<%= company.bulletin[0]._id %>">
+    <input type="hidden" name="bulletin[submittedBy]" value="<%= currentUser._id %>">
+    <input type="hidden" name="bulletin[name]" value="<%= currentUser.name %>">
+    <button class="post-bulletin-btn">POST BULLETIN</button>
+  </form>
+
+</div>
+
+
+
+<% include ../partials/company/footer %>

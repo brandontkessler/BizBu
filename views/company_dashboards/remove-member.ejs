@@ -1,0 +1,21 @@
+<% include ../partials/company/header %>
+
+<h2>Select which members to remove</h2>
+
+<form action="/user_profile/<%= currentUser._id %>/company_dashboard/<%= company._id %>/team/remove?_method=PUT" method="post">
+	<% company.member.forEach(member => { %>
+		<input type="checkbox" name="member" value="<%= member._id %>"> <%= member.username %>
+	<% }) %>
+
+	<span id="remove-button">REMOVE</span>
+
+	<div class="remove-member-popup">
+		<h3>Are you sure?</h3>
+		<button>Remove</button>
+		<span class="remove-member-cancel">Cancel</span>
+	</div>
+</form>
+
+<a href="/user_profile/<%= currentUser._id %>/company_dashboard/<%= company._id %>/team">Return to Team</a>
+
+<% include ../partials/company/footer %>

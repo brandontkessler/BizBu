@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/home.css">
+</head>
+<body>
+
+	<!-- NAVBAR -->
+		<a href="/">Home</a>
+		<a href="/logout">Sign out</a>
+
+
+	<!-- FLASH -->
+	<% if(error && error.length>0){ %>
+		<div class="flash flash-error" role="alert">
+			<%= error %>
+		</div>
+	<% } %>
+	<% if(success && success.length>0){ %>
+		<div class="flash flash-success" role="alert">
+			<%= success %>
+		</div>
+	<% } %>

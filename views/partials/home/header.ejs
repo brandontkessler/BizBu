@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="stylesheets/home.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+	<a href="/">Home</a>
+	<% if(currentUser){ %>
+		<a href="/logout">Sign out</a>
+	<% } else { %>
+		<a href="/signup">sign up</a>
+		<a href="/login">Sign in</a>
+	<% } %>
+
+
+
+
+<!-- FLASH MESSAGES -->
+	<% if(error && error.length>0){ %>
+		<div class="flash flash-error" role="alert">
+			<%= error %>
+		</div>
+	<% } %>
+	<% if(success && success.length>0){ %>
+		<div class="flash flash-success" role="alert">
+			<%= success %>
+		</div>
+	<% } %>

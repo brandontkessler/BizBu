@@ -1,0 +1,27 @@
+{
+  "name": "bco",
+  "version": "1.0.0",
+  "description": "BCO Project (OOO)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.2",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^5.0.1",
+    "ejs": "^2.5.9",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "helmet": "^3.12.1",
+    "method-override": "^2.3.10",
+    "moment": "^2.22.2",
+    "mongoose": "^5.0.17",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "passport-linkedin": "^1.0.0"
+  }
+}
