@@ -74,41 +74,37 @@ passport.use(new FacebookStrategy({
 		callbackURL: "http://localhost:3000/auth/facebook/callback",
 		profileFields: ['id', 'displayName', 'picture.type(large)', 'email']
 	},
-	function(accessToken, refreshToken, profile, done) {
-		process.nextTick(function(){
-			// QUERY FOR USER WITH EMAIL REGISTERED (STORED FROM FB OR LINKEDIN)
-			User.findOne({ email : profile.emails[0].value }, function(err, user){
-				if(err) return done(err)
-				if(!user){
-					// IF USER DOES NOT EXIST, CREATE ONE WITH FB
-					let newUser = new User();
-					newUser.email = profile.emails[0].value;
-					newUser.created = new Date();
-					newUser.name = profile.displayName;
-					newUser.pic = profile.photos[0].value || '';
-					newUser.facebook.id = profile.id;
-					newUser.facebook.accessToken = accessToken;
+	async (accessToken, refreshToken, profile, done) => {
+		try{
+			let user = await User.findOne({ email : profile.emails[0].value });
+			if(!user){
+				// IF USER DOES NOT EXIST, CREATE ONE WITH FB
+				let newUser = new User({
+					'email' : profile.emails[0].value,
+					'created' : new Date(),
+					'name' : profile.displayName,
+					'pic' : profile.photos[0].value,
+					'facebook.id' : profile.id,
+					'facebook.accessToken' : accessToken
+				});
 
-					newUser.save().then(() => {
-						return done(null, newUser)
-					}).catch(e => console.log(e));
+				await newUser.save()
+				return done(null, newUser)
+			} else {
+				// IF USER DOES EXIST, CHECK IF DONE WITH FB
+				let fbUser =  await User.findOne({ 'facebook.id' : profile.id });
+				if(fbUser) return done(null, fbUser);
 
-				} else {
-					// IF USER DOES EXIST, CHECK IF DONE WITH FB
-					User.findOne({'facebook.id' : profile.id }, function(err, fbUser){
-						if(err) return done(err);
-						if(fbUser) return done(null, fbUser);
+				// IF NOT, USER IS LINKEDIN, CREATE FB DATA
+				user.facebook.id = profile.id;
+				user.facebook.accessToken = accessToken;
 
-						user.facebook.id = profile.id;
-						user.facebook.accessToken = accessToken;
-
-						user.save().then(() => {
-							return done(null, user)
-						}).catch(e => console.log(e));
-					})
-				}
-			})
-		})
+				await user.save()
+				return done(null, user)
+			}
+		} catch(e) {
+			return done(e);
+		}
 	}
 ))
 
@@ -118,41 +114,37 @@ passport.use(new LinkedinStrategy({
 		callbackURL: 'http://localhost:3000/auth/linkedin/callback',
 		profileFields: ['id', 'first-name', 'last-name', 'email-address', 'headline', 'picture-url', 'industry', 'positions']
 	},
-	function(token, tokenSecret, profile, done){
-		process.nextTick(function(){
-			// IF USER ALREADY HAS AN ACCOUNT
-			User.findOne({ email : profile.emails[0].value }, function(err, user){
-				if(err) return done(err)
+	async (token, tokenSecret, profile, done) => {
+		try{
+			let user = await User.findOne({ email : profile.emails[0].value });
+			if(!user){
+				// IF USER DOES NOT EXIST, CREATE ONE WITH LINKEDIN
+				let newUser = new User({
+					'email' : profile.emails[0].value,
+					'created' : new Date(),
+					'name' : profile.displayName,
+					'pic' : profile._json.pictureUrl,
+					'linkedin.id' : profile.id,
+					'linkedin.token' : token
+				});
 
-				if(!user){
-					let newUser = new User();
-					newUser.email = profile.emails[0].value;
-					newUser.created = new Date();
-					newUser.name = profile.displayName;
-					newUser.pic = profile._json.pictureUrl;
-					newUser.linkedin.id = profile.id;
-					newUser.linkedin.token = token;
+				await newUser.save()
+				return done(null, newUser)
+			} else {
+				// IF USER DOES EXIST, CHECK IF DONE WITH LINKEDIN
+				let linkedinUser =  await User.findOne({ 'linkedin.id' : profile.id });
+				if(linkedinUser) return done(null, linkedinUser);
 
-					newUser.save().then(() => {
-						return done(null, newUser)
-					}).catch(e => console.log(e));
-				} else {
-					// IF USER EXISTS, CHECK IF REGISTERED WITH LINKEDIN
-					User.findOne({ 'linkedin.id' : profile.id }, function(err, linkedUser){
-						if(err) return done(err);
-						if(linkedUser) return done(null, linkedUser);
+				// IF NOT, USER IS FB, CREATE LINKEDIN DATA
+				user.linkedin.id = profile.id;
+				user.linkedin.token = token;
 
-						user.linkedin.id = profile.id;
-						user.linkedin.token = token;
-
-						user.save().then(() => {
-							return done(null, user)
-						}).catch(e => console.log(e));
-					})
-				}
-
-			})
-		})
+				await user.save()
+				return done(null, user)
+			}
+		} catch(e) {
+			return done(e)
+		}
 	}
 ))
 
@@ -160,7 +152,7 @@ passport.serializeUser(function(user, done){
 	done(null, user.id)
 });
 passport.deserializeUser(function(id, done){
-	User.findById(id, function(err, user) {
+	User.findOne({'_id': id}, function(err, user) {
 		done(err, user);
 	})
 });
@@ -177,6 +169,7 @@ app.use(indexRoutes);
 app.use('/user_profile', userProfiles);
 app.use(companyDashboards);
 
+// 404 page
 app.get('*', (req, res) => res.status(404).send('unable to find page!'));
 
 const PORT = process.env.PORT || 3000;

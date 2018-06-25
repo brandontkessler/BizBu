@@ -1,5 +1,5 @@
 const User = require('../models/user'),
-	  Company = require('../models/company');
+	  	Company = require('../models/company');
 
 let middlewareObject = {};
 
