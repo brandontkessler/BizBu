@@ -17,10 +17,14 @@ let CompanySchema = new mongoose.Schema({
 		}
 	],
 
-	bulletin: [{
+	notifications: [String],
+
+	bulletin: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Bulletin'
-	}]
+	}
+
+
 });
 
 module.exports = mongoose.model("Company", CompanySchema);

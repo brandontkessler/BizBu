@@ -4,7 +4,7 @@
 
 <form action="/user_profile/<%= currentUser._id %>/company_dashboard/<%= company._id %>/team/remove?_method=PUT" method="post">
 	<% company.member.forEach(member => { %>
-		<input type="checkbox" name="member" value="<%= member._id %>"> <%= member.username %>
+		<input type="checkbox" name="member" value="<%= member._id %>"> <%= member.name.split(' ')[0] %>
 	<% }) %>
 
 	<span id="remove-button">REMOVE</span>

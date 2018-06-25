@@ -1,8 +1,24 @@
 <% include ../partials/company/header %>
 
 <div class="content">
-	<h1>hello buddy</h1>
-	
+
+	<div class="page-description">
+	  <h2>Dashboard</h2>
+	  <p>
+	    The dashboard summarizes all activity.
+	  </p>
+	</div>
+
+	<div class="notifications">
+		<ul>
+			<h3>Notifications</h3>
+			<% for (notification of company.notifications) { %>
+				<li><%= notification %></li>
+			<% } %>
+		</ul>
+	</div>
+
+
 </div>
 
 <% include ../partials/company/footer %>

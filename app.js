@@ -72,20 +72,20 @@ passport.use(new FacebookStrategy({
 		clientID: process.env.FACEBOOK_APP_ID,
 		clientSecret: process.env.FACEBOOK_APP_SECRET,
 		callbackURL: "http://localhost:3000/auth/facebook/callback",
-		profileFields: ['id', 'displayName', 'photos', 'email']
+		profileFields: ['id', 'displayName', 'picture.type(large)', 'email']
 	},
 	function(accessToken, refreshToken, profile, done) {
 		process.nextTick(function(){
 			// QUERY FOR USER WITH EMAIL REGISTERED (STORED FROM FB OR LINKEDIN)
 			User.findOne({ email : profile.emails[0].value }, function(err, user){
 				if(err) return done(err)
-
 				if(!user){
 					// IF USER DOES NOT EXIST, CREATE ONE WITH FB
 					let newUser = new User();
 					newUser.email = profile.emails[0].value;
 					newUser.created = new Date();
 					newUser.name = profile.displayName;
+					newUser.pic = profile.photos[0].value || '';
 					newUser.facebook.id = profile.id;
 					newUser.facebook.accessToken = accessToken;
 
@@ -116,7 +116,7 @@ passport.use(new LinkedinStrategy({
 		consumerKey: process.env.LINKEDIN_CLIENT_ID,
 		consumerSecret: process.env.LINKEDIN_CLIENT_SECRET,
 		callbackURL: 'http://localhost:3000/auth/linkedin/callback',
-		profileFields: ['id', 'first-name', 'last-name', 'email-address', 'headline']
+		profileFields: ['id', 'first-name', 'last-name', 'email-address', 'headline', 'picture-url', 'industry', 'positions']
 	},
 	function(token, tokenSecret, profile, done){
 		process.nextTick(function(){
@@ -129,6 +129,7 @@ passport.use(new LinkedinStrategy({
 					newUser.email = profile.emails[0].value;
 					newUser.created = new Date();
 					newUser.name = profile.displayName;
+					newUser.pic = profile._json.pictureUrl;
 					newUser.linkedin.id = profile.id;
 					newUser.linkedin.token = token;
 

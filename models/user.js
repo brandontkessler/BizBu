@@ -22,6 +22,10 @@ let UserSchema = new mongoose.Schema({
 		type: String
 	},
 
+	pic: {
+		type: String
+	},
+
 	facebook: {
 		id: String,
 		accessToken: String

@@ -5,7 +5,6 @@
 <p><%= currentUser.inviteCode %></p>
 <a href="/user_profile/<%= currentUser._id %>/company_dashboard/create">Create a company</a>
 
-
 <% if(user.companiesAdmin.length > 0 || user.companiesMember.length > 0) { %>
 	<h2>Your Companies</h2>
 	<h3>Admin</h3>

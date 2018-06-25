@@ -1,7 +1,13 @@
 <% include ../partials/company/header %>
 
 <div class="content">
-	<h1>Invite Team Members</h1>
+
+	<div class="page-description">
+    <h2>Invite</h2>
+    <p>
+
+    </p>
+  </div>
 
 	<form action="/user_profile/<%= currentUser._id %>/company_dashboard/<%= company._id %>/team/invite" method="post">
 		<input type="text" name="invitee" required>
@@ -9,7 +15,7 @@
 		<input type="hidden" name="invite[companyId]" value="<%= company._id %>">
 		<input type="hidden" name="invite[companyName]" value="<%= company.name %>">
 		<input type="radio" name="invite[admin]" value=true required> Admin
-		<input type="radio" name="invite[admin]" value=false requied> Member
+		<input type="radio" name="invite[admin]" value=false required> Member
 		<button>Invite</button>
 	</form>
 

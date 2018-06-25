@@ -8,7 +8,7 @@ const 	express = require('express'),
 
 
 // ************************* COMPANY CREATION *************************
-router.get('/user_profile/:id/company_dashboard/create', middleware.isLoggedIn, middleware.isProfileOwner, (req, res) => res.render('company_dashboards/create'));
+router.get('/user_profile/:id/company_dashboard/create', middleware.isLoggedIn, middleware.isProfileOwner, (req, res) => res.render('user_profiles/create-company'));
 router.post('/user_profile/:id/company_dashboard/create', middleware.isLoggedIn, middleware.isProfileOwner, (req, res) => {
 	User.findById(req.user.id, (err, user) => {
 		if(err){
@@ -26,7 +26,7 @@ router.post('/user_profile/:id/company_dashboard/create', middleware.isLoggedIn,
 				return res.redirect('back');
 			}
 
-			// CREATE THE BULLETIN BOARD WITH THE COMPANY AS A REFERENCE
+			// CREATE THE BULLETIN BOARD ASSOCIATED WITH COMPANY
 			let newBulletin = new Bulletin({
 				'companyRef': company
 			});
@@ -38,11 +38,12 @@ router.post('/user_profile/:id/company_dashboard/create', middleware.isLoggedIn,
 
 				// THEN SAVE THE COMPANY INFORMATION
 				company.admin.push(req.user._id);
-				company.bulletin.push(bulletin);
+				company.bulletin = bulletin;
+				company.notifications.unshift(`${user.name.split(' ')[0]} created ${company.name}`);
 
-				company.save((err) => {
+				company.save(err => {
 					user.companiesAdmin.push(company);
-					user.save((err) => {
+					user.save(err => {
 						req.flash('success', 'Welcome to your new company dashboard')
 						res.redirect('/user_profile/' + req.user._id + '/company_dashboard/' + company._id);
 					});
@@ -58,7 +59,7 @@ router.get('/user_profile/:id/company_dashboard/:companyId',
 	middleware.isProfileOwner,
 	middleware.isCompanyAdminOrMember,
 	(req, res) => {
-		Company.findById(req.params.companyId, (err, foundCompany) => {
+		Company.findById(req.params.companyId).exec((err, foundCompany) => {
 			if(err){
 				req.flash('error', `Can't find that company!`)
 				return res.redirect('back');
@@ -128,7 +129,7 @@ router.post('/user_profile/:id/company_dashboard/:companyId/team/invite',
 				res.redirect('back')
 			} else {
 				foundUser[0].invites.push(newInvite);
-				foundUser[0].save((err) => {
+				foundUser[0].save(err => {
 					req.flash('success', `Your invite has been sent!`)
 					res.redirect('/user_profile/' + req.user.id + '/company_dashboard/' + req.params.companyId + '/team')
 				});
@@ -161,6 +162,7 @@ router.post('/user_profile/:id/company_dashboard/:companyId/team/invite/accept',
 						foundUser.companiesAdmin.push(foundCompany);
 						foundUser.save(err => {
 							foundCompany.admin.push(req.user);
+							foundCompany.notifications.unshift(`${req.user.name.split(' ')[0]} has accepted the invite`);
 							foundCompany.save(err => {
 								req.flash('success', `You're now an admin for ${foundCompany.name}`)
 								res.redirect("/user_profile/" + req.user.id);
@@ -171,6 +173,7 @@ router.post('/user_profile/:id/company_dashboard/:companyId/team/invite/accept',
 						foundUser.companiesMember.push(foundCompany);
 						foundUser.save(err => {
 							foundCompany.member.push(req.user);
+							foundCompany.notifications.unshift(`${req.user.name.split(' ')[0]} has accepted the invite`);
 							foundCompany.save(err => {
 								req.flash('success', `You're now a member for ${foundCompany.name}`)
 								res.redirect("/user_profile/" + req.user.id);
@@ -192,12 +195,24 @@ router.post('/user_profile/:id/company_dashboard/:companyId/team/invite/decline'
 				req.flash('error', err)
 				return res.redirect('back');
 			}
-			foundUser.invites = foundUser.invites.filter(invite => !invite._id.equals(req.body.inviteId));
-			foundUser.save(err => {
-				req.flash('success', `You have rejected the invite!`)
-				res.redirect("/user_profile/" + req.user.id)
-			})
-		})
+			Company.findById(req.params.companyId, (err, foundCompany) => {
+				if(err){
+					req.flash('error', err)
+					return res.redirect('back');
+				}
+				foundUser.invites = foundUser.invites.filter(invite => !invite._id.equals(req.body.inviteId));
+				foundUser.save(err => {
+					foundCompany.notifications.unshift(`${req.user.name.split(' ')[0]} has rejected the invite`);
+					foundCompany.save().then(() => {
+						req.flash('success', `You have rejected the invite!`);
+						res.redirect("/user_profile/" + req.user.id);
+					}).catch(e => {
+						console.log(e);
+						res.redirect('back')
+					})
+				});
+			});
+		});
 });
 
 // ************************* GET REMOVE MEMBER PAGE *************************
@@ -232,6 +247,7 @@ router.put('/user_profile/:id/company_dashboard/:companyId/team/remove',
 				User.findById(membersToDelete, (err, foundUser) => {
 					foundCompany.member = foundCompany.member.filter(member => !member.equals(foundUser._id));
 					foundUser.companiesMember = foundUser.companiesMember.filter(company => !company.equals(foundCompany._id));
+					foundCompany.notifications.unshift(`${foundUser.name.split(' ')[0]} has been removed`);
 					foundCompany.save(err => {
 						foundUser.save(err => {
 							req.flash('success', `${foundUser.name} has been removed from the team`);
@@ -240,6 +256,7 @@ router.put('/user_profile/:id/company_dashboard/:companyId/team/remove',
 					});
 				});
 			} else {
+				foundCompany.notifications.unshift(`Multiple members have been removed`);
 				membersToDelete.forEach(member => {
 					User.findById(member, (err, foundUser) => {
 						foundCompany.member = foundCompany.member.filter(memberId => !memberId.equals(foundUser._id));
@@ -274,6 +291,7 @@ router.put('/user_profile/:id/company_dashboard/:companyId/team',
 				if(!foundUser.companiesAdmin){
 					let companyIndex = foundCompany.member.indexOf(foundUser._id);
 					foundCompany.member.splice(companyIndex, 1);
+					foundCompany.notifications.unshift(`${foundUser.name.split(' ')[0]} has left the team`);
 					foundCompany.save(err => {
 						let userIndex = foundUser.companiesMember.indexOf(foundCompany._id);
 						foundUser.companiesMember.splice(userIndex, 1);
@@ -287,6 +305,7 @@ router.put('/user_profile/:id/company_dashboard/:companyId/team',
 			 		if(userIsMember){
 			 			let companyIndex = foundCompany.member.indexOf(foundUser._id);
 						foundCompany.member.splice(companyIndex, 1);
+						foundCompany.notifications.unshift(`${foundUser.name.split(' ')[0]} has left the team`);
 						foundCompany.save(err => {
 							let userIndex = foundUser.companiesMember.indexOf(foundCompany._id);
 							foundUser.companiesMember.splice(userIndex, 1);
@@ -298,6 +317,7 @@ router.put('/user_profile/:id/company_dashboard/:companyId/team',
 			 		} else {
 		 				let companyIndex = foundCompany.admin.indexOf(foundUser._id);
 						foundCompany.admin.splice(companyIndex, 1);
+						foundCompany.notifications.unshift(`${foundUser.name.split(' ')[0]} has left the team`);
 						foundCompany.save(err => {
 							let userIndex = foundUser.companiesAdmin.indexOf(foundCompany._id);
 							foundUser.companiesAdmin.splice(userIndex, 1);
@@ -338,12 +358,21 @@ router.route('/user_profile/:id/company_dashboard/:companyId/bulletin-board')
 				req.flash('error', err.message)
 				return res.redirect('back');
 			}
-			foundBulletin.bulletins.push(bulletin);
-			foundBulletin.save(e => {
-				req.flash('success', 'Your bulletin has been posted');
-				return res.redirect(`/user_profile/${req.params.id}/company_dashboard/${req.params.companyId}/bulletin-board`);
-			})
-		})
-	})
+			Company.findById(req.params.companyId, (err, foundCompany) => {
+				if(err){
+					req.flash('error', err.message)
+					return res.redirect('back')
+				}
+				foundCompany.notifications.unshift(`${req.body.bulletin.name.split(' ')[0]} has posted a bulletin`);
+				foundCompany.save().then(() => {
+					foundBulletin.bulletins.push(bulletin);
+					foundBulletin.save(e => {
+						req.flash('success', 'Your bulletin has been posted');
+						return res.redirect(`/user_profile/${req.params.id}/company_dashboard/${req.params.companyId}/bulletin-board`);
+					})
+				});
+			});
+		});
+	});
 
 module.exports = router;
