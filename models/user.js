@@ -1,6 +1,7 @@
-const 	mongoose = require("mongoose"),
-				bcrypt = require('bcryptjs'),
-				inviteCostFactor = process.env.INVITE_COST_FACTOR;
+'use strict';
+const mongoose = require("mongoose"),
+  crypto = require('crypto'),
+  config = require('../config');
 
 let UserSchema = new mongoose.Schema({
 	email: {
@@ -65,20 +66,12 @@ UserSchema.pre('save', function(next){
 	// Only hash if unmodified
 	if(!user.isModified('email')) return next();
 
-	bcrypt.genSalt(inviteCostFactor, function(err, salt){
-		if(err) return next(err);
+	let cipher = crypto.createCipher('aes192', user.email);
+	let inviteCode = cipher.update(config.inviteEncrypter, 'utf8', 'hex');
+	inviteCode += cipher.final('hex');
 
-		bcrypt.hash(user.email, salt, function(err, hash){
-			if(err) return next(err);
-			user.inviteCode = hash;
-			next();
-		})
-	})
+	user.inviteCode = inviteCode;
+	next();
 })
-
-// another layer of checking password matches
-// UserSchema.methods.comparePassword = function(password){
-// 	return bcrypt.compareSync(password, this.password)
-// }
 
 module.exports = mongoose.model("User", UserSchema);

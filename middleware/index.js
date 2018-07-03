@@ -1,25 +1,24 @@
+'use strict';
 const User = require('../models/user'),
-	  	Company = require('../models/company');
+	Company = require('../models/company');
 
-let middlewareObject = {};
-
-middlewareObject.isNotLoggedIn = function(req, res, next){
+let isNotLoggedIn = (req, res, next) => {
 	if(!req.isAuthenticated()){
 		return next();
 	}
 	req.flash('error', `You're already logged in!`);
-	res.redirect("/login");
+	res.redirect("/get-started");
 };
 
-middlewareObject.isLoggedIn = function(req, res, next){
+let isLoggedIn = (req, res, next) => {
 	if(req.isAuthenticated()){
 		return next();
 	}
 	req.flash('error', `You must be logged in!`);
-	res.redirect("/login");
+	res.redirect("/get-started");
 };
 
-middlewareObject.isProfileOwner = function(req, res, next){
+let isProfileOwner = (req, res, next) => {
 	if(req.user._id.toString() === req.params.id){
 		return next();
 	}
@@ -27,7 +26,7 @@ middlewareObject.isProfileOwner = function(req, res, next){
 	res.redirect("/user_profile/" + req.user._id);
 };
 
-middlewareObject.isCompanyAdmin = function(req, res, next){
+let isCompanyAdmin = (req, res, next) => {
 	Company.findById(req.params.companyId, (err, foundCompany) => {
 		let isNotAdmin = foundCompany.admin.every(userId => !userId.equals(req.params.id));
 		if(!isNotAdmin){
@@ -38,7 +37,7 @@ middlewareObject.isCompanyAdmin = function(req, res, next){
 	})
 };
 
-middlewareObject.isCompanyMember = function(req, res, next){
+let isCompanyMember = (req, res, next) => {
 	Company.findById(req.params.companyId, (err, foundCompany) => {
 		let isNotMember = foundCompany.member.every(userId => !userId.equals(req.params.id));
 		if(!isNotMember){
@@ -49,7 +48,7 @@ middlewareObject.isCompanyMember = function(req, res, next){
 	})
 };
 
-middlewareObject.isCompanyAdminOrMember = function(req, res, next){
+let isCompanyAdminOrMember = (req, res, next) => {
 	Company.findById(req.params.companyId, (err, foundCompany) => {
 		let isNotMember = foundCompany.member.every(userId => !userId.equals(req.params.id));
 		let isNotAdmin = foundCompany.admin.every(userId => !userId.equals(req.params.id));
@@ -62,7 +61,7 @@ middlewareObject.isCompanyAdminOrMember = function(req, res, next){
 };
 
 // USED FOR REMOVING MEMBERS --- MUST SELECT AT LEAST ONE TO REMOVE TO TRIGGER ROUTE
-middlewareObject.atLeastOneOption = function(req, res, next){
+let atLeastOneOption = (req, res, next) => {
 	if(!req.body.member){
 		console.log("You didn't select anything to delete");
 		return res.redirect('/user_profile/' + req.user.id + '/company_dashboard/' + req.params.companyId + '/team/remove')
@@ -70,4 +69,12 @@ middlewareObject.atLeastOneOption = function(req, res, next){
 	next()
 }
 
-module.exports = middlewareObject;
+module.exports = {
+	isNotLoggedIn,
+	isLoggedIn,
+	isProfileOwner,
+	isCompanyAdmin,
+	isCompanyMember,
+	isCompanyAdminOrMember,
+	atLeastOneOption
+};

@@ -1,4 +1,6 @@
-const 	mongoose = require("mongoose");
+'use strict';
+
+const mongoose = require("mongoose");
 
 let CompanySchema = new mongoose.Schema({
 	name: String,
