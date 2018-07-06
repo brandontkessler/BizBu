@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="/stylesheets/company_dashboards_navigation.css">
 	<link rel="stylesheet" type="text/css" href="/stylesheets/company_dashboards_content.css">
 	<link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
+	<script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
 
@@ -50,6 +51,22 @@
 			</ul>
 		</div>
 
+		<div class="chat-window">
+			<p class="chat-hide"><i class="fas fa-caret-down"></i></p>
+			<p class="chat-reveal"><i class="fas fa-caret-up"></i></p>
+
+			<ul class="chat-messages-content-background">
+				<li class="first-message"><- Team Chat -></li>
+			</ul>
+
+
+			<form class="chat-form" action="index.html" method="post">
+			  <textarea name="name" class="chat-message"></textarea>
+				<button id="chat-button" class="chat-message-button"><i class="fas fa-paper-plane"></i></button>
+			</form>
+
+		</div>
+
 	<% if(error && error.length>0){ %>
 		<div class="flash flash-error" role="alert">
 			<%= error %>
@@ -60,3 +77,12 @@
 			<%= success %>
 		</div>
 	<% } %>
+
+	<div id="user-data-store">
+		<input id="userId" type="text" value="<%= currentUser._id %>" type="hidden">
+		<input id="userName" type="text" value="<%= currentUser.name %>" type="hidden">
+		<input id="userHideChat" type="text" value="<%= currentUser.hideChat %>" type="hidden">
+		<input id="companyId" type="text" value="<%= company._id %>" type="hidden">
+		<input id="companyName" type="text" value="<%= company.name %>" type="hidden">
+		<input id="chatId" type="text" value="<%= company.chat %>" type="hidden">
+	</div>

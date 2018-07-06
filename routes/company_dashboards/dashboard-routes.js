@@ -1,7 +1,9 @@
 'use strict';
 const User = require('../../models/user'),
   Company = require('../../models/company'),
-  Bulletin = require('../../models/bulletin');
+  Bulletin = require('../../models/bulletin'),
+  Chat = require('../../models/chat'),
+  config = require('../../config');
 
 let getCompanyCreate = (req, res) => {
   res.render('user_profiles/create-company')
@@ -22,12 +24,20 @@ let createCompany = async (req, res) => {
     });
     let createdBulletin = await Bulletin.create(newBulletin);
 
+    // CREATE CHAT WINDOW
+    let newChat = new Chat({
+      'companyRef': createdCompany
+    });
+    let createdChat = await Chat.create(newChat);
+
     let user = await User.findById(req.user._id);
 
     newCompany.admin.push(req.user._id);
     newCompany.bulletin = createdBulletin;
+    newCompany.chat = createdChat;
     newCompany.notifications.unshift(`${user.name.split(' ')[0]} created ${req.body.company.name}`);
 
+    await createdChat.save();
     await newCompany.save();
     user.companiesAdmin.push(newCompany);
     await user.save();
@@ -41,16 +51,15 @@ let createCompany = async (req, res) => {
   }
 }
 
-let getCompanyDashboard = (req, res) => {
+let getCompanyDashboard = async (req, res) => {
   Company.findById(req.params.companyId).exec((err, foundCompany) => {
     if(err){
       req.flash('error', `Can't find that company!`)
       return res.redirect('back');
     }
-    res.render('company_dashboards', {company: foundCompany});
+    res.render('company_dashboards', {company: foundCompany, host: config.host});
   });
 }
-
 
 module.exports = {
   getCompanyCreate,

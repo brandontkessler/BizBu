@@ -1,3 +1,4 @@
+'use strict';
 const 	flash = document.querySelector('.flash');
 
 

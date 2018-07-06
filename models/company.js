@@ -1,5 +1,4 @@
 'use strict';
-
 const mongoose = require("mongoose");
 
 let CompanySchema = new mongoose.Schema({
@@ -24,8 +23,12 @@ let CompanySchema = new mongoose.Schema({
 	bulletin: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Bulletin'
-	}
+	},
 
+	chat: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Chat'
+	}
 
 });
 

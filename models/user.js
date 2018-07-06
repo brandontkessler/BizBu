@@ -57,7 +57,8 @@ let UserSchema = new mongoose.Schema({
 			companyName: String,
 			admin: Boolean
 		}
-	]
+	],
+  hideChat: Boolean
 });
 
 // Creates a unique invite code from hashed email
