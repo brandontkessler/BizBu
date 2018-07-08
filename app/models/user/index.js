@@ -1,7 +1,7 @@
 'use strict';
 const mongoose = require("mongoose"),
   crypto = require('crypto'),
-  config = require('../config');
+  config = require('../../config');
 
 let UserSchema = new mongoose.Schema({
 	email: {

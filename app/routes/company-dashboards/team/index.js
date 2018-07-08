@@ -1,6 +1,5 @@
 'use strict';
-const User = require('../../../models/user'),
-  Company = require('../../../models/company');
+const { User, Company } = require('../../../models');
 
 let getTeam = (req, res) => {
   Company.findById(req.params.companyId).populate('admin').populate('member').exec((err, foundCompany) => {

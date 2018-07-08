@@ -1,7 +1,7 @@
 'use strict';
 const passport = require('passport'),
   config = require('../config'),
-  User = require('../models/user'),
+  { User } = require('../models'),
   FacebookStrategy = require('passport-facebook').Strategy,
   LinkedinStrategy = require('passport-linkedin').Strategy;
 

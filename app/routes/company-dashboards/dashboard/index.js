@@ -1,8 +1,5 @@
 'use strict';
-const User = require('../../../models/user'),
-  Company = require('../../../models/company'),
-  Bulletin = require('../../../models/bulletin'),
-  Chat = require('../../../models/chat'),
+const { User, Company, Bulletin, Chat } = require('../../../models'),
   config = require('../../../config');
 
 let getCompanyCreate = (req, res) => {

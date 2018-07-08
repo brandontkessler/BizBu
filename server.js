@@ -11,18 +11,11 @@ const
 	passport = require('passport'),
 	helmet = require('helmet'),
 	methodOverride = require('method-override'),
-  auth = require('./app/auth'),
-	config = require('./app/config'),
-	Chat = require('./app/models/chat'),
-	User = require('./app/models/user'),
-	Company = require('./app/models/company'),
-	chatIo = require('./app/socket');
-
-// REQUIRED ROUTES
-const	homeRoutes = require('./app/routes/home'),
-	authRoutes = require('./app/routes/auth'),
-	userRoutes = require('./app/routes/user-profile'),
-	companyDashboardRoutes = require('./app/routes/company-dashboards');
+	{
+		chatIo, config,
+		homeRoutes, authRoutes, userRoutes, companyDashboardRoutes,
+		User, Company, Chat
+	} = require('./app');
 
 mongoose.connect(config.dbURI);
 app.use(bodyParser.urlencoded({extended: true}));
@@ -38,7 +31,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // invoke social authentication
-auth();
+require('./app/auth')();
 
 app.use((req, res, next) => {
 	res.locals.currentUser = req.user;
@@ -52,8 +45,6 @@ app.use(homeRoutes);
 app.use(authRoutes);
 app.use('/user_profile', userRoutes);
 app.use('/company_dashboard', companyDashboardRoutes);
-
-// 404 page
 app.get('*', (req, res) => res.status(404).send('404 unable to find page!'));
 
 // SOCKET

@@ -1,9 +1,7 @@
 'use strict';
 const moment = require('moment'),
-  User = require('../../../models/user'),
-  Company = require('../../../models/company'),
-  Bulletin = require('../../../models/bulletin');
-
+  { User, Company, Bulletin } = require('../../../models');
+  
 let getBulletinBoard = (req, res) => {
   Company.findById(req.params.companyId).populate('admin').populate('member').populate('bulletin').exec((err, foundCompany) => {
     if(err){

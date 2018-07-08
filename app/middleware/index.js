@@ -1,6 +1,5 @@
 'use strict';
-const User = require('../models/user'),
-	Company = require('../models/company');
+const { User, Company } = require('../models');
 
 let isNotLoggedIn = (req, res, next) => {
 	if(!req.isAuthenticated()){
