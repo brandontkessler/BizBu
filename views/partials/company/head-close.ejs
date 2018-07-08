@@ -1,0 +1,79 @@
+</head>
+<body>
+
+	<nav id="top-nav">
+		<p id="nav-content">
+			<a href="#"><%= company.name %></a>
+			<span id="nav-button"><i class="fas fa-bars"></i></span>
+		</p>
+	</nav>
+
+
+		<div id="sidebar" class="sidebar">
+			<ul class="sidebar-ul">
+				<li>
+					<a href="/company_dashboard/<%= company._id %>"><span><i class="fas fa-object-group"></i></span>Dashboard</a>
+				</li>
+				<li>
+					<a href="/company_dashboard/<%= company._id %>/team"><span><i class="fas fa-users"></i></span>Team</a>
+				</li>
+				<li>
+					<a href="#"><span><i class="fas fa-tasks"></i></span>Venture Checklist</a>
+				</li>
+				<li>
+					<a href="/company_dashboard/<%= company._id %>/bulletin-board"><span><i class="fas fa-thumbtack"></i></span>Bulletin Board</a>
+				</li>
+				<li>
+					<a href="#"><span><i class="fas fa-comments"></i></span>Community</a>
+				</li>
+				<br><br><br>
+				<li>
+					<a href="/"><span><i class="fas fa-home"></i></span>Home</a>
+				</li>
+				<li>
+					<a href="/user_profile/<%= currentUser._id %>"><span><i class="fas fa-user-circle"></i></span>Profile</a>
+				</li>
+				<li>
+					<a href="#"><span><i class="fas fa-cog"></i></span>Settings</a>
+				</li>
+				<li>
+					<a href="/logout"><span><i class="fas fa-sign-out-alt"></i></span>Sign Out</a>
+				</li>
+			</ul>
+		</div>
+
+		<div class="chat-window">
+			<p class="chat-hide"><i class="fas fa-caret-down"></i></p>
+			<p class="chat-reveal"><i class="fas fa-caret-up"></i></p>
+
+			<ul class="chat-messages-content-background">
+				<li class="first-message"><- Team Chat -></li>
+			</ul>
+
+
+			<form class="chat-form" action="index.html" method="post">
+			  <textarea name="name" class="chat-message"></textarea>
+				<button id="chat-button" class="chat-message-button"><i class="fas fa-paper-plane"></i></button>
+			</form>
+
+		</div>
+
+	<% if(error && error.length>0){ %>
+		<div class="flash flash-error" role="alert">
+			<%= error %>
+		</div>
+	<% } %>
+	<% if(success && success.length>0){ %>
+		<div class="flash flash-success" role="alert">
+			<%= success %>
+		</div>
+	<% } %>
+
+	<div id="user-data-store">
+		<input id="userId" type="text" value="<%= currentUser._id %>" type="hidden">
+		<input id="userName" type="text" value="<%= currentUser.name %>" type="hidden">
+		<input id="userHideChat" type="text" value="<%= currentUser.hideChat %>" type="hidden">
+		<input id="companyId" type="text" value="<%= company._id %>" type="hidden">
+		<input id="companyName" type="text" value="<%= company.name %>" type="hidden">
+		<input id="chatId" type="text" value="<%= company.chat %>" type="hidden">
+	</div>

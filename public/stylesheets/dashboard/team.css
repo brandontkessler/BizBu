@@ -1,0 +1,22 @@
+
+
+/* ************* LEAVE TEAM ************** */
+#leave-team-button {
+	cursor: pointer;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+.leave-team-form-hidden {
+	display: none;
+}
+
+.leave-team-form-display {
+	display: block;
+}
+
+.nevermind-leave {
+	cursor: pointer;
+	border: 1px solid black;
+	border-radius: 5px;
+}

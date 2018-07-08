@@ -3,19 +3,19 @@
 <h3>Welcome <%= currentUser.name.split(' ')[0] %></h3>
 <p>Here is your invite code:</p>
 <p><%= currentUser.inviteCode %></p>
-<a href="/user_profile/<%= currentUser._id %>/company_dashboard/create">Create a company</a>
+<a href="/company_dashboard/create">Create a company</a>
 
 <% if(user.companiesAdmin.length > 0 || user.companiesMember.length > 0) { %>
 	<h2>Your Companies</h2>
 	<h3>Admin</h3>
 		<% user.companiesAdmin.forEach((company) => { %>
-			<a class="my-companies" href="/user_profile/<%= currentUser._id %>/company_dashboard/<%= company._id %>">
+			<a class="my-companies" href="/company_dashboard/<%= company._id %>">
 				<%= company.name %>
 			</a>
 		<% }) %>
 	<h3>Member</h3>
 		<% user.companiesMember.forEach((company) => { %>
-			<a class="my-companies" href="/user_profile/<%= currentUser._id %>/company_dashboard/<%= company._id %>">
+			<a class="my-companies" href="/company_dashboard/<%= company._id %>">
 				<%= company.name %>
 			</a>
 		<% }) %>
@@ -33,11 +33,11 @@
 			<% } %>
 		</p>
 		<p>From: <%= invite.inviter %></p>
-		<form action="/user_profile/<%= currentUser._id %>/company_dashboard/<%= invite.companyId %>/team/invite/accept" method="post">
+		<form action="/company_dashboard/<%= invite.companyId %>/team/invite/accept" method="post">
 			<input type="hidden" name="inviteId" value="<%= invite._id %>">
 			<button>Accept</button>
 		</form>
-		<form action="/user_profile/<%= currentUser._id %>/company_dashboard/<%= invite.companyId %>/team/invite/decline" method="post">
+		<form action="/company_dashboard/<%= invite.companyId %>/team/invite/decline" method="post">
 			<input type="hidden" name="inviteId" value="<%= invite._id %>">
 			<button>Decline</button>
 		</form>

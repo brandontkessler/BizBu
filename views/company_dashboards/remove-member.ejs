@@ -1,8 +1,10 @@
-<% include ../partials/company/header %>
+<% include ../partials/company/head-open %>
+<link rel="stylesheet" type="text/css" href="/stylesheets/dashboard/remove-member.css">
+<% include ../partials/company/head-close %>
 
 <h2>Select which members to remove</h2>
 
-<form action="/user_profile/<%= currentUser._id %>/company_dashboard/<%= company._id %>/team/remove?_method=PUT" method="post">
+<form action="/company_dashboard/<%= company._id %>/team/remove?_method=PUT" method="post">
 	<% company.member.forEach(member => { %>
 		<input type="checkbox" name="member" value="<%= member._id %>"> <%= member.name.split(' ')[0] %>
 	<% }) %>
@@ -16,6 +18,6 @@
 	</div>
 </form>
 
-<a href="/user_profile/<%= currentUser._id %>/company_dashboard/<%= company._id %>/team">Return to Team</a>
+<a href="/company_dashboard/<%= company._id %>/team">Return to Team</a>
 
 <% include ../partials/company/footer %>

@@ -1,4 +1,6 @@
-<% include ../partials/company/header %>
+<% include ../partials/company/head-open %>
+<link rel="stylesheet" type="text/css" href="/stylesheets/dashboard/bulletin-board.css">
+<% include ../partials/company/head-close %>
 
 <div class="content">
 
@@ -6,9 +8,6 @@
     <h2>Bulletin Board</h2>
     <p>
       The bulletin page is where you can communicate directly with the rest of the team.
-      This is to post high-level messages (ex. completed milestones or contact information)
-      and is not meant to handle real-time messaging. We recommend using a tool like
-      <a href="http://www.slack.com">Slack</a> for this functionality.
     </p>
   </div>
 
@@ -38,7 +37,7 @@
 
     </ul>
 
-    <form class="post-bulletin-message-form" action="/user_profile/<%= currentUser._id %>/company_dashboard/<%= company._id %>/bulletin-board" method="post">
+    <form class="post-bulletin-message-form" action="/company_dashboard/<%= company._id %>/bulletin-board" method="post">
       <textarea class="post-bulletin-message" name="bulletin[message]" placeholder="Post a message..."></textarea>
       <input type="hidden" name="bulletinId" value="<%= company.bulletin._id %>">
       <input type="hidden" name="bulletin[submittedBy]" value="<%= currentUser._id %>">

@@ -1,4 +1,6 @@
-<% include ../partials/company/header %>
+<% include ../partials/company/head-open %>
+<link rel="stylesheet" type="text/css" href="/stylesheets/dashboard/team.css">
+<% include ../partials/company/head-close %>
 
 <div class="content">
 
@@ -10,7 +12,7 @@
   </div>
 
 	<p>Invite more team members to help you build your company</p>
-	<a href="/user_profile/<%= currentUser._id %>/company_dashboard/<%= company._id %>/team/invite">Invite to Team</a>
+	<a href="/company_dashboard/<%= company._id %>/team/invite">Invite to Team</a>
 
 	<div class="admin">
 		<h3>These are the admins</h3>
@@ -29,27 +31,24 @@
 	<% let companyAdmins = company.admin %>
 
 	<% for(let j = 0; j < companyAdmins.length; j++){ %>
-
 		<% if(userId.toString() !== companyAdmins[j]._id.toString()){ %>
 			<% continue %>
 		<% } %>
-		<a href="/user_profile/<%= currentUser._id %>/company_dashboard/<%= company._id %>/team/remove">Remove Member(s)</a>
+		<a href="/company_dashboard/<%= company._id %>/team/remove">Remove Member(s)</a>
 	<% } %>
-
 
 	<span id="leave-team-button">Leave the Team</span>
 
 	<div class="leave-team-form-hidden">
-		<form action="/user_profile/<%= currentUser._id %>/company_dashboard/<%= company._id %>/team?_method=PUT" method="post">
+		<form action="/company_dashboard/<%= company._id %>/team?_method=PUT" method="post">
 			<h4>Are you sure??</h4>
 			<button>Leave</button>
 			<span class="nevermind-leave">Nevermind</span>
 		</form>
 	</div>
 
-
 </div>
 
 
-
+<script type="text/javascript" src="/scripts/dashboard/team.js"></script>
 <% include ../partials/company/footer %>
