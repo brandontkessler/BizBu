@@ -10,12 +10,11 @@ const
 	mongoose = require('mongoose'),
 	passport = require('passport'),
 	helmet = require('helmet'),
+	morgan = require('morgan'),
 	methodOverride = require('method-override'),
-	{
-		chatIo, config,
+	{ chatIo, config, logger,
 		homeRoutes, authRoutes, userRoutes, companyDashboardRoutes,
-		User, Company, Chat
-	} = require('./app');
+		User, Company, Chat } = require('./app');
 
 mongoose.connect(config.dbURI);
 app.use(bodyParser.urlencoded({extended: true}));
@@ -29,10 +28,18 @@ app.use(helmet());
 app.use(session(config.session));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(morgan('combined', {
+	stream: {
+		write: message => {
+			logger.log('info', message)
+		}
+	}
+}))
 
 // invoke social authentication
 require('./app/auth')();
 
+// Send to static files
 app.use((req, res, next) => {
 	res.locals.currentUser = req.user;
 	res.locals.error = req.flash("error");

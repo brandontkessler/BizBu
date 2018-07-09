@@ -1,10 +1,12 @@
 'use strict';
 const moment = require('moment'),
-  { User, Company, Bulletin } = require('../../../models');
-  
+  { User, Company, Bulletin } = require('../../../models'),
+  logger = require('../../../logger');
+
 let getBulletinBoard = (req, res) => {
   Company.findById(req.params.companyId).populate('admin').populate('member').populate('bulletin').exec((err, foundCompany) => {
     if(err){
+      logger.log('error', `routes/company-dashboards/bulletin - getBulletinBoard: ${err}`)
       req.flash('error', err.message)
       return res.redirect('back');
     }
@@ -36,7 +38,7 @@ let postBulletin = async (req, res) => {
     return res.redirect(`/company_dashboard/${req.params.companyId}/bulletin-board`);
 
   } catch(e) {
-    console.log(e)
+    logger.log('error', `routes/company-dashboards/bulletin - postBulletin: ${e}`)
     req.flash('error', e.message)
     return res.redirect('back');
   }

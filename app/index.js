@@ -1,12 +1,12 @@
 'use strict';
-const chatIo = require('./socket'),
-  config = require('./config'),
+const
   { homeRoutes, authRoutes, userRoutes, companyDashboardRoutes } = require('./routes'),
   { User, Company, Chat } = require('./models');
 
 module.exports = {
-  chatIo,
-  config,
+  chatIo: require('./socket'),
+  config: require('./config'),
+  logger: require('./logger'),
   homeRoutes,
   authRoutes,
   userRoutes,

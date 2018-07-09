@@ -2,6 +2,7 @@
 const passport = require('passport'),
   config = require('../config'),
   { User } = require('../models'),
+  logger = require('../logger'),
   FacebookStrategy = require('passport-facebook').Strategy,
   LinkedinStrategy = require('passport-linkedin').Strategy;
 
@@ -46,6 +47,7 @@ module.exports = () => {
   			return done(null, user)
   		}
   	} catch(e) {
+      logger.log('error', `Facebook auth error: ${e}`)
   		return done(e);
   	}
   }
@@ -80,6 +82,7 @@ module.exports = () => {
   			return done(null, user)
   		}
   	} catch(e) {
+      logger.log('error', `Linkedin auth error: ${e}`)
   		return done(e)
   	}
   }

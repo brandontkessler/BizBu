@@ -1,9 +1,11 @@
 'use strict';
-const { User, Company } = require('../../../models');
+const { User, Company } = require('../../../models'),
+  logger = require('../../../logger');
 
 let getTeam = (req, res) => {
   Company.findById(req.params.companyId).populate('admin').populate('member').exec((err, foundCompany) => {
     if(err){
+      logger.log('error', `routes/company-dashboards/team - getTeam: ${err}`)
       req.flash('error', err)
       return res.redirect('back');
     }
@@ -47,6 +49,7 @@ let leaveTeam = async (req, res) => {
     req.flash('success', `You have left ${foundCompany.name}`);
     return res.redirect(`/user_profile/${foundUser._id}`)
   } catch(e) {
+    logger.log('error', `routes/company-dashboards/team - leaveTeam: ${e}`)
     req.flash('error', e.message);
     return res.redirect('back');
   }
@@ -58,6 +61,7 @@ let getInvitePage = async (req, res) => {
     let allUsers = await User.find({});
     res.render('company_dashboards/invite', {users: allUsers, company: foundCompany});
   } catch(e) {
+    logger.log('error', `routes/company-dashboards/team - getInvitePage: ${e}`)
     req.flash('error', e.message);
     res.redirect('back');
   }
@@ -68,7 +72,8 @@ let sendInvite = async (req, res) => {
     let foundUser = await User.findOne({ 'inviteCode': req.body.invitee });
 
     if(!foundUser){
-      req.flash('error', `That user doesn't exist!`)
+      logger.log('error', `routes/company-dashboards/team - sendInvite: That user doesn't exist`)
+      req.flash('error', `That user doesn't exist`);
       return res.redirect('back');
     }
 
@@ -79,12 +84,15 @@ let sendInvite = async (req, res) => {
     let uniqueInvite = foundUser.invites.every(invite => invite.companyId !== newInvite.companyId);
 
     if(!uniqueAdmin){
+      logger.log('error', `routes/company-dashboards/team - sendInvite: user is already admin`)
       req.flash('error', `That user's already an admin for this company!`)
       res.redirect('back')
     } else if (!uniqueMember){
+      logger.log('error', `routes/company-dashboards/team - sendInvite: user is already member`)
       req.flash('error', `That user's already a team member for this company!`)
       res.redirect('back')
     } else if (!uniqueInvite){
+      logger.log('error', `routes/company-dashboards/team - sendInvite: pending invite`)
       req.flash('error', `There's already an invite pending for the user`)
       res.redirect('back')
     } else {
@@ -96,8 +104,9 @@ let sendInvite = async (req, res) => {
       return res.redirect(`/company_dashboard/${req.params.companyId}/team`)
     }
   } catch(e) {
+    logger.log('error', `routes/company-dashboards/team - sendInvite: ${e}`)
     req.flash('error', e.message);
-    res.redirect('back');
+    return res.redirect('back');
   }
 }
 
@@ -136,8 +145,9 @@ let acceptInvite = async (req, res) => {
       }
     }
   } catch(e) {
+    logger.log('error', `routes/company-dashboards/team - acceptInvite: ${e}`)
     req.flash('error', e.message);
-    res.redirect('back');
+    return res.redirect('back');
   }
 }
 
@@ -155,6 +165,7 @@ let declineInvite = async (req, res) => {
     req.flash('success', `You have rejected the invite!`);
     return res.redirect(`/user_profile/${req.user.id}`);
   } catch(e) {
+    logger.log('error', `routes/company-dashboards/team - declineInvite: ${e}`)
     req.flash('error', e.message);
     return res.redirect('back');
   }
@@ -163,6 +174,7 @@ let declineInvite = async (req, res) => {
 let removeMemberPage = (req, res) => {
   Company.findById(req.params.companyId).populate('member').exec((err, foundCompany) => {
     if(err){
+      logger.log('error', `routes/company-dashboards/team - removeMemberPage: ${err}`)
       req.flash('error', err)
       return res.redirect('back');
     }
@@ -204,6 +216,7 @@ let removeMember = async (req, res) => {
       }
     }
   } catch(e) {
+    logger.log('error', `routes/company-dashboards/team - removeMember: ${e}`)
     req.flash('error', e.mesage);
     return res.redirect('back');
   }

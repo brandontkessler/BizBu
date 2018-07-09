@@ -1,6 +1,7 @@
 'use strict';
 const { User, Company, Bulletin, Chat } = require('../../../models'),
-  config = require('../../../config');
+  config = require('../../../config'),
+  logger = require('../../../logger');
 
 let getCompanyCreate = (req, res) => {
   res.render('user_profiles/create-company')
@@ -43,6 +44,7 @@ let createCompany = async (req, res) => {
     return res.redirect(`/company_dashboard/${newCompany._id}`);
 
   } catch(e) {
+    logger.log('error', `routes/company-dashboards/dashboard - createCompany: ${e}`)
     req.flash('error', e.message)
     return res.redirect('back');
   }
@@ -67,7 +69,7 @@ let getCompanyDashboard = async (req, res) => {
     let updatedCompany = await Company.findById(req.params.companyId).populate('activeUsers')
     res.render('company_dashboards/dashboard', {company: updatedCompany, host: config.host});
   } catch(e) {
-    console.log(e)
+    logger.log('error', `routes/company-dashboards/dashboard - getCompanyDashboard: ${e}`)
     req.flash('error', e.message);
     return res.redirect('back');
   }

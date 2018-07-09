@@ -1,5 +1,6 @@
 'use strict';
-const { isRealString } = require('../utils/validation');
+const { isRealString } = require('../utils/validation'),
+  logger = require('../logger');
 
 module.exports = (io, Chat, User, Company) => {
   io.on('connection', socket => {
@@ -11,7 +12,7 @@ module.exports = (io, Chat, User, Company) => {
   			}
   			socket.join(data.chatId);
   		} catch(e) {
-  			console.log(e)
+        logger.log('error', `socket - joinChat: ${e}`)
   		}
     });
 
@@ -27,7 +28,7 @@ module.exports = (io, Chat, User, Company) => {
         io.to(data.chatId).emit('populate active users', activeUsers)
 
       } catch(e) {
-        console.log(e)
+        logger.log('error', `socket - active user: ${e}`)
       }
     })
 
@@ -46,8 +47,8 @@ module.exports = (io, Chat, User, Company) => {
   				io.to(data.chatId).emit('new message', data);
   			}
   		} catch(e){
+        logger.log('error', `socket - chat message: ${e}`)
         return callback(e);
-  			console.log(e);
   		}
   	});
 
@@ -57,7 +58,7 @@ module.exports = (io, Chat, User, Company) => {
   			user.hideChat = true;
   			user.save();
   		} catch(e){
-  			console.log(e)
+        logger.log('error', `socket - set hide true: ${e}`)
   		}
   	})
 
@@ -67,7 +68,7 @@ module.exports = (io, Chat, User, Company) => {
   			user.hideChat = false;
   			user.save();
   		} catch(e){
-  			console.log(e)
+        logger.log('error', `socket - set hide false: ${e}`)
   		}
   	})
 
