@@ -1,17 +1,27 @@
-// REMOVE MEMBERS POPUP
-$('#remove-button').on('click', () => {
-	$('.remove-member-popup').addClass('remove-member-popup-display');
-})
+'use strict';
+(function(code){
+	code(window.jQuery, window, document);
+}(function($, window, document){
+	$(function(){
+		// The DOM is ready
+	});
 
-$('.remove-member-cancel').on('click', () => {
-	$('.remove-member-popup').removeClass('remove-member-popup-display');
-})
+	// REMOVE MEMBERS POPUP
+	$('#remove-button').on('click', function(){
+		$('.remove-member-popup').addClass('remove-member-popup-display');
+	})
 
-// LEAVE TEAM POPUP
-$('#leave-team-button').on('click', () => {
-  $('.leave-team-form-hidden').addClass('leave-team-form-display');
-})
+	$('.remove-member-cancel').on('click', function(){
+		$('.remove-member-popup').removeClass('remove-member-popup-display');
+	})
 
-$('.nevermind-leave').on('click', () => {
-  $('.leave-team-form-hidden').removeClass('leave-team-form-display');
-})
+	// LEAVE TEAM POPUP
+	$('#leave-team-button').on('click', function(){
+	  $('.leave-team-form-hidden').addClass('leave-team-form-display');
+	})
+
+	$('.nevermind-leave').on('click', function(){
+	  $('.leave-team-form-hidden').removeClass('leave-team-form-display');
+	})
+
+}));

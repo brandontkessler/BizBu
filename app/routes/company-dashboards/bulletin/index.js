@@ -44,7 +44,81 @@ let postBulletin = async (req, res) => {
   }
 }
 
+let updateBulletin = async (req, res) => {
+  try{
+    let body = req.body;
+    let foundBulletin = await Bulletin.findById(body.bulletinId);
+    let foundCompany = await Company.findById(req.params.companyId);
+
+    foundCompany.notifications.unshift(`${req.body.name.split(' ')[0]} has updated a bulletin`);
+    foundBulletin.bulletins[req.body.bulletinIndex].message = body.message;
+
+    await foundCompany.save();
+    await foundBulletin.save();
+
+    res.send({redirect: `/company_dashboard/${req.params.companyId}/bulletin-board`});
+
+  } catch(e) {
+    logger.log('error', `routes/company-dashboards/bulletin - updateBulletin: ${e}`)
+    req.flash('error', e.message)
+    return res.redirect('back');
+  }
+}
+
+let deleteBulletin = async (req, res) => {
+  try {
+    let body = req.body;
+    let foundBulletin = await Bulletin.findById(body.bulletinId);
+
+    if (req.body.bulletinIndex > -1){
+      foundBulletin.bulletins.splice([req.body.bulletinIndex],1)
+    }
+
+    await foundBulletin.save();
+
+    res.send({redirect: `/company_dashboard/${req.params.companyId}/bulletin-board`});
+
+  } catch(e) {
+    logger.log('error', `routes/company-dashboards/bulletin - deleteBulletin: ${e}`)
+    req.flash('error', e.message)
+    return res.redirect('back');
+  }
+}
+
+let bulletinComment = async (req, res) => {
+  try {
+    let body = req.body;
+    let now = new Date();
+    let comment = {
+      message: body.message,
+      submittedBy: body.submittedBy,
+      name: body.name,
+      submittedOn: now,
+      date: moment(now).format("M/D/YY"),
+      time: moment(now).format("h:mma")
+    }
+    let foundBulletin = await Bulletin.findById(body.bulletinId);
+    let foundCompany = await Company.findById(req.params.companyId);
+
+    foundCompany.notifications.unshift(`${req.body.name.split(' ')[0]} has commented on a bulletin`);
+    foundBulletin.bulletins[req.body.bulletinIndex].comments.push(comment);
+
+    await foundCompany.save();
+    await foundBulletin.save();
+
+    res.send({redirect: `/company_dashboard/${req.params.companyId}/bulletin-board`});
+
+  } catch(e) {
+    logger.log('error', `routes/company-dashboards/bulletin - bulletinComment: ${e}`)
+    req.flash('error', e.message)
+    return res.redirect('back');
+  }
+}
+
 module.exports = {
   getBulletinBoard,
-  postBulletin
+  postBulletin,
+  updateBulletin,
+  deleteBulletin,
+  bulletinComment
 }

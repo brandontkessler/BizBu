@@ -13,7 +13,7 @@
 
 .bulletin-board{
 	background-color: white;
-	padding: 5px 10px;
+	padding: 0;
 	list-style: none;
 	border-radius: 5px;
 	height: calc(100% - 10px - 10px - 165px);
@@ -21,7 +21,7 @@
 }
 
 .bulletin-message-container {
-	margin-bottom: 20px;
+	padding: 10px 10px 15px 10px;
 }
 
 .bulletin-timestamp {
@@ -30,6 +30,49 @@
 }
 
 .bulletin-message {
+	margin: 5px 0 0 0;
+}
+
+.bulletin-view {
+	display: none;
+}
+
+.bulletin-view h4 {
+	font-size: 1em;
+	margin-bottom: 0;
+}
+
+.bulletin-view p {
+	font-size: 0.9em;
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+
+.bulletin-message-response {
+	font-size: 1em;
+	margin: 2px;
+	text-align: right;
+}
+
+.bulletin-comments-count {
+	float: left;
+}
+
+.bulletin-message-response a {
+	margin: 0 3px;
+	text-decoration: none;
+	color: rgb(46, 106, 201);
+}
+
+.bulletin-message-response a:hover{
+	opacity: 0.7;
+}
+
+.cancel-button, .confirm-button, .hide-button {
+	display: none;
+}
+
+.bulletin-hr {
 	margin: 0;
 }
 
@@ -60,6 +103,16 @@
 	background-color: rgb(103, 132, 102);
 	border-radius: 5px;
 	outline: none;
+}
+
+#edit-bulletin {
+	background-color: rgb(188, 151, 69);
+	display: none;
+}
+
+#comment-bulletin {
+	background-color: rgb(68, 96, 181);
+	display: none;
 }
 
 .post-bulletin-btn:hover {

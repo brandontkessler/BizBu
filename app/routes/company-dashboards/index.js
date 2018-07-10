@@ -2,7 +2,8 @@
 const router = require('express').Router(),
   { getCompanyCreate, createCompany, getCompanyDashboard } = require('./dashboard'),
   team = require('./team'),
-  bulletin = require('./bulletin'),
+  { getBulletinBoard, postBulletin, updateBulletin, deleteBulletin,
+    bulletinComment } = require('./bulletin'),
 	middleware = require('../../middleware');
 
 // ************************* COMPANY CREATION *************************
@@ -58,9 +59,20 @@ router.route('/:companyId/team/remove')
 router.route('/:companyId/bulletin-board')
 	.get(middleware.isLoggedIn,
     middleware.isCompanyAdminOrMember,
-    bulletin.getBulletinBoard)
+    getBulletinBoard)
 	.post(middleware.isLoggedIn,
-    middleware.isCompanyAdminOrMember,
-		bulletin.postBulletin);
+    middleware.isCompanyAdmin,
+		postBulletin)
+  .put(middleware.isLoggedIn,
+    middleware.isCompanyAdmin,
+    updateBulletin)
+  .delete(middleware.isLoggedIn,
+    middleware.isCompanyAdmin,
+    deleteBulletin)
+
+router.post('/:companyId/bulletin-board/comment',
+  middleware.isLoggedIn,
+  middleware.isCompanyAdminOrMember,
+  bulletinComment)
 
 module.exports = router;

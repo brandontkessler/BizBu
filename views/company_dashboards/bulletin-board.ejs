@@ -22,7 +22,7 @@
           </h3>
         </li>
       <% } else { %>
-        <% for (bulletin of company.bulletin.bulletins){ %>
+        <% for (bulletin of company.bulletin.bulletins.reverse()){ %>
           <li class="bulletin-message-container">
             <h3 class="bulletin-timestamp">
               <%= bulletin.date %> at <%= bulletin.time %> - <%= bulletin.name.split(' ')[0] %>
@@ -30,25 +30,61 @@
             <p class="bulletin-message">
               <%= bulletin.message %>
             </p>
+            <ul class="bulletin-view">
+              <% for (let comment of bulletin.comments){ %>
+                <li>
+                  <h4>
+                    <%= comment.date %> at <%= comment.time %> - <%= comment.name.split(' ')[0] %>
+                  </h4>
+                  <p>
+                    <%= comment.message %>
+                  </p>
+                </li>
+              <% } %>
+            </ul>
+            <p class="bulletin-message-response">
+              <% if(bulletin.comments && bulletin.comments.length > 0){ %>
+                <span class="bulletin-comments-count">
+                  <i class="far fa-comments"></i> <%= bulletin.comments.length %>
+                </span>
+              <% } %>
+
+              <span style="visibility:hidden">|</span>
+              <span class="bulletin-message-response-btns">
+                <% if(currentUser.companiesAdmin.indexOf(company._id) !== -1){ %>
+                  <a class="edit-button" href="#">edit</a>
+                  <a class="delete-button" href="#">delete</a>
+                <% } %>
+                <% if(bulletin.comments && bulletin.comments.length > 0){ %>
+                  <a class="view-button" href="#">view</a>
+                  <a class="hide-button" href="#">hide</a>
+                <% } %>
+                <a class="comment-button" href="#">comment</a>
+              </span>
+              <a class="confirm-button" href="#">confirm</a>
+              <a class="cancel-button" href="#">cancel</a>
+            </p>
           </li>
-          <hr>
+          <hr class="bulletin-hr">
         <% } %>
       <% } %>
 
     </ul>
 
-    <form class="post-bulletin-message-form" action="/company_dashboard/<%= company._id %>/bulletin-board" method="post">
-      <textarea class="post-bulletin-message" name="bulletin[message]" placeholder="Post a message..."></textarea>
+    <form id="post-bulletin-form" class="post-bulletin-message-form" action="/company_dashboard/<%= company._id %>/bulletin-board" method="post">
+      <textarea class="post-bulletin-message" name="bulletin[message]" placeholder="Post a bulletin..."></textarea>
+      <input type="hidden" name="companyId" value="<%= company._id %>">
       <input type="hidden" name="bulletinId" value="<%= company.bulletin._id %>">
       <input type="hidden" name="bulletin[submittedBy]" value="<%= currentUser._id %>">
       <input type="hidden" name="bulletin[name]" value="<%= currentUser.name %>">
-      <button class="post-bulletin-btn">POST BULLETIN</button>
+      <button id="post-bulletin" class="post-bulletin-btn">POST BULLETIN</button>
+      <button id="edit-bulletin" class="post-bulletin-btn">UPDATE BULLETIN</button>
+      <button id="comment-bulletin" class="post-bulletin-btn">POST COMMENT</button>
     </form>
 
   </div>
 
 </div>
 
-
-
+<script type="text/javascript" src="/scripts/dashboard/bulletin.js"></script>
 <% include ../partials/company/footer %>

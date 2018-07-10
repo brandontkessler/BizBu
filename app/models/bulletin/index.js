@@ -16,7 +16,21 @@ let BulletinSchema = new mongoose.Schema({
       name: String,
       submittedOn: Date,
       date: String,
-      time: String
+      time: String,
+			comments: [
+				{
+					message: String,
+					submittedBy: {
+						type: mongoose.Schema.Types.ObjectId,
+						ref: 'User'
+					},
+					name: String,
+					submittedOn: Date,
+					date: String,
+					time: String
+				}
+			]
+
     }
   ]
 });

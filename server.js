@@ -28,13 +28,13 @@ app.use(helmet());
 app.use(session(config.session));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(morgan('combined', {
-	stream: {
-		write: message => {
-			logger.log('info', message)
-		}
-	}
-}))
+// app.use(morgan('combined', {
+// 	stream: {
+// 		write: message => {
+// 			logger.log('info', message)
+// 		}
+// 	}
+// }))
 
 // invoke social authentication
 require('./app/auth')();
