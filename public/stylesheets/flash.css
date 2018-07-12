@@ -1,0 +1,24 @@
+/************************ Flash Styling ****************************/
+.flash {
+	width: 80%;
+	margin: 20px 10%;
+	color: white;
+	text-align:  center;
+	border-radius: 5px;
+	padding: 10px 0;
+	position: fixed;
+  transform: scale(1);
+	transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.flash-error {
+	border: 1px solid white;
+	background-color: rgba(234, 89, 89, 1);
+	color: white;
+}
+
+.flash-success {
+	border: 1px solid white;
+	background-color: rgba(139, 183, 121, 1);
+	color: white;
+}

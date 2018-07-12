@@ -56,7 +56,7 @@ let getInvitePage = async (req, res) => {
   try {
     let foundCompany = await Company.findById(req.params.companyId);
     let allUsers = await User.find({});
-    res.render('company_dashboards/invite', {users: allUsers, company: foundCompany});
+    res.render('company_dashboards/team/invite', {users: allUsers, company: foundCompany});
   } catch(e) {
     errorHandler(e, req, res, routeType, route)
   }
@@ -153,7 +153,7 @@ let removeMemberPage = (req, res) => {
   let route = 'removeMemberPage';
   Company.findById(req.params.companyId).populate('member').exec((err, foundCompany) => {
     if(err) errorHandler(err, req, res, routeType, route);
-    res.render('company_dashboards/remove-member', {company: foundCompany});
+    res.render('company_dashboards/team/remove-member', {company: foundCompany});
   });
 }
 

@@ -67,7 +67,7 @@ let getCompanyDashboard = async (req, res) => {
     await foundCompany.save();
 
     let updatedCompany = await Company.findById(req.params.companyId).populate('activeUsers')
-    res.render('company_dashboards/dashboard', {company: updatedCompany, host: config.host});
+    res.render('company_dashboards', { company: updatedCompany });
   } catch(e) {
     errorHandler(e, req, res, routeType, route)
   }

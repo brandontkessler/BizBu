@@ -1,0 +1,6 @@
+	<a href="/">Home</a>
+	<% if(currentUser){ %>
+		<a href="/logout">Sign out</a>
+	<% } else { %>
+		<a href="/get-started">Get Started</a>
+	<% } %>

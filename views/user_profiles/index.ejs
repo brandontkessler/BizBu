@@ -1,48 +1,48 @@
-<% include ../partials/user/header %>
+<% include ./partials/header %>
 
-<h3>Welcome <%= currentUser.name.split(' ')[0] %></h3>
-<p>Here is your invite code:</p>
-<p><%= currentUser.inviteCode %></p>
-<a href="/company_dashboard/create">Create a company</a>
+	<h3>Welcome <%= currentUser.name.split(' ')[0] %></h3>
+	<p>Here is your invite code:</p>
+	<p><%= currentUser.inviteCode %></p>
+	<a href="/company_dashboard/create">Create a company</a>
 
-<% if(user.companiesAdmin.length > 0 || user.companiesMember.length > 0) { %>
-	<h2>Your Companies</h2>
-	<h3>Admin</h3>
-		<% user.companiesAdmin.forEach((company) => { %>
-			<a class="my-companies" href="/company_dashboard/<%= company._id %>">
-				<%= company.name %>
-			</a>
+	<% if(user.companiesAdmin.length > 0 || user.companiesMember.length > 0) { %>
+		<h2>Your Companies</h2>
+		<h3>Admin</h3>
+			<% user.companiesAdmin.forEach((company) => { %>
+				<a class="my-companies" href="/company_dashboard/<%= company._id %>">
+					<%= company.name %>
+				</a>
+			<% }) %>
+		<h3>Member</h3>
+			<% user.companiesMember.forEach((company) => { %>
+				<a class="my-companies" href="/company_dashboard/<%= company._id %>">
+					<%= company.name %>
+				</a>
+			<% }) %>
+	<% } %>
+
+	<% if(user.invites.length > 0) { %>
+		<h2>Your Invites</h2>
+		<% user.invites.forEach((invite) => { %>
+			<p>Company: <%= invite.companyName %></p>
+			<p>Role:
+				<% if(invite.admin){ %>
+					<span>admin</span>
+				<% } else { %>
+					<span>member</span>
+				<% } %>
+			</p>
+			<p>From: <%= invite.inviter %></p>
+			<form action="/company_dashboard/<%= invite.companyId %>/team/invite/accept" method="post">
+				<input type="hidden" name="inviteId" value="<%= invite._id %>">
+				<button>Accept</button>
+			</form>
+			<form action="/company_dashboard/<%= invite.companyId %>/team/invite/decline" method="post">
+				<input type="hidden" name="inviteId" value="<%= invite._id %>">
+				<button>Decline</button>
+			</form>
 		<% }) %>
-	<h3>Member</h3>
-		<% user.companiesMember.forEach((company) => { %>
-			<a class="my-companies" href="/company_dashboard/<%= company._id %>">
-				<%= company.name %>
-			</a>
-		<% }) %>
-<% } %>
-
-<% if(user.invites.length > 0) { %>
-	<h2>Your Invites</h2>
-	<% user.invites.forEach((invite) => { %>
-		<p>Company: <%= invite.companyName %></p>
-		<p>Role:
-			<% if(invite.admin){ %>
-				<span>admin</span>
-			<% } else { %>
-				<span>member</span>
-			<% } %>
-		</p>
-		<p>From: <%= invite.inviter %></p>
-		<form action="/company_dashboard/<%= invite.companyId %>/team/invite/accept" method="post">
-			<input type="hidden" name="inviteId" value="<%= invite._id %>">
-			<button>Accept</button>
-		</form>
-		<form action="/company_dashboard/<%= invite.companyId %>/team/invite/decline" method="post">
-			<input type="hidden" name="inviteId" value="<%= invite._id %>">
-			<button>Decline</button>
-		</form>
-	<% }) %>
-<% } %>
+	<% } %>
 
 
-<% include ../partials/user/footer %>
+<% include ./partials/footer %>

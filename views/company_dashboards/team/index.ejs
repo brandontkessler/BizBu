@@ -1,0 +1,54 @@
+<% include ../partials/head-open %>
+<link rel="stylesheet" type="text/css" href="/stylesheets/dashboard/team/team.css">
+<% include ../partials/head-close %>
+
+<div class="content">
+
+	<div class="page-description">
+    <h2>Team</h2>
+    <p>
+
+    </p>
+  </div>
+
+	<p>Invite more team members to help you build your company</p>
+	<a href="/company_dashboard/<%= company._id %>/team/invite">Invite to Team</a>
+
+	<div class="admin">
+		<h3>These are the admins</h3>
+		<% company.admin.forEach(function(user){ %>
+			<%= user.name.split(' ')[0] %>
+		<% }) %>
+	</div>
+	<div class="member">
+		<h3>These are the members</h3>
+		<% company.member.forEach(function(user){ %>
+			<%= user.name.split(' ')[0] %>
+		<% }) %>
+	</div>
+
+	<% let userId = currentUser._id %>
+	<% let companyAdmins = company.admin %>
+
+	<% for(let j = 0; j < companyAdmins.length; j++){ %>
+		<% if(userId.toString() !== companyAdmins[j]._id.toString()){ %>
+			<% continue %>
+		<% } %>
+		<a href="/company_dashboard/<%= company._id %>/team/remove">Remove Member(s)</a>
+	<% } %>
+
+	<span id="leave-team-button">Leave the Team</span>
+
+	<div class="leave-team-form-hidden">
+		<form action="/company_dashboard/<%= company._id %>/team?_method=PUT" method="post">
+			<h4>Are you sure??</h4>
+			<button>Leave</button>
+			<span class="nevermind-leave">Nevermind</span>
+		</form>
+	</div>
+
+</div>
+
+
+<script type="text/javascript" src="/scripts/dashboard/team/leave-team.js"></script>
+<% include ../partials/footer %>

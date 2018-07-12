@@ -1,0 +1,32 @@
+<div id="sidebar" class="sidebar">
+  <ul class="sidebar-ul">
+    <li>
+      <a href="/company_dashboard/<%= company._id %>"><span><i class="fas fa-object-group"></i></span>Dashboard</a>
+    </li>
+    <li>
+      <a href="/company_dashboard/<%= company._id %>/team"><span><i class="fas fa-users"></i></span>Team</a>
+    </li>
+    <li>
+      <a href="#"><span><i class="fas fa-tasks"></i></span>Venture Checklist</a>
+    </li>
+    <li>
+      <a href="/company_dashboard/<%= company._id %>/bulletin-board"><span><i class="fas fa-thumbtack"></i></span>Bulletin Board</a>
+    </li>
+    <li>
+      <a href="#"><span><i class="fas fa-comments"></i></span>Community</a>
+    </li>
+    <br><br><br>
+    <li>
+      <a href="/"><span><i class="fas fa-home"></i></span>Home</a>
+    </li>
+    <li>
+      <a href="/user_profile/<%= currentUser._id %>"><span><i class="fas fa-user-circle"></i></span>Profile</a>
+    </li>
+    <li>
+      <a href="#"><span><i class="fas fa-cog"></i></span>Settings</a>
+    </li>
+    <li>
+      <a href="/logout"><span><i class="fas fa-sign-out-alt"></i></span>Sign Out</a>
+    </li>
+  </ul>
+</div>

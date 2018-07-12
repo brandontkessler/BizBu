@@ -39,7 +39,7 @@ app.use(passport.session());
 // invoke social authentication
 require('./app/auth')();
 
-// Send to static files
+// Send data to static files
 app.use((req, res, next) => {
 	res.locals.currentUser = req.user;
 	res.locals.error = req.flash("error");

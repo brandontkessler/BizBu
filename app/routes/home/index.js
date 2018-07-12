@@ -3,7 +3,7 @@ const router = require('express').Router(),
   middleware = require('../../middleware');
 
 let home = (req, res) => res.render('home');
-let getStarted = (req, res) => res.render('get-started')
+let getStarted = (req, res) => res.render('home/get-started')
 
 // HOME
 router.get('/', middleware.activeRemovePageLeave, home);

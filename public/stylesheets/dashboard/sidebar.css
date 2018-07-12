@@ -1,0 +1,67 @@
+.sidebar {
+	width: 250px;
+	float: left;
+	background-color: #303332;
+	height: calc(100vh - 50px);
+}
+
+.sidebar-ul {
+	list-style: none;
+	padding: 20px 0 0 0;
+	width: 70%;
+	margin: 0 auto;
+}
+
+.sidebar-ul li {
+	color: white;
+	padding: 10px 5px;
+}
+
+.sidebar-ul li:not(:last-child) {
+	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-ul li a {
+	color: white;
+	text-decoration: none;
+}
+
+.sidebar-ul li a span {
+	padding-right: 5px;
+}
+
+.sidebar-ul li a:hover {
+	opacity: .7;
+}
+
+/******************************************** CSS TOGGLE CLASSES *******************************************/
+.sidebar-toggle {
+	height: calc(100vh - 50px);
+	width: 100vw;
+	transition: all .5s ease-out;
+}
+
+.sidebar-ul-toggle {
+	display: block;
+}
+
+.content-toggle {
+	display: none;
+}
+
+/********************************************* MEDIA QUERIES *********************************************/
+@media screen and (max-width: 1023px){
+	.sidebar {
+		height: 0;
+		width: 100vw;
+		transition: all .5s ease-out;
+	}
+
+	.sidebar-ul {
+		display: none;
+	}
+
+	.content {
+		margin: 0;
+	}
+}

@@ -1,9 +1,0 @@
-<% include ./partials/home/header %>
-
-<h1 id="home">Home</h1>
-
-<% if(currentUser){ %>
-	<a href="/user_profile/<%= currentUser._id %>">Back to Profile</a>
-<% } %>
-
-<% include ./partials/home/footer %>
