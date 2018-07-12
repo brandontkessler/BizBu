@@ -1,22 +1,21 @@
 'use strict';
 const moment = require('moment'),
   { User, Company, Bulletin } = require('../../../models'),
-  logger = require('../../../logger');
+  { successHandler, errorHandler } = require('../../../helpers');
+
+const routeType = 'company-dashboards';
+const route = 'bulletinRoutes';
+let now = new Date();
 
 let getBulletinBoard = (req, res) => {
   Company.findById(req.params.companyId).populate('admin').populate('member').populate('bulletin').exec((err, foundCompany) => {
-    if(err){
-      logger.log('error', `routes/company-dashboards/bulletin - getBulletinBoard: ${err}`)
-      req.flash('error', err.message)
-      return res.redirect('back');
-    }
+    if(err) errorHandler(err, req, res, routeType, route);
     res.render('company_dashboards/bulletin-board', {company: foundCompany});
   })
 }
 
 let postBulletin = async (req, res) => {
   try{
-    let now = new Date();
     let bulletin = {
         message: req.body.bulletin.message,
         submittedBy: req.body.bulletin.submittedBy,
@@ -34,41 +33,32 @@ let postBulletin = async (req, res) => {
     await foundCompany.save();
     await foundBulletin.save();
 
-    req.flash('success', 'Your bulletin has been posted');
-    return res.redirect(`/company_dashboard/${req.params.companyId}/bulletin-board`);
-
+    successHandler(req, res, routeType, route)
   } catch(e) {
-    logger.log('error', `routes/company-dashboards/bulletin - postBulletin: ${e}`)
-    req.flash('error', e.message)
-    return res.redirect('back');
+    errorHandler(e, req, res, routeType, route)
   }
 }
 
 let updateBulletin = async (req, res) => {
   try{
-    let body = req.body;
-    let foundBulletin = await Bulletin.findById(body.bulletinId);
+    let foundBulletin = await Bulletin.findById(req.body.bulletinId);
     let foundCompany = await Company.findById(req.params.companyId);
 
     foundCompany.notifications.unshift(`${req.body.name.split(' ')[0]} has updated a bulletin`);
-    foundBulletin.bulletins[req.body.bulletinIndex].message = body.message;
+    foundBulletin.bulletins[req.body.bulletinIndex].message = req.body.message;
 
     await foundCompany.save();
     await foundBulletin.save();
 
     res.send({redirect: `/company_dashboard/${req.params.companyId}/bulletin-board`});
-
   } catch(e) {
-    logger.log('error', `routes/company-dashboards/bulletin - updateBulletin: ${e}`)
-    req.flash('error', e.message)
-    return res.redirect('back');
+    errorHandler(e, req, res, routeType, route)
   }
 }
 
 let deleteBulletin = async (req, res) => {
   try {
-    let body = req.body;
-    let foundBulletin = await Bulletin.findById(body.bulletinId);
+    let foundBulletin = await Bulletin.findById(req.body.bulletinId);
 
     if (req.body.bulletinIndex > -1){
       foundBulletin.bulletins.splice([req.body.bulletinIndex],1)
@@ -77,27 +67,22 @@ let deleteBulletin = async (req, res) => {
     await foundBulletin.save();
 
     res.send({redirect: `/company_dashboard/${req.params.companyId}/bulletin-board`});
-
   } catch(e) {
-    logger.log('error', `routes/company-dashboards/bulletin - deleteBulletin: ${e}`)
-    req.flash('error', e.message)
-    return res.redirect('back');
+    errorHandler(e, req, res, routeType, route)
   }
 }
 
 let bulletinComment = async (req, res) => {
   try {
-    let body = req.body;
-    let now = new Date();
     let comment = {
-      message: body.message,
-      submittedBy: body.submittedBy,
-      name: body.name,
+      message: req.body.message,
+      submittedBy: req.body.submittedBy,
+      name: req.body.name,
       submittedOn: now,
       date: moment(now).format("M/D/YY"),
       time: moment(now).format("h:mma")
     }
-    let foundBulletin = await Bulletin.findById(body.bulletinId);
+    let foundBulletin = await Bulletin.findById(req.body.bulletinId);
     let foundCompany = await Company.findById(req.params.companyId);
 
     foundCompany.notifications.unshift(`${req.body.name.split(' ')[0]} has commented on a bulletin`);
@@ -107,11 +92,8 @@ let bulletinComment = async (req, res) => {
     await foundBulletin.save();
 
     res.send({redirect: `/company_dashboard/${req.params.companyId}/bulletin-board`});
-
   } catch(e) {
-    logger.log('error', `routes/company-dashboards/bulletin - bulletinComment: ${e}`)
-    req.flash('error', e.message)
-    return res.redirect('back');
+    errorHandler(e, req, res, routeType, route)
   }
 }
 

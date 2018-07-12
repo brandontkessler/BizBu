@@ -1,6 +1,9 @@
 'use strict';
 const router = require('express').Router(),
-  passport = require('passport');
+  passport = require('passport'),
+  { successHandler } = require('../../../helpers');
+
+const routeType = 'auth';
 
 // FB ROUTES
 let authFB = passport.authenticate('facebook', {
@@ -13,8 +16,7 @@ let authFBcbMiddleware = passport.authenticate('facebook', {
 })
 
 let authFBcb = (req, res) => {
-	req.flash('success', 'Facebook login successful')
-	res.redirect('/user_profile/' + req.user._id)
+  successHandler(req, res, routeType, 'authFBcb')
 }
 
 // LINKEDIN ROUTES
@@ -28,15 +30,13 @@ let authLIcbMiddleware = passport.authenticate('linkedin', {
 })
 
 let authLIcb = (req, res) => {
-	req.flash('success', 'LinkedIn login successful')
-	res.redirect('/user_profile/' + req.user._id)
+  successHandler(req, res, routeType, 'authLIcb')
 }
 
 // LOGOUT
 let logout = (req, res) => {
 	req.logout();
-	req.flash("success", "See ya later");
-	res.redirect('/');
+  successHandler(req, res, routeType, 'logout')
 }
 
 module.exports = {

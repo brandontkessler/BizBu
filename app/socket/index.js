@@ -1,5 +1,5 @@
 'use strict';
-const { isRealString } = require('../utils/validation'),
+const { isRealString } = require('../helpers/validation'),
   logger = require('../logger');
 
 module.exports = (io, Chat, User, Company) => {

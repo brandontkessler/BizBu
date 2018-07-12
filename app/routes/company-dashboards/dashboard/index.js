@@ -1,13 +1,16 @@
 'use strict';
 const { User, Company, Bulletin, Chat } = require('../../../models'),
   config = require('../../../config'),
-  logger = require('../../../logger');
+  { successHandler, errorHandler } = require('../../../helpers');
+
+const routeType = 'company-dashboards';
 
 let getCompanyCreate = (req, res) => {
   res.render('user_profiles/create-company')
 }
 
 let createCompany = async (req, res) => {
+  let route = 'createCompany';
   try {
     // CREATE COMPANY
     let newCompany = new Company({
@@ -40,17 +43,14 @@ let createCompany = async (req, res) => {
     user.companiesAdmin.push(newCompany);
     await user.save();
 
-    req.flash('success', 'Welcome to your new company dashboard')
-    return res.redirect(`/company_dashboard/${newCompany._id}`);
-
+    successHandler(req, res, routeType, route, newCompany._id)
   } catch(e) {
-    logger.log('error', `routes/company-dashboards/dashboard - createCompany: ${e}`)
-    req.flash('error', e.message)
-    return res.redirect('back');
+    errorHandler(e, req, res, routeType, route)
   }
 }
 
 let getCompanyDashboard = async (req, res) => {
+  let route = 'getCompanyDashboard';
   try {
     let foundCompany = await Company.findById(req.params.companyId);
     let user = await User.findById(req.user._id);
@@ -69,9 +69,7 @@ let getCompanyDashboard = async (req, res) => {
     let updatedCompany = await Company.findById(req.params.companyId).populate('activeUsers')
     res.render('company_dashboards/dashboard', {company: updatedCompany, host: config.host});
   } catch(e) {
-    logger.log('error', `routes/company-dashboards/dashboard - getCompanyDashboard: ${e}`)
-    req.flash('error', e.message);
-    return res.redirect('back');
+    errorHandler(e, req, res, routeType, route)
   }
 }
 

@@ -1,6 +1,7 @@
 'use strict';
 const router = require('express').Router(),
-  { authFB, authFBcbMiddleware, authFBcb, authLI, authLIcbMiddleware, authLIcb, logout } = require('./social'),
+  { authFB, authFBcbMiddleware, authFBcb,
+    authLI, authLIcbMiddleware, authLIcb, logout } = require('./social'),
 	middleware = require('../../middleware');
 
 // FB routes

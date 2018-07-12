@@ -1,32 +1,28 @@
 'use strict';
 const { User, Company } = require('../models'),
-  logger = require('../logger');
+  { errorHandler } = require('../helpers');
+
+let errorType = 'middleware';
 
 let isNotLoggedIn = (req, res, next) => {
 	if(!req.isAuthenticated()){
 		return next();
 	}
-	logger.log('error', `Middleware, isNotLoggedIn error`)
-	req.flash('error', `You're already logged in!`);
-	res.redirect("/get-started");
+  errorHandler(errorType, req, res, 'isNotLoggedIn')
 };
 
 let isLoggedIn = (req, res, next) => {
 	if(req.isAuthenticated()){
 		return next();
 	}
-	logger.log('error', `Middleware, isLoggedIn error`)
-	req.flash('error', `You must be logged in!`);
-	res.redirect("/get-started");
+	errorHandler(errorType, req, res, 'isLoggedIn')
 };
 
 let isProfileOwner = (req, res, next) => {
 	if(req.user._id.toString() === req.params.id){
 		return next();
 	}
-	logger.log('error', `Middleware, isProfileOwner error`)
-	req.flash('error', `That's not your profile!`);
-	res.redirect("/user_profile/" + req.user._id);
+	errorHandler(errorType, req, res, 'isProfileOwner')
 };
 
 let isCompanyAdmin = (req, res, next) => {
@@ -35,9 +31,7 @@ let isCompanyAdmin = (req, res, next) => {
 		if(!isNotAdmin){
 			return next()
 		}
-		logger.log('error', `Middleware, isCompanyAdmin error`)
-		req.flash('error', `You're not an admin! You can't do that!`);
-		res.redirect('back')
+		errorHandler(errorType, req, res, 'isCompanyAdmin')
 	})
 };
 
@@ -47,9 +41,7 @@ let isCompanyMember = (req, res, next) => {
 		if(!isNotMember){
 			return next()
 		}
-		logger.log('error', `Middleware, isCompanyMember error`)
-		req.flash('error', `You're not a member`);
-		res.redirect('back')
+		errorHandler(errorType, req, res, 'isCompanyMember')
 	})
 };
 
@@ -60,19 +52,13 @@ let isCompanyAdminOrMember = (req, res, next) => {
 		if(!isNotMember || !isNotAdmin){
 			return next()
 		}
-		logger.log('error', `Middleware, isCompanyAdminOrMember error`)
-		req.flash('error', `You're not on the team for that company!`);
-		res.redirect('back')
+    errorHandler(errorType, req, res, 'isCompanyAdminOrMember')
 	})
 };
 
 // USED FOR REMOVING MEMBERS --- MUST SELECT AT LEAST ONE TO REMOVE TO TRIGGER ROUTE
 let atLeastOneOption = (req, res, next) => {
-	if(!req.body.member){
-		logger.log('error', `Middleware, atLeastOneOption error`)
-		req.flash('error', `You didn't select anything to delete`);
-		return res.redirect('/user_profile/' + req.user._id + '/company_dashboard/' + req.params.companyId + '/team/remove')
-	}
+	if(!req.body.member) errorHandler(errorType, req, res, 'atLeastOneOption')
 	next()
 }
 
@@ -94,7 +80,7 @@ let activeRemoveLogout = async (req, res, next) => {
 		}
 		next()
 	} catch(e) {
-		logger.log('error', `Middleware, activeRemoveLogout error: ${e}`)
+		errorHandler(errorType, req, res, 'activeRemoveLogout')
 	}
 }
 
@@ -104,7 +90,7 @@ let activeRemovePageLeave = async (req, res, next) => {
 		if(!req.user){
 			return next()
 		}
-		
+
 		let foundUser = await User.findById(req.user._id);
 		let companies = foundUser.activeCompanies;
 
@@ -125,7 +111,7 @@ let activeRemovePageLeave = async (req, res, next) => {
 		}
 		next()
 	} catch(e){
-		logger.log('error', `Middleware, activeRemovePageLeave error: ${e}`)
+		errorHandler(errorType, req, res, 'activeRemovePageLeave')
 	}
 }
 
