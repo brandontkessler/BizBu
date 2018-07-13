@@ -10,7 +10,7 @@ let now = new Date();
 let getBulletinBoard = (req, res) => {
   Company.findById(req.params.companyId).populate('admin').populate('member').populate('bulletin').exec((err, foundCompany) => {
     if(err) errorHandler(err, req, res, routeType, route);
-    res.render('company_dashboards/bulletin-board', {company: foundCompany});
+    res.render('company-dashboards/bulletin-board', {company: foundCompany});
   })
 }
 
@@ -50,7 +50,7 @@ let updateBulletin = async (req, res) => {
     await foundCompany.save();
     await foundBulletin.save();
 
-    res.send({redirect: `/company_dashboard/${req.params.companyId}/bulletin-board`});
+    res.send({redirect: `/company-dashboard/${req.params.companyId}/bulletin-board`});
   } catch(e) {
     errorHandler(e, req, res, routeType, route)
   }
@@ -66,7 +66,7 @@ let deleteBulletin = async (req, res) => {
 
     await foundBulletin.save();
 
-    res.send({redirect: `/company_dashboard/${req.params.companyId}/bulletin-board`});
+    res.send({redirect: `/company-dashboard/${req.params.companyId}/bulletin-board`});
   } catch(e) {
     errorHandler(e, req, res, routeType, route)
   }
@@ -91,7 +91,7 @@ let bulletinComment = async (req, res) => {
     await foundCompany.save();
     await foundBulletin.save();
 
-    res.send({redirect: `/company_dashboard/${req.params.companyId}/bulletin-board`});
+    res.send({redirect: `/company-dashboard/${req.params.companyId}/bulletin-board`});
   } catch(e) {
     errorHandler(e, req, res, routeType, route)
   }

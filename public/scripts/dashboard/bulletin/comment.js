@@ -49,7 +49,7 @@
 				}
 
 				$.ajax({
-					'url': `/company_dashboard/${companyId}/bulletin-board/comment`,
+					'url': `/company-dashboard/${companyId}/bulletin-board/comment`,
 					'type': 'POST',
 					'data': data,
 					'dataType' : 'json',

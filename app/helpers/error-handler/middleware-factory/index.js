@@ -13,7 +13,7 @@ module.exports = (req, routeType) => {
       break;
     case 'isProfileOwner':
       msg = `That's not your profile!`;
-      redirect = `/user_profile/${req.user._id}`;
+      redirect = `/user-profile/${req.user._id}`;
       break;
     case 'isCompanyAdmin':
       msg = `You're not an admin! You can't do that!`;
@@ -29,7 +29,7 @@ module.exports = (req, routeType) => {
       break;
     case 'atLeastOneOption':
       msg = `You didn't select anything to delete`;
-      redirect = `/user_profile/${req.user._id}/company_dashboard/${req.params.companyId}/team/remove`;
+      redirect = `/company-dashboard/${req.params.companyId}/team/remove`;
       break;
     case 'activeRemoveLogout':
       // Fall-through

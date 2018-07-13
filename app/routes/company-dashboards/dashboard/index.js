@@ -6,7 +6,7 @@ const { User, Company, Bulletin, Chat } = require('../../../models'),
 const routeType = 'company-dashboards';
 
 let getCompanyCreate = (req, res) => {
-  res.render('user_profiles/create-company')
+  res.render('user-profiles/create-company')
 }
 
 let createCompany = async (req, res) => {
@@ -67,7 +67,7 @@ let getCompanyDashboard = async (req, res) => {
     await foundCompany.save();
 
     let updatedCompany = await Company.findById(req.params.companyId).populate('activeUsers')
-    res.render('company_dashboards', { company: updatedCompany });
+    res.render('company-dashboards', { company: updatedCompany });
   } catch(e) {
     errorHandler(e, req, res, routeType, route)
   }

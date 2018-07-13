@@ -4,7 +4,7 @@
 
 <h2>Select which members to remove</h2>
 
-<form action="/company_dashboard/<%= company._id %>/team/remove?_method=PUT" method="post">
+<form action="/company-dashboard/<%= company._id %>/team/remove?_method=PUT" method="post">
 	<% company.member.forEach(member => { %>
 		<input type="checkbox" name="member" value="<%= member._id %>"> <%= member.name.split(' ')[0] %>
 	<% }) %>
@@ -18,7 +18,7 @@
 	</div>
 </form>
 
-<a href="/company_dashboard/<%= company._id %>/team">Return to Team</a>
+<a href="/company-dashboard/<%= company._id %>/team">Return to Team</a>
 
 <script type="text/javascript" src="/scripts/dashboard/team/remove-members.js"></script>
 <% include ../../partials/footer %>

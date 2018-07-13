@@ -4,7 +4,7 @@ const passport = require('passport'),
   { User } = require('../models'),
   logger = require('../logger'),
   FacebookStrategy = require('passport-facebook').Strategy,
-  LinkedinStrategy = require('passport-linkedin').Strategy;
+  LinkedinStrategy = require('passport-linkedin-oauth2').Strategy;
 
 module.exports = () => {
   passport.serializeUser((user, done) => {
@@ -52,8 +52,9 @@ module.exports = () => {
   	}
   }
 
-  let linkedinAuth = async (token, tokenSecret, profile, done) => {
+  let linkedinAuth = async (accessToken, refreshToken, profile, done) => {
   	try{
+      console.log(JSON.stringify(profile, null, 2))
   		let user = await User.findOne({ email : profile.emails[0].value });
   		if(!user){
   			// IF USER DOES NOT EXIST, CREATE ONE WITH LINKEDIN
@@ -76,7 +77,7 @@ module.exports = () => {
 
   			// IF NOT, USER IS FB, CREATE LINKEDIN DATA
   			user.linkedin.id = profile.id;
-  			user.linkedin.token = token;
+  			user.linkedin.token = accessToken;
 
   			await user.save()
   			return done(null, user)

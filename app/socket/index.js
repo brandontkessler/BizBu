@@ -1,5 +1,5 @@
 'use strict';
-const { isRealString } = require('../helpers/validation'),
+const { validation } = require('../helpers'),
   logger = require('../logger');
 
 module.exports = (io, Chat, User, Company) => {
@@ -34,7 +34,7 @@ module.exports = (io, Chat, User, Company) => {
 
   	socket.on('chat message', async (data, callback) => {
   		try {
-        if(!isRealString(data.chatMessage)){
+        if(!validation.isRealString(data.chatMessage)){
           return callback("Message must contain content")
         }
   			let chatRoom = await Chat.findById(data.chatId);

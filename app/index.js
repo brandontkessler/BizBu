@@ -1,6 +1,6 @@
 'use strict';
 const
-  { homeRoutes, authRoutes, userRoutes, companyDashboardRoutes } = require('./routes'),
+  { homeRoutes, authRoutes, userRoutes, companyDashboardRoutes, startupResourcesRoutes } = require('./routes'),
   { User, Company, Chat } = require('./models');
 
 module.exports = {
@@ -11,6 +11,7 @@ module.exports = {
   authRoutes,
   userRoutes,
   companyDashboardRoutes,
+  startupResourcesRoutes,
   User,
   Company,
   Chat

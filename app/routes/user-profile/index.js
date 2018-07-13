@@ -10,7 +10,7 @@ let getUserProfile = (req, res) => {
 	let route = 'getUserProfile';
 	User.findById(req.user._id).populate('companiesAdmin').populate('companiesMember').exec((err, user) => {
 		if(err) errorHandler(err, req, res, routeType, route);
-		res.render('user_profiles', { user: user });
+		res.render('user-profiles', { user: user });
 	});
 };
 

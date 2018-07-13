@@ -25,7 +25,7 @@
       }());
 
       $.ajax({
-        'url': `/company_dashboard/${companyId}/bulletin-board?_method=DELETE`,
+        'url': `/company-dashboard/${companyId}/bulletin-board?_method=DELETE`,
         'type': 'POST',
         'data': {
           name: $("input[name='bulletin[name]']").val(),

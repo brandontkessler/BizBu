@@ -12,7 +12,7 @@
   </div>
 
 	<p>Invite more team members to help you build your company</p>
-	<a href="/company_dashboard/<%= company._id %>/team/invite">Invite to Team</a>
+	<a href="/company-dashboard/<%= company._id %>/team/invite">Invite to Team</a>
 
 	<div class="admin">
 		<h3>These are the admins</h3>
@@ -34,13 +34,13 @@
 		<% if(userId.toString() !== companyAdmins[j]._id.toString()){ %>
 			<% continue %>
 		<% } %>
-		<a href="/company_dashboard/<%= company._id %>/team/remove">Remove Member(s)</a>
+		<a href="/company-dashboard/<%= company._id %>/team/remove">Remove Member(s)</a>
 	<% } %>
 
 	<span id="leave-team-button">Leave the Team</span>
 
 	<div class="leave-team-form-hidden">
-		<form action="/company_dashboard/<%= company._id %>/team?_method=PUT" method="post">
+		<form action="/company-dashboard/<%= company._id %>/team?_method=PUT" method="post">
 			<h4>Are you sure??</h4>
 			<button>Leave</button>
 			<span class="nevermind-leave">Nevermind</span>

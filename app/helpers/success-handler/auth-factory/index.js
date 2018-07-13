@@ -4,15 +4,15 @@ let msg, redirect;
 module.exports = (req, route) => {
   switch (route) {
     case 'authFBcb':
-      msg = 'Facebook login hooray';
-      redirect = `/user_profile/${req.user._id}`;
+      msg = 'Facebook login hooray!';
+      redirect = `/user-profile/${req.user._id}`;
       break;
     case 'authLIcb':
-      msg = 'Linkedin login successful';
-      redirect = `/user_profile/${req.user._id}`;
+      msg = 'Linkedin login woooo!';
+      redirect = `/user-profile/${req.user._id}`;
       break;
     case 'logout':
-      msg = 'Thanks for coming';
+      msg = 'How dare you';
       redirect = '/';
       break;
     default:

@@ -10,7 +10,7 @@
     </p>
   </div>
 
-	<form action="/company_dashboard/<%= company._id %>/team/invite" method="post">
+	<form action="/company-dashboard/<%= company._id %>/team/invite" method="post">
 		<input type="text" name="invitee" autocomplete="off" required>
 		<input type="hidden" name="invite[inviter]" value="<%= currentUser.name.split(' ')[0] %>">
 		<input type="hidden" name="invite[companyId]" value="<%= company._id %>">
