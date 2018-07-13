@@ -54,17 +54,17 @@ module.exports = () => {
 
   let linkedinAuth = async (accessToken, refreshToken, profile, done) => {
   	try{
-      console.log(JSON.stringify(profile, null, 2))
   		let user = await User.findOne({ email : profile.emails[0].value });
   		if(!user){
   			// IF USER DOES NOT EXIST, CREATE ONE WITH LINKEDIN
   			let newUser = new User({
   				'email' : profile.emails[0].value,
   				'created' : new Date(),
-  				'name' : profile.displayName,
+  				'name' : `${profile.name.givenName} ${profile.name.familyName}`,
   				'pic' : profile._json.pictureUrl,
   				'linkedin.id' : profile.id,
-  				'linkedin.token' : token,
+  				'linkedin.accessToken' : accessToken,
+          'linkedin.url' : profile._json.publicProfileUrl,
           'hideChat' : false
   			});
 
@@ -77,7 +77,7 @@ module.exports = () => {
 
   			// IF NOT, USER IS FB, CREATE LINKEDIN DATA
   			user.linkedin.id = profile.id;
-  			user.linkedin.token = accessToken;
+  			user.linkedin.accessToken = accessToken;
 
   			await user.save()
   			return done(null, user)

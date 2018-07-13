@@ -34,7 +34,8 @@ let UserSchema = new mongoose.Schema({
 
 	linkedin: {
 		id: String,
-		token: String
+		accessToken: String,
+    url: String
 	},
 
 	companiesAdmin: [
