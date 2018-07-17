@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  background-color: rgb(245,245,245);
+  overflow: hidden;
+}
+.grid-container {
+	margin: 10px 0;
+	display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	grid-auto-rows: minmax(auto, auto);
+}
+
+.user-profile-btns {
+  grid-column: 1/13;
+}
+
+.information {
+  grid-column: 1/13;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.companies {
+  grid-column: 1/13;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

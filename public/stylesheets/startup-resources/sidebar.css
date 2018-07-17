@@ -1,0 +1,27 @@
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar hr {
+  width: 150px;
+  margin-left: -10px;
+  outline: none;
+  border: none;
+  background-color: #DCDCDC;
+  height: 1px;
+}
+
+.sidebar ul li {
+  padding: 10px 0;
+}
+
+.sidebar ul li a {
+  font-size:1.2em;
+  text-decoration: none;
+  font-weight: bolder;
+  color: #384760;
+}
+
+.sidebar ul li a:hover {
+  text-decoration: underline;
+}

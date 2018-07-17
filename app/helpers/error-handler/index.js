@@ -20,7 +20,7 @@ module.exports = (err, req, res, routeType, route) => {
     }
 
     logger.log('error', `Error at ${routeType} - ${route}: ${loggerError}`);
-    req.flash('error', err.message || 'Unable to handle request');
+    req.flash('error', loggerError || 'Unable to handle request');
     return res.redirect('back');
   }
 }

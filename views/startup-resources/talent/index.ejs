@@ -1,0 +1,27 @@
+<% include ../partials/head-open %>
+<% include ../partials/head-close %>
+
+<div class="grid-container">
+  <% include ../partials/nav/sidebar %>
+  <div class="content">
+    <ul>
+      <% for (let publicUser of publicUsers) { %>
+        <li>
+          <%= publicUser.name.split(" ")[0] %>
+          <a href="<%= publicUser.linkedin.url %>" target="_blank">Linkedin</a>
+          <form action="/startup-resources/startups/message/user/<%= publicUser._id %>" method="post">
+            <button>Send Message</button>
+          </form>
+        </li>
+      <% } %>
+
+    </ul>
+  </div>
+</div>
+
+
+<script>
+
+
+</script>
+<% include ../partials/footer %>

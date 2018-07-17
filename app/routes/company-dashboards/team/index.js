@@ -5,15 +5,13 @@ const { User, Company } = require('../../../models'),
 const routeType = 'company-dashboards';
 
 let getTeam = (req, res) => {
-  let route = 'getTeam';
   Company.findById(req.params.companyId).populate('admin').populate('member').exec((err, foundCompany) => {
-    if(err) errorHandler(err, req, res, routeType, route)
+    if(err) errorHandler(err, req, res, routeType, 'getTeam')
     res.render('company-dashboards/team', {company: foundCompany});
   })
 }
 
 let leaveTeam = async (req, res) => {
-  let route = 'leaveTeam';
   try {
     let foundUser = await User.findById(req.user.id);
     let foundCompany = await Company.findById(req.params.companyId);
@@ -31,7 +29,7 @@ let leaveTeam = async (req, res) => {
       await foundCompany.save();
       await foundUser.save();
 
-      successHandler(req, res, routeType, route);
+      successHandler(req, res, routeType, 'leaveTeam');
     }
 
     // IF NOT MEMBER, THEN USER IS ADMIN
@@ -45,29 +43,26 @@ let leaveTeam = async (req, res) => {
     await foundCompany.save();
     await foundUser.save();
 
-    successHandler(req, res, routeType, route);
+    successHandler(req, res, routeType, 'leaveTeam');
   } catch(e) {
-    errorHandler(e, req, res, routeType, route)
+    errorHandler(e, req, res, routeType, 'leaveTeam')
   }
 }
 
 let getInvitePage = async (req, res) => {
-  let route = 'getInvitePage';
   try {
     let foundCompany = await Company.findById(req.params.companyId);
     let allUsers = await User.find({});
     res.render('company-dashboards/team/invite', {users: allUsers, company: foundCompany});
   } catch(e) {
-    errorHandler(e, req, res, routeType, route)
+    errorHandler(e, req, res, routeType, 'getInvitePage')
   }
 }
 
 let sendInvite = async (req, res) => {
-  let route = 'sendInvite';
-
   try {
     let foundUser = await User.findOne({ 'inviteCode': req.body.invitee });
-    if(!foundUser) return errorHandler({message: "That user doesn't exist"}, req, res, routeType, route)
+    if(!foundUser) return errorHandler({message: "That user doesn't exist"}, req, res, routeType, 'sendInvite')
 
     let newInvite = req.body.invite;
 
@@ -76,25 +71,24 @@ let sendInvite = async (req, res) => {
     let uniqueInvite = foundUser.invites.every(invite => invite.companyId !== newInvite.companyId);
 
     if(!uniqueAdmin){
-      errorHandler({message: 'That user is already an admin'}, req, res, routeType, route)
+      errorHandler({message: 'That user is already an admin'}, req, res, routeType, 'sendInvite')
     } else if (!uniqueMember){
-      errorHandler({message: 'That user is already a team member'}, req, res, routeType, route)
+      errorHandler({message: 'That user is already a team member'}, req, res, routeType, 'sendInvite')
     } else if (!uniqueInvite){
-      errorHandler({message: 'There is already a pending invite to that user'}, req, res, routeType, route)
+      errorHandler({message: 'There is already a pending invite to that user'}, req, res, routeType, 'sendInvite')
     } else {
 
       await foundUser.invites.push(newInvite);
       await foundUser.save();
 
-      successHandler(req, res, routeType, route);
+      successHandler(req, res, routeType, 'sendInvite');
     }
   } catch(e) {
-    errorHandler(e, req, res, routeType, route);
+    errorHandler(e, req, res, routeType, 'sendInvite');
   }
 }
 
 let acceptInvite = async (req, res) => {
-  let route = 'acceptInvite';
   try {
     let foundUser = await User.findById(req.user._id);
     let foundCompany = await Company.findById(req.params.companyId);
@@ -113,7 +107,7 @@ let acceptInvite = async (req, res) => {
         await foundUser.save();
         await foundCompany.save();
 
-        successHandler(req, res, routeType, route);
+        successHandler(req, res, routeType, 'acceptInvite');
       } else {
         foundUser.invites = foundUser.invites.filter(invite => !invite._id.equals(req.body.inviteId));
         foundUser.companiesMember.push(foundCompany);
@@ -123,16 +117,15 @@ let acceptInvite = async (req, res) => {
         await foundUser.save();
         await foundCompany.save();
 
-        successHandler(req, res, routeType, route);
+        successHandler(req, res, routeType, 'acceptInvite');
       }
     }
   } catch(e) {
-    errorHandler(e, req, res, routeType, route);
+    errorHandler(e, req, res, routeType, 'acceptInvite');
   }
 }
 
 let declineInvite = async (req, res) => {
-  let route = 'declineInvite';
   try {
     let foundUser = await User.findById(req.user._id);
     let foundCompany = await Company.findById(req.params.companyId);
@@ -143,22 +136,20 @@ let declineInvite = async (req, res) => {
     await foundUser.save();
     await foundCompany.save();
 
-    successHandler(req, res, routeType, route);
+    successHandler(req, res, routeType, 'declineInvite');
   } catch(e) {
-    errorHandler(e, req, res, routeType, route);
+    errorHandler(e, req, res, routeType, 'declineInvite');
   }
 }
 
 let removeMemberPage = (req, res) => {
-  let route = 'removeMemberPage';
   Company.findById(req.params.companyId).populate('member').exec((err, foundCompany) => {
-    if(err) errorHandler(err, req, res, routeType, route);
+    if(err) errorHandler(err, req, res, routeType, 'removeMemberPage');
     res.render('company-dashboards/team/remove-member', {company: foundCompany});
   });
 }
 
 let removeMember = async (req, res) => {
-  let route = 'removeMember';
   try {
     let membersToDelete = req.body.member;
     let foundCompany = await Company.findById(req.params.companyId);
@@ -173,7 +164,7 @@ let removeMember = async (req, res) => {
       await foundCompany.save();
       await foundUser.save();
 
-      successHandler(req, res, routeType, route);
+      successHandler(req, res, routeType, 'removeMember');
     } else {
       foundCompany.notifications.unshift(`Members have been removed`);
 
@@ -186,11 +177,11 @@ let removeMember = async (req, res) => {
         await foundCompany.save();
         await foundUser.save();
 
-        successHandler(req, res, routeType, route);
+        successHandler(req, res, routeType, 'removeMember');
       }
     }
   } catch(e) {
-    errorHandler(e, req, res, routeType, route);
+    errorHandler(e, req, res, routeType, 'removeMember');
   }
 }
 

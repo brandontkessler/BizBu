@@ -29,7 +29,8 @@ module.exports = () => {
   				'pic' : profile.photos[0].value,
   				'facebook.id' : profile.id,
   				'facebook.accessToken' : accessToken,
-          'hideChat' : false
+          'hideChat' : false,
+          'publicProfile' : false
   			});
 
   			await newUser.save()
@@ -65,7 +66,8 @@ module.exports = () => {
   				'linkedin.id' : profile.id,
   				'linkedin.accessToken' : accessToken,
           'linkedin.url' : profile._json.publicProfileUrl,
-          'hideChat' : false
+          'hideChat' : false,
+          'publicProfile' : false
   			});
 
   			await newUser.save()

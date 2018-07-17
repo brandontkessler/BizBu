@@ -9,23 +9,45 @@
 
 		<div class="grid-container">
 
-			<div class="active-users">
-				<h3>Online</h3>
-				<ul id="active-user-ul">
+			<div class="company-info">
+				<h3 class="section-header">Company Info</h3>
+				<form action="/company-dashboard/<%= company._id %>" method="post">
+					<label>Tagline:</label>
+					<input class="tagline" name="tagline" type="text" value="<%= company.companyInfo.tagline %>" placeholder="100 characters max." disabled>
 
-				</ul>
+					<label>Description:</label>
+					<textarea class="company-description" name="description" placeholder="300 characters max." disabled><%= company.companyInfo.description %></textarea>
+
+					<label>Needs:</label>
+					<input class="company-needs" name="needs" type="text" value="<%= company.companyInfo.needs.join(', ') %>" placeholder="Marketing, Legal, Advisors, etc." disabled>
+
+					<% let userIndex = company.admin.indexOf(currentUser._id) %>
+					<% if (userIndex !== -1){ %>
+						<p class="edit-btn company-btn">Edit</p>
+					<% } %>
+					<button class="save-btn">Save</button>
+					<p class="cancel-btn company-btn">Cancel</p>
+				</form>
 			</div>
 
 			<div class="notifications">
+				<h3 class="section-header">Notifications</h3>
 				<ul>
-					<h3>Notifications</h3>
 					<% for (let notification of company.notifications) { %>
 						<li><%= notification %></li>
 					<% } %>
 				</ul>
 			</div>
 
+			<div class="active-users">
+				<h3 class="section-header">Online</h3>
+				<ul id="active-user-ul">
+
+				</ul>
+			</div>
+
 		</div>
 	</div>
 
+<script type="text/javascript" src="/scripts/dashboard/company-info-form.js"></script>
 <% include ./partials/footer %>

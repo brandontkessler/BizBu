@@ -1,23 +1,23 @@
 'use strict';
 const router = require('express').Router(),
 	middleware = require('../../middleware'),
-	{ User, Company } = require('../../models'),
-	{ errorHandler } = require('../../helpers');
-
-const routeType = 'user-profile';
-
-let getUserProfile = (req, res) => {
-	let route = 'getUserProfile';
-	User.findById(req.user._id).populate('companiesAdmin').populate('companiesMember').exec((err, user) => {
-		if(err) errorHandler(err, req, res, routeType, route);
-		res.render('user-profiles', { user: user });
-	});
-};
+	{ getUserProfile } = require('./get-profile'),
+	{ makeMePublic, hideMe } = require('./public-profile');
 
 router.get('/:id',
 	middleware.isLoggedIn,
 	middleware.isProfileOwner,
 	middleware.activeRemovePageLeave,
   getUserProfile);
+
+router.get('/:id/make-me-public',
+	middleware.isLoggedIn,
+	middleware.isProfileOwner,
+  makeMePublic);
+
+router.get('/:id/hide-me',
+	middleware.isLoggedIn,
+	middleware.isProfileOwner,
+  hideMe);
 
 module.exports = router;

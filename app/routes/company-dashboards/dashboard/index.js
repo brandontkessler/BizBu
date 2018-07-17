@@ -10,7 +10,6 @@ let getCompanyCreate = (req, res) => {
 }
 
 let createCompany = async (req, res) => {
-  let route = 'createCompany';
   try {
     // CREATE COMPANY
     let newCompany = new Company({
@@ -43,14 +42,13 @@ let createCompany = async (req, res) => {
     user.companiesAdmin.push(newCompany);
     await user.save();
 
-    successHandler(req, res, routeType, route, newCompany._id)
+    successHandler(req, res, routeType, 'createCompany', newCompany._id)
   } catch(e) {
-    errorHandler(e, req, res, routeType, route)
+    errorHandler(e, req, res, routeType, 'createCompany')
   }
 }
 
 let getCompanyDashboard = async (req, res) => {
-  let route = 'getCompanyDashboard';
   try {
     let foundCompany = await Company.findById(req.params.companyId);
     let user = await User.findById(req.user._id);
@@ -69,12 +67,38 @@ let getCompanyDashboard = async (req, res) => {
     let updatedCompany = await Company.findById(req.params.companyId).populate('activeUsers')
     res.render('company-dashboards', { company: updatedCompany });
   } catch(e) {
-    errorHandler(e, req, res, routeType, route)
+    errorHandler(e, req, res, routeType, 'getCompanyDashboard')
+  }
+}
+
+let postCompanyInfoToDashboard = async (req, res) => {
+  try {
+    let foundCompany = await Company.findById(req.params.companyId);
+    let needs = [];
+    for (let need of req.body.needs.split(",")) {
+      needs.push(need.trim());
+    }
+
+    let companyInfo = {
+      tagline: req.body.tagline,
+      description: req.body.description,
+      needs: needs
+    }
+
+    foundCompany.companyInfo = companyInfo;
+
+    await foundCompany.save();
+
+    let updatedCompany = await Company.findById(req.params.companyId).populate('activeUsers')
+    res.render('company-dashboards', { company: updatedCompany });
+  } catch(e) {
+    errorHandler(e, req, res, routeType, 'postCompanyInfoToDashboard')
   }
 }
 
 module.exports = {
   getCompanyCreate,
   createCompany,
-  getCompanyDashboard
+  getCompanyDashboard,
+  postCompanyInfoToDashboard
 }

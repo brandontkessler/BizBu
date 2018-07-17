@@ -1,0 +1,42 @@
+<% include ../partials/head-open %>
+<link rel="stylesheet" type="text/css" href="/stylesheets/startup-resources/my-messages.css">
+<% include ../partials/head-close %>
+
+<div class="grid-container">
+  <% include ../partials/nav/sidebar %>
+  <div class="content">
+    <% if(!user.myMessages || user.myMessages.length === 0){ %>
+      <p>There are no messages yet to display!</p>
+    <% } %>
+    <ul id="my-messages-ul">
+      <% for (let msg of user.myMessages){ %>
+        <li class="message-tab"><%= msg.title %></li>
+        <input class="msg-id" value="<%= msg.myMessagesRef %>" hidden>
+        <div class="message-actions">
+          <button class="reply-btn" type="button" name="button">Reply</button>
+          <button class="delete-btn" type="button" name="button">Delete</button>
+          <form class="delete-message-form" action="/startup-resources/delete-message/<%= msg.myMessagesRef %>" method="post">
+            <label>Are you sure?</label>
+            <button>Delete</button>
+            <button class="cancel-delete-btn">Cancel</button>
+          </form>
+          <form class="reply-message-form" action="/startup-resources/send-message/<%= msg.myMessagesRef %>" method="post">
+            <textarea name="text" autofocus></textarea>
+            <button>Send</button>
+            <button class="cancel-btn">Cancel</button>
+          </form>
+          <hr>
+        </div>
+      <% } %>
+    </ul>
+
+
+    <% if(user.myMessages && user.myMessages.length > 0){ %>
+      <ul id="message-window"></ul>
+    <% } %>
+
+  </div>
+</div>
+
+<script type="text/javascript" src="/scripts/startup-resources/my-messages.js"></script>
+<% include ../partials/footer %>

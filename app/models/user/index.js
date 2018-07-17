@@ -67,7 +67,17 @@ let UserSchema = new mongoose.Schema({
     }
   ],
 
-  hideChat: Boolean
+  hideChat: Boolean,
+  publicProfile: Boolean,
+  myMessages: [
+    {
+      title: String,
+      myMessagesRef: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'MyMessages'
+      }
+    }
+  ]
 });
 
 // Creates a unique invite code from hashed email
