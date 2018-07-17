@@ -1,5 +1,5 @@
 'use strict';
-const
+const path = require('path'),
 	express = require('express'),
 	app = express(),
 	server = require('http').Server(app),
@@ -14,20 +14,20 @@ const
 	methodOverride = require('method-override'),
 	{ chatIo, config, logger,
 		homeRoutes, authRoutes, userRoutes, companyDashboardRoutes, startupResourcesRoutes,
-		User, Company, Chat } = require('./app');
+		User, Company, Chat } = require(path.join(__dirname, 'app'))
 
-mongoose.connect(config.dbURI);
-app.use(bodyParser.urlencoded({extended: true}));
-app.set('view engine', 'ejs');
-app.use(express.static('public'));
-app.use(methodOverride("_method"));
-app.use(flash());
-app.use(helmet());
+mongoose.connect(config.dbURI)
+app.use(bodyParser.urlencoded({extended: true}))
+app.set('view engine', 'ejs')
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(methodOverride("_method"))
+app.use(flash())
+app.use(helmet())
 
 // EXPRESS SESSION CONFIG
-app.use(session(config.session));
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(session(config.session))
+app.use(passport.initialize())
+app.use(passport.session())
 // app.use(morgan('combined', {
 // 	stream: {
 // 		write: message => {
@@ -37,26 +37,25 @@ app.use(passport.session());
 // }))
 
 // invoke social authentication
-require('./app/auth')();
+require(path.join(__dirname, 'app', 'auth'))()
 
 // Send data to static files
 app.use((req, res, next) => {
-	res.locals.currentUser = req.user;
-	res.locals.error = req.flash("error");
-  res.locals.success = req.flash("success");
-	next();
-});
+	res.locals.currentUser = req.user
+	res.locals.error = req.flash("error")
+  res.locals.success = req.flash("success")
+	next()
+})
 
 // ROUTES
-app.use(homeRoutes);
-app.use(authRoutes);
-app.use('/user-profile', userRoutes);
-app.use('/company-dashboard', companyDashboardRoutes);
-app.use('/startup-resources', startupResourcesRoutes);
-app.get('*', (req, res) => res.status(404).send('404 unable to find page!'));
+app.use(homeRoutes)
+app.use(authRoutes)
+app.use('/user-profile', userRoutes)
+app.use('/company-dashboard', companyDashboardRoutes)
+app.use('/startup-resources', startupResourcesRoutes)
+app.get('*', (req, res) => res.status(404).send('404 unable to find page!'))
 
 // SOCKET
-chatIo(io, Chat, User, Company);
+chatIo(io, Chat, User, Company)
 
-const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => console.log('BCO Server started on port ' + PORT));
+server.listen(config.port, () => console.log(`OutOfOffice started on port ${config.port}`))

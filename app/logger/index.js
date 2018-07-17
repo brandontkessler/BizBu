@@ -11,4 +11,4 @@ const winston = require('winston'),
     exitOnError: false
   })
 
-module.exports = logger;
+module.exports = logger

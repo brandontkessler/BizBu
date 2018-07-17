@@ -1,11 +1,12 @@
 'use strict';
-const router = require('express').Router(),
-  { User } = require('../../models'),
-  middleware = require('../../middleware'),
+const path = require('path'),
+  router = require('express').Router(),
+  { User } = require(path.join(process.cwd(), 'app', 'models')),
+  middleware = require(path.join(process.cwd(), 'app', 'middleware')),
   { myMessages, getStartupResourcesStartups,
-    getStartupResourcesTalent, getStartupResourcesServiceProviders } = require('./nav-routes'),
+    getStartupResourcesTalent, getStartupResourcesServiceProviders } = require(path.join(__dirname, 'nav-routes')),
   { sendMessage, deleteMessage, queryMessages,
-    startMessageWithCompany, startMessageWithUser } = require('./message-routes');
+    startMessageWithCompany, startMessageWithUser } = require(path.join(__dirname, 'message-routes'))
 
 // NAVIGATION
 router.get('/my-messages',
@@ -28,22 +29,22 @@ router.get('/service-providers',
 // MESSAGES
 router.route('/send-message/:msgId')
   .post(middleware.isLoggedIn,
-  sendMessage);
+  sendMessage)
 
 router.route('/delete-message/:msgId')
   .post(middleware.isLoggedIn,
-  deleteMessage);
+  deleteMessage)
 
 router.get('/my-messages/query/:msgId',
   middleware.isLoggedIn,
-  queryMessages);
+  queryMessages)
 
 router.route('/startups/message/company/:companyId')
   .post(middleware.isLoggedIn,
-  startMessageWithCompany);
+  startMessageWithCompany)
 
 router.route('/startups/message/user/:userId')
   .post(middleware.isLoggedIn,
-  startMessageWithUser);
+  startMessageWithUser)
 
-module.exports = router;
+module.exports = router

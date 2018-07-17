@@ -1,25 +1,26 @@
 'use strict';
-const passport = require('passport'),
-  config = require('../config'),
-  { User } = require('../models'),
-  logger = require('../logger'),
+const path = require('path'),
+  passport = require('passport'),
+  config = require(path.join(process.cwd(), 'app', 'config')),
+  { User } = require(path.join(process.cwd(), 'app', 'models')),
+  logger = require(path.join(process.cwd(), 'app', 'logger')),
   FacebookStrategy = require('passport-facebook').Strategy,
-  LinkedinStrategy = require('passport-linkedin-oauth2').Strategy;
+  LinkedinStrategy = require('passport-linkedin-oauth2').Strategy
 
 module.exports = () => {
   passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, user.id)
   })
 
   passport.deserializeUser(function(id, done){
   	User.findOne({'_id': id}, function(err, user) {
-  		done(err, user);
+  		done(err, user)
   	})
   });
 
   let facebookAuth = async (accessToken, refreshToken, profile, done) => {
   	try{
-  		let user = await User.findOne({ email : profile.emails[0].value });
+  		let user = await User.findOne({ email : profile.emails[0].value })
   		if(!user){
   			// IF USER DOES NOT EXIST, CREATE ONE WITH FB
   			let newUser = new User({
@@ -31,31 +32,31 @@ module.exports = () => {
   				'facebook.accessToken' : accessToken,
           'hideChat' : false,
           'publicProfile' : false
-  			});
+  			})
 
   			await newUser.save()
   			return done(null, newUser)
   		} else {
   			// IF USER DOES EXIST, CHECK IF DONE WITH FB
-  			let fbUser =  await User.findOne({ 'facebook.id' : profile.id });
-  			if(fbUser) return done(null, fbUser);
+  			let fbUser =  await User.findOne({ 'facebook.id' : profile.id })
+  			if(fbUser) return done(null, fbUser)
 
   			// IF NOT, USER IS LINKEDIN, CREATE FB DATA
-  			user.facebook.id = profile.id;
-  			user.facebook.accessToken = accessToken;
+  			user.facebook.id = profile.id
+  			user.facebook.accessToken = accessToken
 
   			await user.save()
   			return done(null, user)
   		}
   	} catch(e) {
       logger.log('error', `Facebook auth error: ${e}`)
-  		return done(e);
+  		return done(e)
   	}
   }
 
   let linkedinAuth = async (accessToken, refreshToken, profile, done) => {
   	try{
-  		let user = await User.findOne({ email : profile.emails[0].value });
+  		let user = await User.findOne({ email : profile.emails[0].value })
   		if(!user){
   			// IF USER DOES NOT EXIST, CREATE ONE WITH LINKEDIN
   			let newUser = new User({
@@ -68,18 +69,18 @@ module.exports = () => {
           'linkedin.url' : profile._json.publicProfileUrl,
           'hideChat' : false,
           'publicProfile' : false
-  			});
+  			})
 
   			await newUser.save()
   			return done(null, newUser)
   		} else {
   			// IF USER DOES EXIST, CHECK IF DONE WITH LINKEDIN
-  			let linkedinUser =  await User.findOne({ 'linkedin.id' : profile.id });
-  			if(linkedinUser) return done(null, linkedinUser);
+  			let linkedinUser =  await User.findOne({ 'linkedin.id' : profile.id })
+  			if(linkedinUser) return done(null, linkedinUser)
 
   			// IF NOT, USER IS FB, CREATE LINKEDIN DATA
-  			user.linkedin.id = profile.id;
-  			user.linkedin.accessToken = accessToken;
+  			user.linkedin.id = profile.id
+  			user.linkedin.accessToken = accessToken
 
   			await user.save()
   			return done(null, user)
@@ -90,6 +91,6 @@ module.exports = () => {
   	}
   }
 
-  passport.use(new FacebookStrategy(config.fb, facebookAuth));
-  passport.use(new LinkedinStrategy(config.linkedin, linkedinAuth));
+  passport.use(new FacebookStrategy(config.fb, facebookAuth))
+  passport.use(new LinkedinStrategy(config.linkedin, linkedinAuth))
 }

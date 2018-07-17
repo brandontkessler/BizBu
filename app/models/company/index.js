@@ -1,5 +1,5 @@
 'use strict';
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 let CompanySchema = new mongoose.Schema({
 	name: String,
@@ -43,6 +43,6 @@ let CompanySchema = new mongoose.Schema({
 		}
 	]
 
-});
+})
 
-module.exports = mongoose.model("Company", CompanySchema);
+module.exports = mongoose.model("Company", CompanySchema)

@@ -1,9 +1,10 @@
 'use strict';
-const homeRoutes = require('./home'),
-  authRoutes = require('./auth'),
-  userRoutes = require('./user-profile'),
-  companyDashboardRoutes = require('./company-dashboards'),
-  startupResourcesRoutes = require('./startup-resources');
+const path = require('path'),
+  homeRoutes = require(path.join(__dirname, 'home')),
+  authRoutes = require(path.join(__dirname, 'auth')),
+  userRoutes = require(path.join(__dirname, 'user-profile')),
+  companyDashboardRoutes = require(path.join(__dirname, 'company-dashboards')),
+  startupResourcesRoutes = require(path.join(__dirname, 'startup-resources'))
 
 module.exports = {
   homeRoutes,

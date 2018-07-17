@@ -1,16 +1,17 @@
 'use strict';
-const moment = require('moment'),
-  { User, Company, Bulletin } = require('../../../models'),
-  { successHandler, errorHandler } = require('../../../helpers');
+const path = require('path'),
+  moment = require('moment'),
+  { User, Company, Bulletin } = require(path.join(process.cwd(), 'app', 'models')),
+  { successHandler, errorHandler } = require(path.join(process.cwd(), 'app', 'helpers'))
 
-const routeType = 'company-dashboards';
-const route = 'bulletinRoutes';
-let now = new Date();
+const routeType = 'company-dashboards'
+const route = 'bulletinRoutes'
+let now = new Date()
 
 let getBulletinBoard = (req, res) => {
   Company.findById(req.params.companyId).populate('admin').populate('member').populate('bulletin').exec((err, foundCompany) => {
-    if(err) errorHandler(err, req, res, routeType, route);
-    res.render('company-dashboards/bulletin-board', {company: foundCompany});
+    if(err) errorHandler(err, req, res, routeType, route)
+    res.render('company-dashboards/bulletin-board', {company: foundCompany})
   })
 }
 
@@ -24,14 +25,14 @@ let postBulletin = async (req, res) => {
         date: moment(now).format("M/D/YY"),
         time: moment(now).format("h:mma")
     }
-    let foundBulletin = await Bulletin.findById(req.body.bulletinId);
-    let foundCompany = await Company.findById(req.params.companyId);
+    let foundBulletin = await Bulletin.findById(req.body.bulletinId)
+    let foundCompany = await Company.findById(req.params.companyId)
 
-    foundCompany.notifications.unshift(`${req.body.bulletin.name.split(' ')[0]} has posted a bulletin`);
-    foundBulletin.bulletins.push(bulletin);
+    foundCompany.notifications.unshift(`${req.body.bulletin.name.split(' ')[0]} has posted a bulletin`)
+    foundBulletin.bulletins.push(bulletin)
 
-    await foundCompany.save();
-    await foundBulletin.save();
+    await foundCompany.save()
+    await foundBulletin.save()
 
     successHandler(req, res, routeType, route)
   } catch(e) {
@@ -41,16 +42,16 @@ let postBulletin = async (req, res) => {
 
 let updateBulletin = async (req, res) => {
   try{
-    let foundBulletin = await Bulletin.findById(req.body.bulletinId);
-    let foundCompany = await Company.findById(req.params.companyId);
+    let foundBulletin = await Bulletin.findById(req.body.bulletinId)
+    let foundCompany = await Company.findById(req.params.companyId)
 
-    foundCompany.notifications.unshift(`${req.body.name.split(' ')[0]} has updated a bulletin`);
-    foundBulletin.bulletins[req.body.bulletinIndex].message = req.body.message;
+    foundCompany.notifications.unshift(`${req.body.name.split(' ')[0]} has updated a bulletin`)
+    foundBulletin.bulletins[req.body.bulletinIndex].message = req.body.message
 
-    await foundCompany.save();
-    await foundBulletin.save();
+    await foundCompany.save()
+    await foundBulletin.save()
 
-    res.send({redirect: `/company-dashboard/${req.params.companyId}/bulletin-board`});
+    res.send({redirect: `/company-dashboard/${req.params.companyId}/bulletin-board`})
   } catch(e) {
     errorHandler(e, req, res, routeType, route)
   }
@@ -58,15 +59,15 @@ let updateBulletin = async (req, res) => {
 
 let deleteBulletin = async (req, res) => {
   try {
-    let foundBulletin = await Bulletin.findById(req.body.bulletinId);
+    let foundBulletin = await Bulletin.findById(req.body.bulletinId)
 
     if (req.body.bulletinIndex > -1){
       foundBulletin.bulletins.splice([req.body.bulletinIndex],1)
     }
 
-    await foundBulletin.save();
+    await foundBulletin.save()
 
-    res.send({redirect: `/company-dashboard/${req.params.companyId}/bulletin-board`});
+    res.send({redirect: `/company-dashboard/${req.params.companyId}/bulletin-board`})
   } catch(e) {
     errorHandler(e, req, res, routeType, route)
   }
@@ -82,16 +83,16 @@ let bulletinComment = async (req, res) => {
       date: moment(now).format("M/D/YY"),
       time: moment(now).format("h:mma")
     }
-    let foundBulletin = await Bulletin.findById(req.body.bulletinId);
-    let foundCompany = await Company.findById(req.params.companyId);
+    let foundBulletin = await Bulletin.findById(req.body.bulletinId)
+    let foundCompany = await Company.findById(req.params.companyId)
 
-    foundCompany.notifications.unshift(`${req.body.name.split(' ')[0]} has commented on a bulletin`);
-    foundBulletin.bulletins[req.body.bulletinIndex].comments.push(comment);
+    foundCompany.notifications.unshift(`${req.body.name.split(' ')[0]} has commented on a bulletin`)
+    foundBulletin.bulletins[req.body.bulletinIndex].comments.push(comment)
 
-    await foundCompany.save();
-    await foundBulletin.save();
+    await foundCompany.save()
+    await foundBulletin.save()
 
-    res.send({redirect: `/company-dashboard/${req.params.companyId}/bulletin-board`});
+    res.send({redirect: `/company-dashboard/${req.params.companyId}/bulletin-board`})
   } catch(e) {
     errorHandler(e, req, res, routeType, route)
   }

@@ -1,5 +1,5 @@
 'use strict';
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 let BulletinSchema = new mongoose.Schema({
 	companyRef: {
@@ -33,6 +33,6 @@ let BulletinSchema = new mongoose.Schema({
 
     }
   ]
-});
+})
 
-module.exports = mongoose.model("Bulletin", BulletinSchema);
+module.exports = mongoose.model("Bulletin", BulletinSchema)

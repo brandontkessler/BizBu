@@ -1,18 +1,19 @@
 'use strict';
-const router = require('express').Router(),
+const path = require('path'),
+  router = require('express').Router(),
   { getCompanyCreate, createCompany,
-    getCompanyDashboard, postCompanyInfoToDashboard } = require('./dashboard'),
-  team = require('./team'),
+    getCompanyDashboard, postCompanyInfoToDashboard } = require(path.join(__dirname, 'dashboard')),
+  team = require(path.join(__dirname, 'team')),
   { getBulletinBoard, postBulletin, updateBulletin, deleteBulletin,
-    bulletinComment } = require('./bulletin'),
-	middleware = require('../../middleware');
+    bulletinComment } = require(path.join(__dirname, 'bulletin')),
+	middleware = require(path.join(process.cwd(), 'app', 'middleware'))
 
 // ************************* COMPANY CREATION *************************
 router.route('/create')
 	.get(middleware.isLoggedIn,
     getCompanyCreate)
 	.post(middleware.isLoggedIn,
-    createCompany);
+    createCompany)
 
 // ************************* COMPANY DASHBOARD *************************
 router.route('/:companyId')
@@ -31,7 +32,7 @@ router.route('/:companyId/team')
     team.getTeam)
 	.put(middleware.isLoggedIn,
     middleware.isCompanyAdminOrMember,
-    team.leaveTeam);
+    team.leaveTeam)
 
 // ************************* TEAM INVITE PAGE *************************
 router.route('/:companyId/team/invite')
@@ -40,15 +41,15 @@ router.route('/:companyId/team/invite')
     team.getInvitePage)
 	.post(middleware.isLoggedIn,
     middleware.isCompanyAdmin,
-    team.sendInvite);
+    team.sendInvite)
 
 // ************************* ACCEPT INVITE *************************
 router.post('/:companyId/team/invite/accept',
-	middleware.isLoggedIn, team.acceptInvite);
+	middleware.isLoggedIn, team.acceptInvite)
 
 // ************************* DECLINE INVITE *************************
 router.post('/:companyId/team/invite/decline',
-	middleware.isLoggedIn, team.declineInvite);
+	middleware.isLoggedIn, team.declineInvite)
 
 // ************************* REMOVE MEMBER **************************************
 router.route('/:companyId/team/remove')
@@ -58,7 +59,7 @@ router.route('/:companyId/team/remove')
 	.put(middleware.isLoggedIn,
     middleware.isCompanyAdmin,
     middleware.atLeastOneOption,
-		team.removeMember);
+		team.removeMember)
 
 // ************************* BULLETIN BOARD *************************
 router.route('/:companyId/bulletin-board')
@@ -80,4 +81,4 @@ router.post('/:companyId/bulletin-board/comment',
   middleware.isCompanyAdminOrMember,
   bulletinComment)
 
-module.exports = router;
+module.exports = router

@@ -1,11 +1,11 @@
 'use strict';
-const
+const path = require('path'),
   { homeRoutes,
     authRoutes,
     userRoutes,
     companyDashboardRoutes,
-    startupResourcesRoutes } = require('./routes'),
-  { User, Company, Chat } = require('./models');
+    startupResourcesRoutes } = require(path.join(__dirname, 'routes')),
+  { User, Company, Chat } = require(path.join(__dirname, 'models'))
 
 module.exports = {
   chatIo: require('./socket'),

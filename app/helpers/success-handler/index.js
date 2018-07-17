@@ -1,8 +1,9 @@
 'use strict';
-const authFactory = require('./auth-factory'),
-  companyFactory = require('./company-factory');
+const path = require('path'),
+  authFactory = require(path.join(__dirname, 'auth-factory')),
+  companyFactory = require(path.join(__dirname, 'company-factory'))
 
-let factoryData;
+let factoryData
 
 module.exports = (req, res, routeType, route, param) => {
   if (routeType === 'auth') {

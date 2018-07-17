@@ -1,6 +1,6 @@
 'use strict';
 const mongoose = require("mongoose"),
-  moment = require('moment');
+  moment = require('moment')
 
 let ChatSchema = new mongoose.Schema({
 	companyRef: {
@@ -13,6 +13,6 @@ let ChatSchema = new mongoose.Schema({
 			message:  String
 		}
 	]
-});
+})
 
-module.exports = mongoose.model("Chat", ChatSchema);
+module.exports = mongoose.model("Chat", ChatSchema)

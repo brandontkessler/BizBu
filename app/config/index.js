@@ -1,8 +1,10 @@
 'use strict';
-const dev = require('./development.json')
+const path = require('path'),
+  dev = require(path.join(__dirname, 'development.json'))
 
 if(process.env.NODE_ENV === 'production'){
   module.exports = {
+    port: process.env.PORT,
     host: process.env.HOST || "",
     dbURI: process.env.DB_URI,
     session: {

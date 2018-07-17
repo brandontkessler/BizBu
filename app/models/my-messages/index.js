@@ -1,5 +1,5 @@
 'use strict';
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 let MyMessagesSchema = new mongoose.Schema({
 
@@ -19,6 +19,6 @@ let MyMessagesSchema = new mongoose.Schema({
       text: String
     }
   ]
-});
+})
 
-module.exports = mongoose.model("MyMessages", MyMessagesSchema);
+module.exports = mongoose.model("MyMessages", MyMessagesSchema)
