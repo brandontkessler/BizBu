@@ -1,10 +1,6 @@
 'use strict';
 const path = require('path')
 
-if(path.join(__dirname, 'development.json')){
-  const dev = require(path.join(__dirname, 'development.json'))
-}
-
 if(process.env.NODE_ENV === 'production'){
   module.exports = {
     port: process.env.PORT,
@@ -35,5 +31,5 @@ if(process.env.NODE_ENV === 'production'){
     }
   }
 } else {
-  module.exports = dev;
+  module.exports = require(path.join(__dirname, 'development.json')
 }
