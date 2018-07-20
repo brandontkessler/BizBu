@@ -11,7 +11,7 @@ const path = require('path'),
 
 // LinkedIn routes
 router.get('/auth/linkedin', authLI)
-router.get('/auth/linkedin/callback', passport.authenticate({
+router.get('/auth/linkedin/callback', require('passport').authenticate({
   successRedirect: `/homebase/user/${req.user._id}`,
  failureRedirect: '/'
 }))
