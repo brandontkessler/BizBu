@@ -1,6 +1,9 @@
 'use strict';
-const path = require('path'),
-  dev = require(path.join(__dirname, 'development.json'))
+const path = require('path')
+
+if(path.join(__dirname, 'development.json')){
+  const dev = require(path.join(__dirname, 'development.json'))
+}
 
 if(process.env.NODE_ENV === 'production'){
   module.exports = {
