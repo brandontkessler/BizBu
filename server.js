@@ -58,4 +58,3 @@ app.get('*', (req, res) => res.status(404).send('404 unable to find page!'))
 chatIo(io, Chat, User, Company)
 
 server.listen(config.port, () => console.log(`OutOfOffice started on port ${config.port}`))
-logger.log(process.env.HOST)

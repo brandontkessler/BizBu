@@ -12,7 +12,7 @@ const routeType = 'auth'
 // })
 //
 // let authFBcbMiddleware = passport.authenticate('facebook', {
-// 	failureRedirect: '/login',
+// 	failureRedirect: '/get-started',
 // 	failureFlash: true
 // })
 //
@@ -26,7 +26,7 @@ let authLI = passport.authenticate('linkedin', {
 })
 
 let authLIcbMiddleware = passport.authenticate('linkedin', {
-	failureRedirect: '/login',
+	failureRedirect: '/get-started',
 	failureFlash: true
 })
 
