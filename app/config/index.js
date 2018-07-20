@@ -31,5 +31,5 @@ if(process.env.NODE_ENV === 'production'){
     }
   }
 } else {
-  module.exports = require(path.join(__dirname, 'development.json')
+  module.exports = require(path.join(__dirname, 'development.json'))
 }
