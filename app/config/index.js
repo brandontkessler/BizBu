@@ -24,8 +24,8 @@ if(process.env.NODE_ENV === 'production'){
     //   profileFields: ["id", "displayName", "photos", "email"]
     // },
     linkedin: {
-      clientID: process.env.LINKED_CONSUMER_KEY,
-      clientSecret: process.env.LINKED_CONSUMER_SECRET,
+      clientID: process.env.LINKED_CLIENT_ID,
+      clientSecret: process.env.LINKED_CLIENT_SECRET,
       callbackURL: process.env.HOST + "/auth/linkedin/callback",
       profileFields: ["id", "first-name", "last-name", "email-address", "headline", "picture-url", "industry", "positions", "public-profile-url"],
       state: true
