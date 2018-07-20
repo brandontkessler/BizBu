@@ -25,7 +25,10 @@ let authLI = passport.authenticate('linkedin', {
 	scope: ['r_basicprofile', 'r_emailaddress']
 })
 
-let authLIcbMiddleware = passport.authenticate('linkedin')
+let authLIcbMiddleware = passport.authenticate('linkedin', {
+  	failureFlash: true,
+	  failureRedirect: '/get-started'
+})
 
 let authLIcb = (req, res) => {
   successHandler(req, res, routeType, 'authLIcb')
