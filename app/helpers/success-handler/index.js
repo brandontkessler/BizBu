@@ -8,7 +8,7 @@ let factoryData
 module.exports = (req, res, routeType, route, param) => {
   if (routeType === 'auth') {
     factoryData = authFactory(req, route)
-  } else if (routeType === 'company-dashboards') {
+  } else {
     factoryData = companyFactory(req, route, param)
   }
 

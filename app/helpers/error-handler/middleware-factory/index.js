@@ -13,7 +13,7 @@ module.exports = (req, routeType) => {
       break
     case 'isProfileOwner':
       msg = `That's not your profile!`
-      redirect = `/user-profile/${req.user._id}`
+      redirect = `/homebase/user/${req.user._id}`
       break
     case 'isCompanyAdmin':
       msg = `You're not an admin! You can't do that!`

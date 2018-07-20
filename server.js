@@ -13,7 +13,7 @@ const path = require('path'),
 	morgan = require('morgan'),
 	methodOverride = require('method-override'),
 	{ chatIo, config, logger,
-		homeRoutes, authRoutes, userRoutes, companyDashboardRoutes, startupResourcesRoutes,
+		homeRoutes, authRoutes, homebaseRoutes, companyDashboardRoutes,
 		User, Company, Chat } = require(path.join(__dirname, 'app'))
 
 mongoose.connect(config.dbURI)
@@ -50,9 +50,8 @@ app.use((req, res, next) => {
 // ROUTES
 app.use(homeRoutes)
 app.use(authRoutes)
-app.use('/user-profile', userRoutes)
+app.use('/homebase', homebaseRoutes)
 app.use('/company-dashboard', companyDashboardRoutes)
-app.use('/startup-resources', startupResourcesRoutes)
 app.get('*', (req, res) => res.status(404).send('404 unable to find page!'))
 
 // SOCKET

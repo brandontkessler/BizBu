@@ -1,5 +1,5 @@
 <% include ./partials/head-open %>
-<link rel="stylesheet" type="text/css" href="/stylesheets/dashboard/dashboard.css">
+<link rel="stylesheet" type="text/css" href="/stylesheets/company-dashboard/dashboard.css">
 <% include ./partials/head-close %>
 
 	<div class="content">
@@ -11,6 +11,7 @@
 
 			<div class="company-info">
 				<h3 class="section-header">Company Info</h3>
+				<p class="section-header-info">In order to make your company public in the startup resources, fill out and save the fields below</p>
 				<form action="/company-dashboard/<%= company._id %>" method="post">
 					<label>Tagline:</label>
 					<input class="tagline" name="tagline" type="text" value="<%= company.companyInfo.tagline %>" placeholder="100 characters max." disabled>
@@ -49,5 +50,5 @@
 		</div>
 	</div>
 
-<script type="text/javascript" src="/scripts/dashboard/company-info-form.js"></script>
+<script type="text/javascript" src="/scripts/company-dashboard/company-info-form.js"></script>
 <% include ./partials/footer %>

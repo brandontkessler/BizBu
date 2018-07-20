@@ -5,10 +5,13 @@
 
 	<div class="page-description">
     <h2>Invite</h2>
-    <p>
-
-    </p>
   </div>
+
+	<p>
+		Paste the user's invite code into the form below and hit send.
+		Choose whether to invite them as a member or as admin. They have different authorizations.
+		They will then be able to accept or decline the invite from their profile.
+	</p>
 
 	<form action="/company-dashboard/<%= company._id %>/team/invite" method="post">
 		<input type="text" name="invitee" autocomplete="off" required>

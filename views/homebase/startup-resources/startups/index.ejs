@@ -1,0 +1,29 @@
+<% include ../../partials/head-open %>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/homebase/startup-resources/startups.css">
+<% include ../../partials/head-close %>
+
+<div class="grid-container">
+  <% include ../../partials/nav/sidebar %>
+  <div class="content">
+    <ul>
+      <% for (let company of companies) { %>
+        <li>
+          <h2><%= company.name %></h2>
+          <h3><%= company.companyInfo.tagline %></h3>
+          <h3><%= company.companyInfo.description %></h3>
+          <% if(company.companyInfo.needs && company.companyInfo.needs.length > 0){ %>
+            <p>Needs: <%= company.companyInfo.needs.join(", ") %></p>
+          <% } %>
+          <form action="/homebase/startup-resources/startups/<%= company._id %>/message" method="post">
+            <button>Send Message</button>
+          </form>
+        </li>
+      <% } %>
+    </ul>
+
+
+  </div>
+</div>
+
+
+<% include ../../partials/footer %>

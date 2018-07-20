@@ -1,19 +1,11 @@
 'use strict';
 const path = require('path'),
   router = require('express').Router(),
-  { getCompanyCreate, createCompany,
-    getCompanyDashboard, postCompanyInfoToDashboard } = require(path.join(__dirname, 'dashboard')),
+  { getCompanyDashboard, postCompanyInfoToDashboard } = require(path.join(__dirname, 'dashboard')),
   team = require(path.join(__dirname, 'team')),
   { getBulletinBoard, postBulletin, updateBulletin, deleteBulletin,
     bulletinComment } = require(path.join(__dirname, 'bulletin')),
 	middleware = require(path.join(process.cwd(), 'app', 'middleware'))
-
-// ************************* COMPANY CREATION *************************
-router.route('/create')
-	.get(middleware.isLoggedIn,
-    getCompanyCreate)
-	.post(middleware.isLoggedIn,
-    createCompany)
 
 // ************************* COMPANY DASHBOARD *************************
 router.route('/:companyId')
@@ -23,7 +15,6 @@ router.route('/:companyId')
   .post(middleware.isLoggedIn,
     middleware.isCompanyAdmin,
     postCompanyInfoToDashboard)
-
 
 // ************************* TEAM PAGE *************************
 router.route('/:companyId/team')

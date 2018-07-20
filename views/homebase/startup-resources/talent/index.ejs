@@ -1,0 +1,24 @@
+<% include ../../partials/head-open %>
+<link rel="stylesheet" type="text/css" href="/stylesheets/homebase/startup-resources/talent.css">
+<% include ../../partials/head-close %>
+
+<div class="grid-container">
+  <% include ../../partials/nav/sidebar %>
+  <div class="content">
+    <ul>
+      <% for (let publicUser of publicUsers) { %>
+        <li>
+          <%= publicUser.name.split(" ")[0] %>
+          <a href="<%= publicUser.linkedin.url %>" target="_blank">Linkedin</a>
+          <form action="/homebase/startup-resources/talent/<%= publicUser._id %>/message" method="post">
+            <button>Send Message</button>
+          </form>
+        </li>
+      <% } %>
+
+    </ul>
+  </div>
+</div>
+
+
+<% include ../../partials/footer %>

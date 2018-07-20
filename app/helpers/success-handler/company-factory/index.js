@@ -9,7 +9,7 @@ module.exports = (req, route, param) => {
       break
     case 'leaveTeam':
       msg = "You're out of there!"
-      redirect = `/user-profile/${req.user._id}`
+      redirect = `/homebase/user/${req.user._id}`
       break
     case 'sendInvite':
       msg = 'Invite has been sent'
@@ -21,7 +21,7 @@ module.exports = (req, route, param) => {
       break
     case 'declineInvite':
       msg = `Invite declined`
-      redirect = `/user-profile/${req.user.id}`
+      redirect = `/homebase/user/${req.user.id}`
       break
     case 'removeMember':
       msg = 'The member(s) have been removed'

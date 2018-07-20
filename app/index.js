@@ -2,9 +2,8 @@
 const path = require('path'),
   { homeRoutes,
     authRoutes,
-    userRoutes,
-    companyDashboardRoutes,
-    startupResourcesRoutes } = require(path.join(__dirname, 'routes')),
+    homebaseRoutes,
+    companyDashboardRoutes } = require(path.join(__dirname, 'routes')),
   { User, Company, Chat } = require(path.join(__dirname, 'models'))
 
 module.exports = {
@@ -13,9 +12,8 @@ module.exports = {
   logger: require('./logger'),
   homeRoutes,
   authRoutes,
-  userRoutes,
+  homebaseRoutes,
   companyDashboardRoutes,
-  startupResourcesRoutes,
   User,
   Company,
   Chat
