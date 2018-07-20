@@ -9,7 +9,7 @@ module.exports = (req, route) => {
     //   break
     case 'authLIcb':
       msg = 'Linkedin login woooo!'
-      redirect = `http://getoutofoffice.herokuapp.com/homebase/user/${req.user._id}`
+      redirect = `/homebase/user/${req.user._id}`
       break
     case 'logout':
       msg = 'How dare you'
