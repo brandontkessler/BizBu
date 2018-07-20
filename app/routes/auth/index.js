@@ -12,9 +12,10 @@ const path = require('path'),
 // LinkedIn routes
 router.get('/auth/linkedin', authLI)
 router.get('/auth/linkedin/callback', require('passport').authenticate({
-  successRedirect: `/homebase/user/${req.user._id}`,
  failureRedirect: '/'
-}))
+}), function(req, res){
+    res.redirect(`/homebase/user/${req.user._id}`);
+})
 
 // LOGOUT
 router.get('/logout', middleware.activeRemoveLogout, logout)
