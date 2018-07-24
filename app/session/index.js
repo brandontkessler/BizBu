@@ -1,7 +1,6 @@
 'use strict';
 const path = require('path'),
   mongoose = require('mongoose'),
-  MongoStore = require('connect-')
   config = require(path.join(process.cwd(), 'app', 'config'))
 
 if(process.env.NODE_ENV === 'production') {
