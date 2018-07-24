@@ -25,13 +25,32 @@ let authLI = passport.authenticate('linkedin', {
 	scope: ['r_basicprofile', 'r_emailaddress']
 })
 
-let authLIcbMiddleware = passport.authenticate('linkedin', {
-  	failureFlash: 'unable to login',
-	  failureRedirect: '/get-started'
-})
+// let authLIcbMiddleware = passport.authenticate('linkedin', {
+//   	failureFlash: 'unable to login',
+// 	  failureRedirect: '/get-started'
+// })
 
-let authLIcb = (req, res) => {
-  successHandler(req, res, routeType, 'authLIcb')
+let authLIcb = (req, res, next) => {
+  passport.authenticate('linkedin', function(err, user, info){
+    if (err) {
+      req.flash('error', 'some error at auth')
+      return res.redirect('/')
+    }
+    if (!user) {
+      req.flash('error', 'failure at auth')
+      return res.redirect('/get-started')
+    }
+
+    req.logIn(user, function(err) {
+      if (err) {
+        req.flash('error', 'error at login')
+        return res.redirect('/get-started')
+      }
+
+      return res.redirect('/homebase/user/' + user._id);
+    })
+  })(req, res, next)
+  // successHandler(req, res, routeType, 'authLIcb')
 }
 
 // LOGOUT
@@ -45,7 +64,7 @@ module.exports = {
   // authFBcbMiddleware,
   // authFBcb,
   authLI,
-  authLIcbMiddleware,
+  // authLIcbMiddleware,
   authLIcb,
   logout
 }
