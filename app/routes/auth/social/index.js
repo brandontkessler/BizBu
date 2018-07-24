@@ -7,18 +7,18 @@ const path = require('path'),
 const routeType = 'auth'
 
 // FB ROUTES
-// let authFB = passport.authenticate('facebook', {
-// 	scope : ['public_profile', 'email']
-// })
-//
-// let authFBcbMiddleware = passport.authenticate('facebook', {
-// 	failureRedirect: '/get-started',
-// 	failureFlash: true
-// })
-//
-// let authFBcb = (req, res) => {
-//   successHandler(req, res, routeType, 'authFBcb')
-// }
+let authFB = passport.authenticate('facebook', {
+	scope : ['public_profile', 'email']
+})
+
+let authFBcbMiddleware = passport.authenticate('facebook', {
+	failureRedirect: '/get-started',
+	failureFlash: true
+})
+
+let authFBcb = (req, res) => {
+  successHandler(req, res, routeType, 'authFBcb')
+}
 
 // LINKEDIN ROUTES
 let authLI = passport.authenticate('linkedin', {
@@ -60,9 +60,9 @@ let logout = (req, res) => {
 }
 
 module.exports = {
-  // authFB,
-  // authFBcbMiddleware,
-  // authFBcb,
+  authFB,
+  authFBcbMiddleware,
+  authFBcb,
   authLI,
   // authLIcbMiddleware,
   authLIcb,

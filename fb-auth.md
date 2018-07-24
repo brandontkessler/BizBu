@@ -1,6 +1,5 @@
 Facebook Auth is currently hidden, to unhide, follow these steps:
 * in app/auth - unhide all three hidden areas
-* development.json file, stayed as is
 * in config/index - unhide the FB portion
 * in app/helpers/success-handler/auth-factory - unhide FB portion
 * in app/models/user - unhide FB portion

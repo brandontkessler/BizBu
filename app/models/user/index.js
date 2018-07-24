@@ -28,10 +28,10 @@ let UserSchema = new mongoose.Schema({
 		type: String
 	},
 
-	// facebook: {
-	// 	id: String,
-	// 	accessToken: String
-	// },
+	facebook: {
+		id: String,
+		accessToken: String
+	},
 
 	linkedin: {
 		id: String,

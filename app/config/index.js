@@ -8,12 +8,12 @@ if(process.env.NODE_ENV === 'production'){
     dbURI: process.env.DB_URI,
     sessionSecret: process.env.SESSION_SECRET,
     inviteEncrypter: process.env.INVITE_ENCRYPTER,
-    // fb: {
-    //   clientID: process.env.FB_CLIENT_ID,
-    //   clientSecret: process.env.FB_CLIENT_SECRET,
-    //   callbackURL: process.env.HOST + "/auth/facebook/callback",
-    //   profileFields: ["id", "displayName", "photos", "email"]
-    // },
+    fb: {
+      clientID: process.env.FB_CLIENT_ID,
+      clientSecret: process.env.FB_CLIENT_SECRET,
+      callbackURL: process.env.HOST + "/auth/facebook/callback",
+      profileFields: ["id", "displayName", "photos", "email"]
+    },
     linkedin: {
       clientID: process.env.LINKED_CLIENT_ID,
       clientSecret: process.env.LINKED_CLIENT_SECRET,
