@@ -17,7 +17,7 @@ if(process.env.NODE_ENV === 'production'){
     linkedin: {
       clientID: process.env.LINKED_CLIENT_ID,
       clientSecret: process.env.LINKED_CLIENT_SECRET,
-      callbackURL: `getoutofoffice.herokuapp.com/auth/linkedin/callback`,
+      callbackURL: `https://getoutofoffice.herokuapp.com/auth/linkedin/callback`,
       profileFields: ["id", "first-name", "last-name", "email-address", "headline", "picture-url", "industry", "positions", "public-profile-url"],
       state: true
     }
