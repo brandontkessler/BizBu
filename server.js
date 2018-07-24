@@ -2,8 +2,8 @@
 const path = require('path'),
 	express = require('express'),
 	app = express(),
-	// server = require('http').Server(app),
-	// io = require('socket.io')(server),
+	server = require('http').Server(app),
+	io = require('socket.io')(server),
 	session = require('express-session'),
 	bodyParser = require('body-parser'),
 	flash = require('connect-flash'),
@@ -53,7 +53,6 @@ app.use('/company-dashboard', OutOfOffice.companyDashboardRoutes)
 app.get('*', (req, res) => res.status(404).send('404 unable to find page!'))
 
 // SOCKET
-// OutOfOffice.chatIo(io, OutOfOffice.Chat, OutOfOffice.User, OutOfOffice.Company)
+OutOfOffice.chatIo(io, OutOfOffice.Chat, OutOfOffice.User, OutOfOffice.Company)
 
-// server.listen(OutOfOffice.config.port, () => console.log(`OutOfOffice started on port ${OutOfOffice.config.port}`))
-app.listen(OutOfOffice.config.port, () => console.log(`OutOfOffice started on port ${OutOfOffice.config.port}`))
+server.listen(OutOfOffice.config.port, () => console.log(`OutOfOffice started on port ${OutOfOffice.config.port}`))
