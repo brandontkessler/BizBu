@@ -10,7 +10,7 @@ const path = require('path'),
 // router.get('/auth/facebook/callback', authFBcbMiddleware, authFBcb)
 
 // LinkedIn routes
-router.get('/auth/linkedin', authLI)
+router.get('/auth/linkedin', authLI, (req, res) => console.log('failed auth'))
 router.get('/auth/linkedin/callback', authLIcbMiddleware, authLIcb)
 
 // LOGOUT
