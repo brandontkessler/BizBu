@@ -2,7 +2,7 @@
 const path = require('path'),
   router = require('express').Router(),
   middleware = require(path.join(process.cwd(), 'app', 'middleware')),
-  logger = require(path.join(process.cwd(), 'logger'))
+  logger = require('../../logger')
 
 let home = (req, res) => {
   logger.log(process.env.HOST)
