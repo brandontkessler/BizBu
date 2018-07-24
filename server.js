@@ -4,19 +4,16 @@ const path = require('path'),
 	app = express(),
 	server = require('http').Server(app),
 	io = require('socket.io')(server),
-	session = require('express-session'),
 	bodyParser = require('body-parser'),
 	flash = require('connect-flash'),
-	mongoose = require('mongoose'),
 	passport = require('passport'),
 	helmet = require('helmet'),
 	morgan = require('morgan'),
 	methodOverride = require('method-override'),
-	{ chatIo, config, logger,
+	{ chatIo, config, logger, session,
 		homeRoutes, authRoutes, homebaseRoutes, companyDashboardRoutes,
 		User, Company, Chat } = require(path.join(__dirname, 'app'))
 
-mongoose.connect(config.dbURI)
 app.use(bodyParser.urlencoded({extended: true}))
 app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, 'public')))
@@ -25,7 +22,7 @@ app.use(flash())
 app.use(helmet())
 
 // EXPRESS SESSION CONFIG
-app.use(session(config.session))
+app.use(session)
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(morgan('combined', {

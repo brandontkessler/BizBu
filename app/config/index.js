@@ -6,15 +6,7 @@ if(process.env.NODE_ENV === 'production'){
     port: process.env.PORT,
     host: process.env.HOST || "",
     dbURI: process.env.DB_URI,
-    session: {
-      secret: process.env.SESSION_SECRET,
-      resave: false,
-      saveUninitialized: false,
-      cookie: {
-        httpOnly: true,
-        secure: true
-      }
-    },
+    sessionSecret: process.env.SESSION_SECRET,
     inviteEncrypter: process.env.INVITE_ENCRYPTER,
     // fb: {
     //   clientID: process.env.FB_CLIENT_ID,
