@@ -11,7 +11,7 @@ if(process.env.NODE_ENV === 'production'){
     fb: {
       clientID: process.env.FB_CLIENT_ID,
       clientSecret: process.env.FB_CLIENT_SECRET,
-      callbackURL: process.env.HOST + "/auth/facebook/callback",
+      callbackURL: `/auth/facebook/callback`,
       profileFields: ["id", "displayName", "photos", "email"]
     },
     linkedin: {
