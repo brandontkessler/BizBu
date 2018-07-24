@@ -38,7 +38,7 @@ let authLIcb = (req, res, next) => {
     }
     if (!user) {
       req.flash('error', 'failure at auth')
-      return res.redirect('/get-started')
+      return res.redirect('/')
     }
 
     req.logIn(user, function(err) {
