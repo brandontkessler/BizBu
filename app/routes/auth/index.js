@@ -13,10 +13,10 @@ const path = require('path'),
 // LinkedIn routes
 router.get('/auth/linkedin', authLI, (req, res) => console.log('failed auth'))
 router.get('/auth/linkedin/callback', (req, res, next) => {
-  logger.log('pre middleware')
+  logger.log('info', 'pre middleware')
   next()
 }, authLIcbMiddleware, (req, res, next) => {
-  logger.log('post middleware')
+  logger.log('info', 'post middleware')
   next()
 }, authLIcb)
 
