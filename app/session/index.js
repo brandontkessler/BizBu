@@ -7,11 +7,7 @@ if(process.env.NODE_ENV === 'production') {
   module.exports = {
     secret: config.sessionSecret,
     resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      secure: true
-    }
+    saveUninitialized: false
   }
 } else {
   module.exports = {
