@@ -6,6 +6,20 @@ const path = require('path'),
 
 let errorType = 'middleware'
 
+let userDoesNotExist = async (req, res, next) => {
+  try {
+    let user = await User.findOne({ username: req.body.username })
+    if(user){
+      req.flash('error', `A user is registered with that email`)
+      return res.redirect('back')
+    }
+    next()
+  } catch(e) {
+    req.flash('error', `A user is registered with that email`)
+    return res.redirect('back')
+  }
+}
+
 let confirmPassword = (req, res, next) => {
   if(req.body.password !== req.body.confirmPassword){
     return errorHandler(errorType, req, res, 'confirmPassword')
@@ -42,6 +56,7 @@ let correctPassword = async (req, res, next) => {
 }
 
 module.exports = {
+  userDoesNotExist,
   confirmPassword,
   userExists,
   correctPassword

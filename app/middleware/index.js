@@ -5,7 +5,7 @@ const path = require('path'),
   { activeRemoveLogout, activeRemovePageLeave } = require(path.join(__dirname, 'active-member')),
   { isCompanyAdmin, isCompanyMember, isCompanyAdminOrMember, atLeastOneOption } = require(path.join(__dirname, 'company')),
   { isNotLoggedIn, isLoggedIn, isProfileOwner } = require(path.join(__dirname, 'authorization')),
-  { confirmPassword, userExists, correctPassword } = require(path.join(__dirname, 'auth'))
+  { userDoesNotExist, confirmPassword, userExists, correctPassword } = require(path.join(__dirname, 'auth'))
 
 
 module.exports = {
@@ -18,6 +18,7 @@ module.exports = {
 	atLeastOneOption,
 	activeRemoveLogout,
 	activeRemovePageLeave,
+  userDoesNotExist,
   confirmPassword,
   userExists,
   correctPassword

@@ -15,6 +15,7 @@ router.route('/signup')
   .get(local.signup.get)
   .post(
     middleware.isNotLoggedIn,
+    middleware.userDoesNotExist,
     middleware.confirmPassword,
     local.signup.post
   )
