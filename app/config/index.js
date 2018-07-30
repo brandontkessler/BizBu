@@ -8,7 +8,7 @@ if(process.env.NODE_ENV === 'production'){
     dbURI: process.env.DB_URI,
     sessionSecret: process.env.SESSION_SECRET,
     inviteEncrypter: process.env.INVITE_ENCRYPTER,
-    encryptionKey: process.env.ENCRYPTER_KEY
+    encrypterKey: process.env.ENCRYPTER_KEY
     // linkedin: {
     //   clientID: process.env.LINKED_CLIENT_ID,
     //   clientSecret: process.env.LINKED_CLIENT_SECRET,
