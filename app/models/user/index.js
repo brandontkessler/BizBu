@@ -1,38 +1,39 @@
 'use strict';
 const path = require('path'),
-  mongoose = require("mongoose"),
   crypto = require('crypto'),
-  config = require(path.join(process.cwd(), 'app', 'config'))
+  mongoose = require('mongoose'),
+  config = require(path.join(process.cwd(), 'app', 'config')),
+  h = require(path.join(process.cwd(), 'app', 'helpers'))
 
 let UserSchema = new mongoose.Schema({
-	email: {
+	username: {
 		type: String,
 		lowercase: true,
-		unique: true
+    required: true,
+    unique: true
 	},
 
-	created: {
-		type: Date
-	},
+  email: String,
 
-	inviteCode: {
-		type: String,
-		unique: true
-	},
+  password: {
+    type: String,
+    required: true
+  },
 
-	name: {
-		type: String
-	},
+  url: String,
+	created: Date,
+	inviteCode: String,
+	name: String,
 
-	pic: {
-		type: String
-	},
+	// pic: {
+	// 	type: String
+	// },
 
-	linkedin: {
-		id: String,
-		accessToken: String,
-    url: String
-	},
+	// linkedin: {
+	// 	id: String,
+	// 	accessToken: String,
+  //   url: String
+	// },
 
 	companiesAdmin: [
 		{
@@ -76,18 +77,21 @@ let UserSchema = new mongoose.Schema({
   ]
 })
 
-// Creates a unique invite code from hashed email
-UserSchema.pre('save', function(next){
+UserSchema.pre('save', async function(next){
 	let user = this
+
 	// Only hash if unmodified
-	if(!user.isModified('email')) return next()
+	if(!user.isModified('username')) return next()
 
-	let cipher = crypto.createCipher('aes192', user.email)
-	let inviteCode = cipher.update(config.inviteEncrypter, 'utf8', 'hex')
-	inviteCode += cipher.final('hex')
+  let cipher = crypto.createCipher('aes192', user.username)
+  let inviteCode = cipher.update(config.inviteEncrypter, 'utf8', 'hex')
+	user.inviteCode = inviteCode += cipher.final('hex')
 
-	user.inviteCode = inviteCode
+  let pw = await h.encryption.encode(user.password)
+  user.password = pw
+
 	next()
 })
+
 
 module.exports = mongoose.model("User", UserSchema)

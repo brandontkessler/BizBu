@@ -1,15 +1,21 @@
 'use strict';
+const path = require('path'),
+  logger = require(path.join(process.cwd(), 'app', 'logger'))
 let msg, redirect
 
 module.exports = (req, routeType) => {
   switch(routeType){
     case 'isNotLoggedIn':
       msg = `You're already logged in!`
-      redirect = `/get-started`
+      redirect = `/login`
       break
     case 'isLoggedIn':
       msg = 'You must be logged in!'
-      redirect = `/get-started`
+      redirect = `/login`
+      break
+    case 'confirmPassword':
+      msg = 'Passwords do not match!'
+      redirect = `/signup`
       break
     case 'isProfileOwner':
       msg = `That's not your profile!`
@@ -31,13 +37,13 @@ module.exports = (req, routeType) => {
       msg = `You didn't select anything to delete`
       redirect = `/company-dashboard/${req.params.companyId}/team/remove`
       break
-    case 'activeRemoveLogout':
-      // Fall-through
-    case 'activeRemovePageLeave':
-      msg = 'An error occurred'
-      redirect = 'back'
+    case 'correctPassword':
+      msg = `Incorrect password`
+      redirect = `back`
+      break
     default:
-      console.log('error at middlewareFactory')
+      msg = `An error occurred`
+      redirect = `back`
   }
   return {
     msg,

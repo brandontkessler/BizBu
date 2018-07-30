@@ -20,15 +20,9 @@ let authLIcb = (req, res, next) => {
   successHandler(req, res, routeType, 'authLIcb')
 }
 
-// LOGOUT
-let logout = (req, res) => {
-	req.logout()
-  successHandler(req, res, routeType, 'logout')
-}
 
 module.exports = {
   authLI,
   authLIcbMiddleware,
-  authLIcb,
-  logout
+  authLIcb
 }
