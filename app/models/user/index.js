@@ -6,34 +6,25 @@ const path = require('path'),
   h = require(path.join(process.cwd(), 'app', 'helpers'))
 
 let UserSchema = new mongoose.Schema({
-	username: {
-		type: String,
-		lowercase: true,
-    required: true,
-    unique: true
-	},
+
 
   email: String,
 
-  password: {
-    type: String,
-    required: true
-  },
 
   url: String,
 	created: Date,
 	inviteCode: String,
 	name: String,
 
-	// pic: {
-	// 	type: String
-	// },
+	pic: {
+		type: String
+	},
 
-	// linkedin: {
-	// 	id: String,
-	// 	accessToken: String,
-  //   url: String
-	// },
+	linkedin: {
+		id: String,
+		accessToken: String,
+    url: String
+	},
 
 	companiesAdmin: [
 		{

@@ -11,10 +11,10 @@ module.exports = (req, route) => {
       msg = 'whattup'
       redirect = `/homebase/user/${req.user._id}`
       break
-    // case 'authLIcb':
-    //   msg = 'Linkedin login woooo!'
-    //   redirect = `/homebase/user/${req.user._id}`
-    //   break
+    case 'authLIcb':
+      msg = 'Linkedin login woooo!'
+      redirect = `/homebase/user/${req.user._id}`
+      break
     case 'logout':
       msg = 'How dare you'
       redirect = '/'

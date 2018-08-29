@@ -3,12 +3,17 @@ const path = require('path'),
   router = require('express').Router(),
 	middleware = require(path.join(process.cwd(), 'app', 'middleware')),
   logger = require(path.join(process.cwd(), 'app', 'logger')),
-  local = require(path.join(__dirname, 'local'))
-  // { authLI, authLIcbMiddleware, authLIcb } = require(path.join(__dirname, 'social'))
+  local = require(path.join(__dirname, 'local')),
+  { authLI, authLIcbMiddleware, authLIcb } = require(path.join(__dirname, 'social'))
 
 // LinkedIn routes
-// router.get('/auth/linkedin', authLI)
-// router.get('/auth/linkedin/callback', authLIcbMiddleware, authLIcb)
+router.get('/auth/linkedin', authLI)
+router.get('/auth/linkedin/callback', authLIcbMiddleware, authLIcb)
+
+// Get started
+router.get('/get-started', (req, res) => {
+  res.render('home/get-started')
+})
 
 // Sign Up
 router.route('/signup')
