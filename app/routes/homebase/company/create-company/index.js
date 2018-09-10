@@ -1,6 +1,6 @@
 'use strict';
 const path = require('path'),
-  { User, Company, Bulletin, Chat } = require(path.join(process.cwd(), 'app', 'models')),
+  { User, Company, Bulletin, Chat, Checklist } = require(path.join(process.cwd(), 'app', 'models')),
   { successHandler, errorHandler } = require(path.join(process.cwd(), 'app', 'helpers'))
 
 const routeType = 'homebase/company'
@@ -24,6 +24,12 @@ let createCompany = async (req, res) => {
     })
     let createdBulletin = await Bulletin.create(newBulletin)
 
+    // CREATE CHECKLIST
+    let newChecklist = new Checklist({
+      'companyRef': createdCompany
+    })
+    let createdChecklist = await Checklist.create(newChecklist)
+
     // CREATE CHAT WINDOW
     let newChat = new Chat({
       'companyRef': createdCompany
@@ -34,10 +40,10 @@ let createCompany = async (req, res) => {
 
     newCompany.admin.push(req.user._id)
     newCompany.bulletin = createdBulletin
+    newCompany.checklist = createdChecklist
     newCompany.chat = createdChat
     newCompany.notifications.unshift(`${user.name.split(' ')[0]} created ${req.body.company.name}`)
 
-    await createdChat.save()
     await newCompany.save()
     user.companiesAdmin.push(newCompany)
     await user.save()

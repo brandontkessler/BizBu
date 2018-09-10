@@ -1,0 +1,71 @@
+.checklist {
+  overflow: hidden;
+}
+
+.checklist-data {
+  overflow: hidden;
+}
+
+.checklist-item {
+  position: absolute;
+  width: calc(100% - 250px);
+  text-align: center;
+  overflow: hidden;
+  transform: translate(100vw);
+  z-index: -1;
+  transition: 0.5s ease-in;
+}
+
+.co-founder-yes, .co-founder-no, .prototype-yes, .prototype-no, .financial-resources-yes, .financial-resources-no {
+  border: 1px solid blue;
+  cursor: pointer;
+  width: 30px;
+  margin: 15px auto;
+}
+
+/* CHECKLIST NAVIGATION */
+.checklist-nav {
+  width: calc(100% - 250px);
+  text-align: center;
+  position: fixed;
+  bottom: 80px;
+}
+
+.checklist-nav-btn {
+  width: 50px;
+  text-align: center;
+}
+
+.checklist-btns {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.hide-btn {
+  height: 0;
+  overflow: hidden;
+}
+
+.selected {
+  background-color: blue;
+  color: white;
+}
+
+/* Display and hide checklist divs */
+.display-from-left {
+  transform: translate(0);
+}
+
+.hide-left {
+  transform: translate(-100vw);
+  transition: 1s ease-out;
+}
+
+.display-from-right {
+  transform: translate(0);
+}
+
+.hide-right {
+  transform: translate(100vw);
+  transition: 1s ease-out;
+}

@@ -1,0 +1,136 @@
+<% include ../partials/head-open %>
+<link rel="stylesheet" type="text/css" href="/stylesheets/company-dashboard/checklist/checklist.css">
+<% include ../partials/head-close %>
+
+<div class="content">
+
+  <div class="page-description">
+    <h2>Checklist</h2>
+    <p>
+      This will guide you to victory
+    </p>
+  </div>
+
+  <div class="checklist">
+    <form id="checklist-form" class="checklist-form" action="/company-dashboard/<%= company._id %>/checklist" method="post">
+
+      <div class="checklist-data">
+
+        <div class="company-info checklist-item">
+          <p>Tagline</p>
+          <textarea name="tagline"><%= company.checklist.checklistData.tagline %></textarea>
+
+          <p>Description</p>
+          <textarea name="description"><%= company.checklist.checklistData.description %></textarea>
+
+          <p>Company Location</p>
+          <input type="text" name="location" value="<%= company.checklist.location %>">
+        </div>
+
+        <div class="assumption-recommendations checklist-item">
+          <p>provide recommendations on how to reach out to people to build assumptions and formulate the end-user profile (assumption building and customer discovery). Provide goals for primary research (link to dashboard?</p>
+        </div>
+
+        <div class="assumptions checklist-item">
+          <p>Describe assumptions</p>
+          <textarea name="assumptions"><%= company.checklist.checklistData.assumptions %></textarea>
+
+          <p>Describe end-user</p>
+          <textarea name="endUser"><%= company.checklist.checklistData.endUser %></textarea>
+
+
+        </div>
+
+        <div class="co-founders checklist-item">
+          <p>Are you seeking co-founders?</p>
+          <p class="co-founder-yes">yes</p>
+          <p class="co-founder-no">no</p>
+          <input id="co-founder-input" type="hidden" name="seekingCoFounder" value="<%= company.checklist.checklistData.seekingCofounder %>">
+        </div>
+
+        <div class="founder-bios checklist-item">
+          <p>Complete founder bios including reasons why founders are qualified for startup</p>
+          <textarea name="founderBios"><%= company.checklist.checklistData.founderBios %></textarea>
+        </div>
+
+        <div class="intro-video checklist-item">
+          <p>Complete 1-min YouTube video introducing founders and save url below</p>
+          <input name="introVideo" type="text" value="<%= company.checklist.checklistData.introVideo %>">
+        </div>
+
+        <div class="prototype checklist-item">
+          <p>Do you have a working prototype or a way to test your product?</p>
+          <p class="prototype-yes">yes</p>
+          <p class="prototype-no">no</p>
+          <input id="prototype-input" type="hidden" name="prototype" value="<%= company.checklist.checklistData.prototype %>">
+        </div>
+
+        <div class="prototype-resources checklist-item">
+          <p>recommend resources for building a cheap prototype and testing a pre-MVP including third party services​</p>
+        </div>
+
+        <div class="competition checklist-item">
+          <p>who are the current players and substitutes for your product?</p>
+          <textarea name="competition"><%= company.checklist.checklistData.competition %></textarea>
+        </div>
+
+        <div class="revenue checklist-item">
+          <p>How will you make money?</p>
+          <textarea name="revenue"><%= company.checklist.checklistData.revenue %></textarea>
+        </div>
+
+        <div class="market-financial-model checklist-item">
+          <p>Complete market assessment and financial model</p>
+          <textarea name="marketFinancialModel"><%= company.checklist.checklistData.marketFinancialModel %></textarea>
+
+          <p>provide recommendations on how to assess the market including tools and third party services</p>
+        </div>
+
+        <div class="user-acquisition checklist-item">
+          <p>How will you obtain customers</p>
+          <textarea name="userAcquisition"><%= company.checklist.checklistData.userAcquisition %></textarea>
+        </div>
+
+        <div class="marketing-recommendation checklist-item">
+          <p>provide recommendations on potential marketing channels including tools and third party services​</p>
+        </div>
+
+        <div class="legal checklist-item">
+          <p>Have you formed a legal entity? Established bank accounts? Payment systems?​</p>
+          <textarea name="legal"><%= company.checklist.checklistData.legal %></textarea>
+          <p>**provide recommendations on options for incorporation including third party services and tools</p>
+        </div>
+
+        <div class="financial-resources checklist-item">
+          <p>Do you have the financial resources needed to acquire initial customers?​​</p>
+          <p class="financial-resources-yes">yes</p>
+          <p class="financial-resources-no">no</p>
+          <input id="financial-resources-input" type="hidden" name="financialResources" value="<%= company.checklist.checklistData.financialResources %>">
+        </div>
+
+        <div class="financial-resources-advice checklist-item">
+          <p>**provide advice for sourcing capital and checklist of what is required by accelerators and/or VC/angel investors​</p>
+        </div>
+
+        <div class="initial-customers-plan checklist-item">
+          <p>Establish target number of initial customers & plan to acquire them (different from general marketing plan). Execute plan.​</p>
+          <textarea name="initialCustomersPlan"><%= company.checklist.checklistData.initialCustomersPlan %></textarea>
+        </div>
+
+      </div>
+
+      <div class="checklist-nav">
+        <p class="checklist-nav-btn checklist-btns checklist-btn-back">back</p>
+        <button class="checklist-btns">Save</button>
+        <p class="checklist-nav-btn checklist-btns checklist-btn-next">next</p>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<script type="text/javascript" src="/scripts/company-dashboard/checklist/checklist-nav.js"></script>
+<% include ../partials/footer %>

@@ -7,11 +7,11 @@ module.exports = (req, routeType) => {
   switch(routeType){
     case 'isNotLoggedIn':
       msg = `You're already logged in!`
-      redirect = `/login`
+      redirect = `/get-started`
       break
     case 'isLoggedIn':
       msg = 'You must be logged in!'
-      redirect = `/login`
+      redirect = `/get-started`
       break
     case 'confirmPassword':
       msg = 'Passwords do not match!'

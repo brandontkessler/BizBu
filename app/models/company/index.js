@@ -31,6 +31,11 @@ let CompanySchema = new mongoose.Schema({
 		ref: 'Bulletin'
 	},
 
+	checklist: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Checklist'
+	},
+
 	chat: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Chat'

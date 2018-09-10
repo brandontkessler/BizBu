@@ -3,6 +3,7 @@ const path = require('path'),
   router = require('express').Router(),
   { getCompanyDashboard, postCompanyInfoToDashboard } = require(path.join(__dirname, 'dashboard')),
   team = require(path.join(__dirname, 'team')),
+  { getChecklist, saveChecklist } = require(path.join(__dirname, 'checklist')),
   { getBulletinBoard, postBulletin, updateBulletin, deleteBulletin,
     bulletinComment } = require(path.join(__dirname, 'bulletin')),
 	middleware = require(path.join(process.cwd(), 'app', 'middleware'))
@@ -51,6 +52,15 @@ router.route('/:companyId/team/remove')
     middleware.isCompanyAdmin,
     middleware.atLeastOneOption,
 		team.removeMember)
+
+// ************************* CHECKLIST *************************
+router.route('/:companyId/checklist')
+  .get(middleware.isLoggedIn,
+    middleware.isCompanyAdminOrMember,
+    getChecklist)
+  .post(middleware.isLoggedIn,
+    middleware.isCompanyAdminOrMember,
+    saveChecklist)
 
 // ************************* BULLETIN BOARD *************************
 router.route('/:companyId/bulletin-board')

@@ -6,11 +6,7 @@ const path = require('path'),
   h = require(path.join(process.cwd(), 'app', 'helpers'))
 
 let UserSchema = new mongoose.Schema({
-
-
   email: String,
-
-
   url: String,
 	created: Date,
 	inviteCode: String,
@@ -39,6 +35,7 @@ let UserSchema = new mongoose.Schema({
 			ref: 'Company'
 		}
 	],
+  
 	invites: [
 		{
 			inviter: String,
