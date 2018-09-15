@@ -73,7 +73,7 @@ UserSchema.pre('save', async function(next){
 
   let cipher = crypto.createCipher('aes192', user.email)
   let inviteCode = cipher.update(config.inviteEncrypter, 'utf8', 'hex')
-	user.inviteCode = inviteCode += cipher.final('hex')
+	user.inviteCode = inviteCode // += cipher.final('hex')
 
 	next()
 })
