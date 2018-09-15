@@ -35,7 +35,7 @@ let UserSchema = new mongoose.Schema({
 			ref: 'Company'
 		}
 	],
-  
+
 	invites: [
 		{
 			inviter: String,
@@ -69,14 +69,11 @@ UserSchema.pre('save', async function(next){
 	let user = this
 
 	// Only hash if unmodified
-	if(!user.isModified('username')) return next()
+	if(!user.isModified('email')) return next()
 
-  let cipher = crypto.createCipher('aes192', user.username)
+  let cipher = crypto.createCipher('aes192', user.email)
   let inviteCode = cipher.update(config.inviteEncrypter, 'utf8', 'hex')
 	user.inviteCode = inviteCode += cipher.final('hex')
-
-  let pw = await h.encryption.encode(user.password)
-  user.password = pw
 
 	next()
 })
