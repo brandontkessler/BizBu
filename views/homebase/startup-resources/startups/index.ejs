@@ -9,10 +9,11 @@
       <% for (let company of companies) { %>
         <li>
           <h2><%= company.name %></h2>
-          <h3><%= company.companyInfo.tagline %></h3>
-          <h3><%= company.companyInfo.description %></h3>
-          <% if(company.companyInfo.needs && company.companyInfo.needs.length > 0){ %>
-            <p>Needs: <%= company.companyInfo.needs.join(", ") %></p>
+          <h3><%= company.checklist.checklistData.tagline %></h3>
+          <h3><%= company.checklist.checklistData.description %></h3>
+          <h3><%= company.checklist.checklistData.location %></h3>
+          <% if(company.checklist.checklistData.needs && company.checklist.checklistData.needs.length > 0){ %>
+            <p>Needs: <%= company.checklist.checklistData.needs.join(", ") %></p>
           <% } %>
           <form action="/homebase/startup-resources/startups/<%= company._id %>/message" method="post">
             <button>Send Message</button>

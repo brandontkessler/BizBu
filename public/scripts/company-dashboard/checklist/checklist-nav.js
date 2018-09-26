@@ -69,6 +69,15 @@
 		}
 	}
 
+	let hideBack = function(firstClass){
+		if(firstClass === 'company-info'){
+			btnBack.addClass('hide-btn')
+		} else {
+			btnBack.removeClass('hide-btn')
+		}
+	}
+
+	hideBack('company-info')
 	companyInfo.addClass('display-from-right')
 
 	// ******* Setting up yes, no answers on load ***********
@@ -116,6 +125,8 @@
 					checklist[nextItemIndex].addClass('display-from-right')
 
 					hideNext(firstClass)
+					btnBack.removeClass('hide-btn')
+
 					break
 				} else {
 					break
@@ -134,6 +145,7 @@
 					checklist[nextItemIndex].addClass('display-from-right')
 
 					hideNext(firstClass)
+					btnBack.removeClass('hide-btn')
 
 					break
 				} else {
@@ -161,6 +173,10 @@
 
 					hideNext(firstClass)
 
+					if(previousItemIndex === 0){
+						hideBack(firstClass)
+					}
+
 					break
 				} else {
 					break
@@ -178,6 +194,10 @@
 					checklist[previousItemIndex].addClass('display-from-left')
 
 					hideNext(firstClass)
+
+					if(previousItemIndex === 0){
+						hideBack(firstClass)
+					}
 
 					break
 				} else {

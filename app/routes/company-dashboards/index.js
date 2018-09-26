@@ -13,9 +13,6 @@ router.route('/:companyId')
   .get(middleware.isLoggedIn,
     middleware.isCompanyAdminOrMember,
     getCompanyDashboard)
-  .post(middleware.isLoggedIn,
-    middleware.isCompanyAdmin,
-    postCompanyInfoToDashboard)
 
 // ************************* TEAM PAGE *************************
 router.route('/:companyId/team')

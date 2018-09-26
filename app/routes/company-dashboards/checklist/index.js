@@ -19,6 +19,8 @@ let saveChecklist = async (req, res) => {
       tagline: req.body.tagline,
       description: req.body.description,
       location: req.body.location,
+      needs: req.body.needs.split(","),
+      public: req.body.public,
       assumptions: req.body.assumptions,
       endUser: req.body.endUser,
       seekingCofounder: req.body.seekingCoFounder,

@@ -24,7 +24,19 @@
           <textarea name="description"><%= company.checklist.checklistData.description %></textarea>
 
           <p>Company Location</p>
-          <input type="text" name="location" value="<%= company.checklist.location %>">
+          <input type="text" name="location" value="<%= company.checklist.checklistData.location %>">
+
+          <p>Company Needs</p>
+          <h6>Separate each need with a comma (,)</h6>
+          <textarea name="needs"><%= company.checklist.checklistData.needs %></textarea>
+
+          <p>Make company public in Startup Resources?</p>
+          <% if(company.checklist.checklistData.public === 'True'){ %>
+            <input type="checkbox" name="public" value="True" checked>
+          <% } else { %>
+            <input type="checkbox" name="public" value="True">
+          <% } %>
+
         </div>
 
         <div class="assumption-recommendations checklist-item">

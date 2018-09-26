@@ -4,11 +4,6 @@ const mongoose = require("mongoose")
 let CompanySchema = new mongoose.Schema({
 	name: String,
 	created: Date,
-	companyInfo: {
-		tagline: String,
-		description: String,
-		needs: [String]
-	},
 
 	admin: [
 		{

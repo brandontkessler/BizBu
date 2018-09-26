@@ -8,14 +8,14 @@ const routeType = 'startup-resources'
 let startups = async (req, res) => {
   try {
     let user = await User.findById(req.user._id).populate('companiesAdmin').populate('companiesMember')
-    let allCompanies = await Company.find()
+    let allCompanies = await Company.find().populate('checklist')
     let companies = []
     for (let company of allCompanies){
-      if(company.companyInfo &&
-        company.companyInfo.tagline &&
-        company.companyInfo.tagline !== '' &&
-        company.companyInfo.description &&
-        company.companyInfo.description !== ''){
+      if(company.checklist.checklistData.public === 'True' &&
+        company.checklist.checklistData.tagline &&
+        company.checklist.checklistData.tagline !== '' &&
+        company.checklist.checklistData.description &&
+        company.checklist.checklistData.description !== ''){
         companies.push(company)
       }
     }

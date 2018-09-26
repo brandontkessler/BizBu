@@ -11,6 +11,8 @@ let ChecklistSchema = new mongoose.Schema({
     tagline: String,
     description: String,
     location: String,
+		needs: [String],
+		public: String,
     assumptions: String,
     endUser: String,
 		seekingCofounder: String,
