@@ -9,34 +9,13 @@
       Check out the startup resources	to see what's already out there.
     </p>
 
-    <h3>Invite Code</h3>
+    <!-- <h3>Invite Code</h3>
     <div class="invite-code">
       <p>Companies need your invite code to invite you to join their team</p>
       <p>Invite code:</p>
       <p class="user-invite-code"><%= currentUser.inviteCode %></p>
-    </div>
+    </div> -->
 
-    <% if(user.invites.length > 0) { %>
-      <h2>Your Invites</h2>
-      <% user.invites.forEach((invite) => { %>
-        <p>Company: <%= invite.companyName %></p>
-        <p>Role:
-          <% if(invite.admin){ %>
-            <span>admin</span>
-          <% } else { %>
-            <span>member</span>
-          <% } %>
-        </p>
-        <p>From: <%= invite.inviter %></p>
-        <form action="/company-dashboard/<%= invite.companyId %>/team/invite/accept" method="post">
-          <input type="hidden" name="inviteId" value="<%= invite._id %>">
-          <button>Accept</button>
-        </form>
-        <form action="/company-dashboard/<%= invite.companyId %>/team/invite/decline" method="post">
-          <input type="hidden" name="inviteId" value="<%= invite._id %>">
-          <button>Decline</button>
-        </form>
-      <% }) %>
-    <% } %>
+    
   </div>
 </div>

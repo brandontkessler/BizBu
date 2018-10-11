@@ -5,6 +5,8 @@
   <% include ../../partials/nav/sidebar %>
   <div class="content">
 
+    <a href="/homebase/company/create">Create a Company</a>
+
     <% if(user.companiesAdmin.length > 0 || user.companiesMember.length > 0) { %>
       <div class="companies">
         <h2 class="profile-header">Your Companies</h2>
@@ -39,11 +41,8 @@
         <h2 class="profile-header">Companies</h2>
         <div class="companies-content">
           <p>
-            You don't have any companies.
+            You don't have any companies yet.
           <p>
-          <p>
-            Create one or join one from <a href="/homebase/startup-resources/startups">Startups</a> pool under Startup Resources.
-          </p>
         </div>
       </div>
     <% } %>

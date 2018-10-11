@@ -4,7 +4,7 @@
 <h1 id="home">Home</h1>
 
 <% if(currentUser){ %>
-	<a href="/user-profile/<%= currentUser._id %>">Back to Profile</a>
+	<a href="/homebase/user/<%= currentUser._id %>">Back to Profile</a>
 <% } %>
 
 <% include ./partials/footer %>

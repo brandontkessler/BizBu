@@ -7,22 +7,44 @@
     <h2>Invite</h2>
   </div>
 
-	<p>
-		Paste the user's invite code into the form below and hit send.
-		Choose whether to invite them as a member or as admin. They have different authorizations.
-		They will then be able to accept or decline the invite from their profile.
-	</p>
 
-	<form action="/company-dashboard/<%= company._id %>/team/invite" method="post">
-		<input type="text" name="invitee" autocomplete="off" required>
-		<input type="hidden" name="invite[inviter]" value="<%= currentUser.name.split(' ')[0] %>">
-		<input type="hidden" name="invite[companyId]" value="<%= company._id %>">
-		<input type="hidden" name="invite[companyName]" value="<%= company.name %>">
-		<input type="radio" name="invite[admin]" value=true required> Admin
-		<input type="radio" name="invite[admin]" value=false required> Member
-		<button>Invite</button>
-	</form>
+	<ul id="available-to-invite">
+		<% users.forEach(function(availableUser){ %>
+			<% if(availableUser.publicProfile){ %>
+				<li>
+					<%= availableUser.name %>
+					<a href="<%= availableUser.linkedin.url %>" target="_blank">LinkedIn</a>
+					<% if(availableUser.companiesAdmin.indexOf(company._id) >= 0){ %>
+						<p>Admin of <%= company.name %></p>
+					<% } else if(availableUser.companiesMember.indexOf(company._id) >= 0){ %>
+						<p>Member of <%= company.name %></p>
+<!-- ************ Adds invite pending message if already existing ************* -->
+					<% } else if(availableUser.invites.forEach(function(invite){ %>
+						<% if(invite.companyId == company._id){ %>
+							<p class="invite-pending">Invite pending</p>
+
+						<% } %>
+					<% })) { %>
+
+					<% } else { %>
+						<form action="/company-dashboard/<%= company._id %>/team/invite" method="post">
+							<input type="text" name="invitee" value="<%= availableUser.inviteCode %>" hidden required>
+							<input type="hidden" name="invite[inviter]" value="<%= currentUser.name.split(' ')[0] %>">
+							<input type="hidden" name="invite[companyId]" value="<%= company._id %>">
+							<input type="hidden" name="invite[companyName]" value="<%= company.name %>">
+							<input type="radio" name="invite[admin]" value=true required> Admin
+							<input type="radio" name="invite[admin]" value=false required> Member
+							<button>Invite</button>
+						</form>
+					<% } %>
+					<br>
+				</li>
+			<% } %>
+		<% }) %>
+	</ul>
 
 </div>
+
+<script type="text/javascript" src="/scripts/company-dashboard/team/invite.js"></script>
 
 <% include ../../partials/footer %>

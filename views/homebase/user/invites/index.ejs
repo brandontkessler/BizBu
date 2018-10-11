@@ -1,0 +1,39 @@
+<% include ../../partials/head-open %>
+<% include ../../partials/head-close %>
+
+
+	<div class="grid-container">
+	  <% include ../../partials/nav/sidebar %>
+	  <div class="content">
+
+      <% if(user.invites.length > 0) { %>
+        <h2>Your Invites</h2>
+        <% user.invites.forEach((invite) => { %>
+          <p>Company: <%= invite.companyName %></p>
+          <p>Role:
+            <% if(invite.admin){ %>
+              <span>admin</span>
+            <% } else { %>
+              <span>member</span>
+            <% } %>
+          </p>
+          <p>From: <%= invite.inviter %></p>
+          <form action="/company-dashboard/<%= invite.companyId %>/team/invite/accept" method="post">
+            <input type="hidden" name="inviteId" value="<%= invite._id %>">
+            <button>Accept</button>
+          </form>
+          <form action="/company-dashboard/<%= invite.companyId %>/team/invite/decline" method="post">
+            <input type="hidden" name="inviteId" value="<%= invite._id %>">
+            <button>Decline</button>
+          </form>
+        <% }) %>
+      <% } else { %>
+				<h2>You have no pending invites.</h2>
+			<% }%>
+
+	  </div>
+	</div>
+
+
+
+<% include ../../partials/footer %>

@@ -2,7 +2,7 @@
 const path = require('path'),
   router = require('express').Router(),
 	middleware = require(path.join(process.cwd(), 'app', 'middleware')),
-  { getUserProfile, makeMePublic, hideMe,
+  { getUserProfile, getUserInvites, makeMePublic, hideMe,
     getMessages, sendMessage, deleteMessage, queryMessages } = require(path.join(__dirname, 'user')),
   { myCompanies, getCompanyCreate, createCompany } = require(path.join(__dirname, 'company')),
   { startups, messageStartup,
@@ -27,22 +27,27 @@ router.get('/user/:id/hide-me',
   middleware.isProfileOwner,
   hideMe)
 
+router.get('/user/:id/invites',
+  middleware.isLoggedIn,
+  middleware.isProfileOwner,
+  getUserInvites)
+
 // message routes
-router.get('/user/:id/my-messages',
-  middleware.isLoggedIn,
-  getMessages)
-
-router.route('/user/:id/send-message/:msgId')
-  .post(middleware.isLoggedIn,
-  sendMessage)
-
-router.route('/user/:id/delete-message/:msgId')
-  .post(middleware.isLoggedIn,
-  deleteMessage)
-
-router.get('/user/:id/my-messages/query/:msgId',
-  middleware.isLoggedIn,
-  queryMessages)
+// router.get('/user/:id/my-messages',
+//   middleware.isLoggedIn,
+//   getMessages)
+//
+// router.route('/user/:id/send-message/:msgId')
+//   .post(middleware.isLoggedIn,
+//   sendMessage)
+//
+// router.route('/user/:id/delete-message/:msgId')
+//   .post(middleware.isLoggedIn,
+//   deleteMessage)
+//
+// router.get('/user/:id/my-messages/query/:msgId',
+//   middleware.isLoggedIn,
+//   queryMessages)
 
 // ************************* COMPANY *************************
 router.get('/company/my-companies',

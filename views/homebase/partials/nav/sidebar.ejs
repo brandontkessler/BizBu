@@ -1,6 +1,5 @@
 <div class="sidebar">
   <ul>
-    <h2>User</h2>
     <li>
       <a href="/homebase/user/<%= currentUser._id %>">
         <% if(page === 'profile') { %>
@@ -9,18 +8,25 @@
         Profile
       </a>
     </li>
-    <li>
+
+    <!-- <li>
       <a href="/homebase/user/<%= currentUser._id %>/my-messages">
         <% if(page === 'my-messages') { %>
           <%= '>' %>
         <% } %>
         My Messages
       </a>
+    </li> -->
+
+    <li>
+      <a href="/homebase/user/<%= currentUser._id %>/invites">
+        <% if(page === 'invites') { %>
+          <%= '>' %>
+        <% } %>
+        Invites
+      </a>
     </li>
 
-    <hr>
-
-    <h2>Company</h2>
     <li>
       <a href="/homebase/company/my-companies">
         <% if(page === 'my-companies') { %>
@@ -29,34 +35,7 @@
         My Companies
       </a>
     </li>
-    <li>
-      <a href="/homebase/company/create">
-        <% if(page === 'create-company') { %>
-          <%= '>' %>
-        <% } %>
-        Create Company
-      </a>
-    </li>
 
-    <hr>
-
-    <h2>Startup resources</h2>
-    <li>
-      <a href="/homebase/startup-resources/startups">
-        <% if(page === 'startups') { %>
-          <%= '>' %>
-        <% } %>
-        Startups
-      </a>
-    </li>
-    <li>
-      <a href="/homebase/startup-resources/talent">
-        <% if(page === 'talent') { %>
-          <%= '>' %>
-        <% } %>
-        Talent
-      </a>
-    </li>
     <li>
       <a href="/homebase/startup-resources/service-providers">
         <% if(page === 'service-providers') { %>
@@ -65,5 +44,16 @@
         Service Providers
       </a>
     </li>
+
+    <hr>
+
+    <li>
+      <a href="/">Home</a>
+    </li>
+
+    <li>
+      <a href="/logout">Logout</a>
+    </li>
+
   </ul>
 </div>

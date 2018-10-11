@@ -13,7 +13,7 @@ module.exports = (req, route, param) => {
       break
     case 'sendInvite':
       msg = 'Invite has been sent'
-      redirect = `/company-dashboard/${req.params.companyId}/team`
+      redirect = `/company-dashboard/${req.params.companyId}/team/invite`
       break
     case 'acceptInvite':
       msg = `Welcome to the team`

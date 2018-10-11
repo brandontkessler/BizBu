@@ -1,5 +1,10 @@
+.sidebar {
+  background-color: #303332;
+}
+
 .sidebar ul {
   list-style: none;
+  height: calc(100vh - 50px);
 }
 
 .sidebar hr {
@@ -16,10 +21,9 @@
 }
 
 .sidebar ul li a {
-  font-size:1.2em;
+  font-size:1em;
   text-decoration: none;
-  font-weight: bolder;
-  color: #384760;
+  color: white;
 }
 
 .sidebar ul li a:hover {
