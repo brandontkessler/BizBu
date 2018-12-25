@@ -4,7 +4,6 @@ const path = require('path'),
   config = require(path.join(process.cwd(), 'app', 'config')),
   { User } = require(path.join(process.cwd(), 'app', 'models')),
   logger = require(path.join(process.cwd(), 'app', 'logger')),
-  LocalStrategy = require('passport-local').Strategy,
   LinkedinStrategy = require('passport-linkedin-oauth2').Strategy
 
 module.exports = () => {
@@ -17,24 +16,6 @@ module.exports = () => {
   		done(err, user)
   	})
   });
-
-
-  let localAuth = async (username, password, done) => {
-    try {
-      let user = await User.findOne({ username: username })
-
-      if(!user) {
-        logger.log('error', 'user does not exist')
-        return done(null, false, { message: 'Unable to log in' });
-      }
-
-      return done(null, user);
-    } catch(e) {
-      logger.log('error', `Local auth error: ${e}`)
-      return done(null, false, { message: e })
-    }
- 	}
-
 
   let linkedinAuth = async (accessToken, refreshToken, profile, done) => {
   	try{
@@ -73,6 +54,5 @@ module.exports = () => {
   	}
   }
 
-  passport.use(new LocalStrategy(localAuth))
   passport.use(new LinkedinStrategy(config.linkedin, linkedinAuth))
 }
