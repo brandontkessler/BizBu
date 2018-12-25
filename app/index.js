@@ -8,7 +8,6 @@ const path = require('path'),
 
 
 module.exports = {
-  chatIo: require(path.join(__dirname, 'socket')),
   config: require(path.join(__dirname, 'config')),
   logger: require(path.join(__dirname, 'logger')),
   session: require(path.join(__dirname, 'session')),
