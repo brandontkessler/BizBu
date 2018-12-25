@@ -1,0 +1,38 @@
+<% include ../partials/head-open %>
+<link rel="stylesheet" type="text/css" href="/stylesheets/company-dashboard/checklist/checklist.css">
+<% include ./partials/head-close %>
+
+<div class="content">
+
+  <form id="checklist-form" class="checklist-form" action="/company-dashboard/<%= company._id %>/checklist/research" method="post">
+
+    <div class="end-user checklist-item">
+      <p>Describe end-user</p>
+      <textarea class="checklist-text" name="endUser"><%= company.checklist.checklistData.endUser %></textarea>
+    </div>
+
+    <div class="competition checklist-item">
+      <p>Who are the current players and substitutes for your product?</p>
+      <textarea class="checklist-text" name="competition"><%= company.checklist.checklistData.competition %></textarea>
+    </div>
+
+    <div class="revenue checklist-item">
+      <p>How will you make money?</p>
+      <textarea class="checklist-text" name="revenue"><%= company.checklist.checklistData.revenue %></textarea>
+    </div>
+
+    <div class="market-size checklist-item">
+      <p>What is the market size?</p>
+      <textarea class="checklist-text" name="marketSize"><%= company.checklist.checklistData.marketSize %></textarea>
+    </div>
+
+    <p>provide recommendations on how to assess the market including tools and third party services</p>
+
+    <button class="save">Save</button>
+  </form>
+
+</div>
+
+
+<script type="text/javascript" src="/scripts/company-dashboard/checklist/text-fields.js"></script>
+<% include ../partials/footer %>

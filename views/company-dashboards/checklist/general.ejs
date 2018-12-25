@@ -1,0 +1,43 @@
+<% include ../partials/head-open %>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/company-dashboard/checklist/checklist.css">
+<% include ./partials/head-close %>
+
+<div class="content">
+
+  <form id="checklist-form" class="checklist-form" action="/company-dashboard/<%= company._id %>/checklist/general" method="post">
+
+    <div class="company-tagline checklist-item">
+      <p>Tagline</p>
+      <textarea class="checklist-text" name="tagline"><%= company.checklist.checklistData.tagline %></textarea>
+    </div>
+
+    <div class="company-mission checklist-item">
+      <p>Company Mission</p>
+      <textarea class="checklist-text" name="mission"><%= company.checklist.checklistData.mission %></textarea>
+    </div>
+
+    <div class="biz-description checklist-item">
+      <p>Business Description</p>
+      <textarea class="checklist-text" name="description"><%= company.checklist.checklistData.description %></textarea>
+    </div>
+
+    <div class="founder-bios checklist-item">
+      <p>Complete founder bios including reasons why founders are qualified for startup</p>
+      <textarea class="checklist-text" name="founderBios"><%= company.checklist.checklistData.founderBios %></textarea>
+    </div>
+
+    <div class="intro-video checklist-item">
+      <p>Complete 1-min YouTube video introducing founders and save url below</p>
+      <input name="introVideo" type="text" value="<%= company.checklist.checklistData.introVideo %>">
+    </div>
+
+
+    <button class="save">Save</button>
+
+  </form>
+
+</div>
+
+
+<script type="text/javascript" src="/scripts/company-dashboard/checklist/text-fields.js"></script>
+<% include ../partials/footer %>

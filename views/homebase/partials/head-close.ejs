@@ -1,5 +1,11 @@
 </head>
 <body>
 
-	<% include ../../universal-partials/flash %>
-	<% include ./nav/nav.ejs %>
+	<% include ./nav/nav %>
+
+
+	<div class="grid-container">
+	  <% include ./nav/sidebar %>
+	  <div class="content">
+
+			<% include ../../flash %>

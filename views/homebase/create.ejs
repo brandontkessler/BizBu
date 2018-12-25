@@ -1,0 +1,22 @@
+<% include ./partials/head-open %>
+
+<link rel="stylesheet" type="text/css" href="/stylesheets/homebase/create-company.css">
+<% include ./partials/head-close %>
+
+
+    <p class="create-intro">It's as simple as typing in the name of the company you want start, then hitting create</p>
+		<br>
+		<br>
+
+		<form action="/homebase/create" method="post">
+			<input class="company-name" type="string" name="company[name]" placeholder="Company Name" required autofocus>
+			<button class="company-create-btn">Create</button>
+		</form>
+
+    <br>
+    <br>
+    <p class="create-tip">Looking to join a company instead? Make sure your profile is public, then have a company admin invite you to join their team.</p>
+
+
+
+<% include ./partials/footer %>

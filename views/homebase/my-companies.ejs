@@ -1,0 +1,60 @@
+<% include ./partials/head-open %>
+
+<link rel="stylesheet" type="text/css" href="/stylesheets/homebase/my-companies.css">
+<% include ./partials/head-close %>
+
+  <% if(user.companiesAdmin.length > 0 || user.companiesMember.length > 0) { %>
+    <div class="companies">
+      <div class="companies-content">
+
+        <ul class="admin">
+          <h3>Admin Of...</h3>
+          <% if(user.companiesAdmin.length > 0){ %>
+            <% user.companiesAdmin.forEach((company) => { %>
+              <li>
+                <a class="my-companies" href="/company-dashboard/<%= company._id %>">
+                  <%= company.name %>
+                </a>
+              </li>
+            <% }) %>
+          <% } else { %>
+            <li>
+              You are not currently an admin of any companies
+            </li>
+          <% } %>
+
+        </ul>
+
+        <ul class="member">
+          <h3>Member Of...</h3>
+            <% if(user.companiesMember.length > 0){ %>
+              <% user.companiesMember.forEach((company) => { %>
+                <li>
+                  <a class="my-companies" href="/company-dashboard/<%= company._id %>">
+                    <%= company.name %>
+                  </a>
+                </li>
+              <% }) %>
+            <% } else { %>
+              <li>
+                You are not currently a member of any companies
+              </li>
+            <% } %>
+
+        </ul>
+
+      </div>
+    </div>
+  <% } else { %>
+    <div class="companies">
+      <h2 class="profile-header">Companies</h2>
+      <div class="companies-content">
+        <p>
+          You don't have any companies yet.
+        <p>
+      </div>
+    </div>
+  <% } %>
+
+
+<% include ./partials/footer %>

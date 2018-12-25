@@ -1,47 +1,27 @@
 <div class="sidebar">
   <ul>
-    <li>
-      <a href="/homebase/user/<%= currentUser._id %>">
-        <% if(page === 'profile') { %>
-          <%= '>' %>
-        <% } %>
-        Profile
-      </a>
-    </li>
-
-    <!-- <li>
-      <a href="/homebase/user/<%= currentUser._id %>/my-messages">
-        <% if(page === 'my-messages') { %>
-          <%= '>' %>
-        <% } %>
-        My Messages
-      </a>
-    </li> -->
 
     <li>
-      <a href="/homebase/user/<%= currentUser._id %>/invites">
-        <% if(page === 'invites') { %>
-          <%= '>' %>
-        <% } %>
-        Invites
+      <a href="/homebase/create">
+        Create Company
       </a>
     </li>
 
     <li>
-      <a href="/homebase/company/my-companies">
-        <% if(page === 'my-companies') { %>
-          <%= '>' %>
-        <% } %>
+      <a href="/homebase/my-companies">
         My Companies
       </a>
     </li>
 
     <li>
-      <a href="/homebase/startup-resources/service-providers">
-        <% if(page === 'service-providers') { %>
-          <%= '>' %>
-        <% } %>
-        Service Providers
+      <a href="/homebase/<%= currentUser._id %>/invites">
+        Invites
+      </a>
+    </li>
+
+    <li>
+      <a href="/homebase/<%= currentUser._id %>/profile">
+        Profile
       </a>
     </li>
 
@@ -52,7 +32,15 @@
     </li>
 
     <li>
-      <a href="/logout">Logout</a>
+      <a href="/">How To</a>
+    </li>
+
+    <li>
+      <a href="/">Contact</a>
+    </li>
+
+    <li>
+      <a href="/logout">Sign out</a>
     </li>
 
   </ul>

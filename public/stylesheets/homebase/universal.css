@@ -1,20 +1,19 @@
 body {
   margin: 0;
   font-family: 'Playfair Display', serif;
-  overflow: hidden;
 }
 
 .grid-container {
-  overflow: hidden;
+
 }
 
 .sidebar {
-	width: 250px;
+	width: 200px;
   float: left;
   border-right: 1px solid black;
 }
 
 .content {
-	width: calc(100vw - 250px - 20px);
+	width: calc(100vw - 200px - 20px);
   float: right;
 }

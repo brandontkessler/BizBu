@@ -1,0 +1,15 @@
+.homebase-nav-bar {
+  overflow: hidden;
+  height: 90px;
+  background-color: #33A4FB;
+  border-bottom: 3px solid #33A4FB;
+}
+
+.homebase-nav-logo {
+  width: 200px;
+  margin: auto;
+}
+
+.homebase-nav-logo img {
+  width: 200px;
+}

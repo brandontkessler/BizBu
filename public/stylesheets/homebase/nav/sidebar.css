@@ -1,31 +1,37 @@
 .sidebar {
-  background-color: #303332;
+  background-color: white;
+  border-right: 1px solid #DCDCDC;
 }
 
 .sidebar ul {
   list-style: none;
   height: calc(100vh - 50px);
+  padding: 0;
 }
 
 .sidebar hr {
-  width: 150px;
-  margin-left: -10px;
   outline: none;
   border: none;
   background-color: #DCDCDC;
   height: 1px;
+  width: 80%;
+  margin: 20px auto;
 }
 
 .sidebar ul li {
   padding: 10px 0;
+  text-align: right;
+  font-size: 20px;
 }
 
 .sidebar ul li a {
   font-size:1em;
   text-decoration: none;
-  color: white;
+  color: #b7b7b7;
+  padding-right: 20px;
 }
 
 .sidebar ul li a:hover {
-  text-decoration: underline;
+  text-decoration: none;
+  color: #33A4FB;
 }

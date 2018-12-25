@@ -7,19 +7,15 @@ module.exports = (req, routeType) => {
   switch(routeType){
     case 'isNotLoggedIn':
       msg = `You're already logged in!`
-      redirect = `/get-started`
+      redirect = `/login`
       break
     case 'isLoggedIn':
       msg = 'You must be logged in!'
-      redirect = `/get-started`
-      break
-    case 'confirmPassword':
-      msg = 'Passwords do not match!'
-      redirect = `/signup`
+      redirect = `/login`
       break
     case 'isProfileOwner':
       msg = `That's not your profile!`
-      redirect = `/homebase/user/${req.user._id}`
+      redirect = `/homebase/${req.user._id}/profile`
       break
     case 'isCompanyAdmin':
       msg = `You're not an admin! You can't do that!`

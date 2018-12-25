@@ -1,22 +1,12 @@
 <% include ./partials/header-open %>
-	<link rel="stylesheet" type="text/css" href="/stylesheets/home/get-started.css">
+	<link rel="stylesheet" type="text/css" href="/stylesheets/home/login.css">
 <% include ./partials/header-close %>
 
-<div class="container">
-  <h3>Log in</h3>
-	<!-- <a href="/auth/linkedin" class="btn btn-linkedin">Continue with LinkedIn</a> -->
-	<form class="login-form" action="/login" method="post">
 
-		<label for="username">Email</label>
-		<input type="email" name="username">
+	<h5 class="social-auth-description">We use LinkedIn to authenticate our users. This helps us create a professional community for you to connect with.</h5>
 
-		<label for="password">Password</label>
-		<input type="password" name="password">
-
-		<button>Go</button>
-	</form>
-
-	<a href="/signup">need an account?</a>
-</div>
+	<div class="social-container">
+		<a href="/auth/linkedin" class="btn btn-linkedin">Continue with LinkedIn</a>
+	</div>
 
 <% include ./partials/footer %>

@@ -1,0 +1,39 @@
+/* **************************** NAVIGATION ******************************* */
+body {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+}
+
+.home-nav-bar {
+  overflow: hidden;
+  height: 120px;
+  background-color: white;
+  position: relative;
+  border-bottom: 3px solid #33A4FB;
+}
+
+.home-nav-logo {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+
+.home-nav-navigation {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-right: 10px;
+}
+
+.home-nav-navigation a {
+  margin-right: 10px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: bold;
+  color: #b7b7b7;
+}
+
+.home-nav-navigation a:hover {
+  text-decoration: none;
+  color: #33A4FB;
+}

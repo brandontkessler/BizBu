@@ -3,7 +3,6 @@ const path = require('path'),
 	express = require('express'),
 	app = express(),
 	server = require('http').Server(app),
-	io = require('socket.io')(server),
 	session = require('express-session'),
 	bodyParser = require('body-parser'),
 	flash = require('connect-flash'),
@@ -12,9 +11,9 @@ const path = require('path'),
 	helmet = require('helmet'),
 	morgan = require('morgan'),
 	methodOverride = require('method-override'),
-	OutOfOffice = require(path.join(__dirname, 'app'))
+	BizBu = require(path.join(__dirname, 'app'))
 
-mongoose.connect(OutOfOffice.config.dbURI)
+mongoose.connect(BizBu.config.dbURI)
 app.use(bodyParser.urlencoded({extended: true}))
 app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, 'public')))
@@ -23,13 +22,13 @@ app.use(flash())
 app.use(helmet())
 
 // EXPRESS SESSION CONFIG
-app.use(session(OutOfOffice.session))
+app.use(session(BizBu.session))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(morgan('combined', {
 	stream: {
 		write: message => {
-			OutOfOffice.logger.log('info', message)
+			BizBu.logger.log('info', message)
 		}
 	}
 }))
@@ -46,13 +45,10 @@ app.use((req, res, next) => {
 })
 
 // ROUTES
-app.use(OutOfOffice.homeRoutes)
-app.use(OutOfOffice.authRoutes)
-app.use('/homebase', OutOfOffice.homebaseRoutes)
-app.use('/company-dashboard', OutOfOffice.companyDashboardRoutes)
+app.use(BizBu.homeRoutes)
+app.use(BizBu.authRoutes)
+app.use('/homebase', BizBu.homebaseRoutes)
+app.use('/company-dashboard', BizBu.companyDashboardRoutes)
 app.get('*', (req, res) => res.status(404).send('404 unable to find page!'))
 
-// SOCKET
-OutOfOffice.chatIo(io, OutOfOffice.Chat, OutOfOffice.User, OutOfOffice.Company)
-
-server.listen(OutOfOffice.config.port, () => console.log(`OutOfOffice started on port ${OutOfOffice.config.port}`))
+server.listen(BizBu.config.port, () => console.log(`BizBu started on port ${BizBu.config.port}`))

@@ -1,0 +1,16 @@
+<% include ./partials/head-open %>
+<% include ./partials/head-close %>
+
+
+	<% if(currentUser.publicProfile) { %>
+		<p>Your profile is currently public. Your profile is visible to startups and they can invite you to join their team.</p>
+		<a href="/homebase/<%= currentUser._id %>/hide-me">Hide me</a>
+	<% } else { %>
+		<p>Your profile is currently hidden. If you would like startups to invite you to work on their team, go public.</p>
+		<a href="/homebase/<%= currentUser._id %>/make-me-public">Make me public</a>
+	<% } %>
+
+	<% include ./partials/user-profile-information %>
+
+
+<% include ./partials/footer %>

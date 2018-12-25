@@ -1,0 +1,44 @@
+<% include ../partials/head-open %>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/company-dashboard/checklist/checklist.css">
+<% include ./partials/head-close %>
+
+<div class="content">
+
+  <form id="checklist-form" class="checklist-form" action="/company-dashboard/<%= company._id %>/checklist/marketing" method="post">
+
+    <div class="customer-acquisition checklist-item">
+      <p>How will you obtain customers?</p>
+      <textarea class="checklist-text" name="userAcquisition"><%= company.checklist.checklistData.userAcquisition %></textarea>
+    </div>
+
+    <div class="acquisition-cost checklist-item">
+      <p>What is the acquisition cost per customer?</p>
+      <textarea class="checklist-text" name="acquisitionCost"><%= company.checklist.checklistData.acquisitionCost %></textarea>
+    </div>
+
+    <div class="initial-customers-plan checklist-item">
+      <p>Establish target number of initial customers & plan to acquire them (different from general marketing plan). Execute plan.​</p>
+      <textarea class="checklist-text" name="initialCustomersPlan"><%= company.checklist.checklistData.initialCustomersPlan %></textarea>
+    </div>
+
+    <div class="marketing-recommendation checklist-item">
+      <h3>Need help with marketing? Check out these resources to get you ahead!</h3>
+      <h4>Articles: </h4>
+      <p><a href="https://medium.com/swlh/how-to-develop-a-basic-marketing-plan-for-your-freelance-business-cb175b58faec">Develop a basic marketing plan</a></p>
+      <p><a href="https://neilpatel.com/blog/ultimate-guide-startup-marketing/">Startup marketing guide</a></p>
+      <hr>
+      <h4>Books</h4>
+      <a href="https://www.amazon.com/Crossing-Chasm-Marketing-High-Tech-Mainstream/dp/0060517123">Crossing the Chasm</a>
+      <hr>
+      <h4>Want to hire someone else to do your marketing?</h4>
+      <a href="https://www.fiverr.com/search/gigs?utf8=%E2%9C%93&source=guest-homepage&locale=en&search_in=everywhere&query=startup%20marketing&search-autocomplete-original-term=&search-autocomplete-original-term=start">Check out these startup marketing freelancers</a>
+    </div>
+
+    <button class="save">Save</button>
+  </form>
+
+</div>
+
+
+<script type="text/javascript" src="/scripts/company-dashboard/checklist/text-fields.js"></script>
+<% include ../partials/footer %>

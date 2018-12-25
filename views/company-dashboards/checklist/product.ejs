@@ -1,0 +1,30 @@
+<% include ../partials/head-open %>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/company-dashboard/checklist/checklist.css">
+<% include ./partials/head-close %>
+
+<div class="content">
+
+  <form id="checklist-form" class="checklist-form" action="/company-dashboard/<%= company._id %>/checklist/product" method="post">
+
+    <div class="prototype checklist-item">
+      <p>Do you have a working prototype or a way to test your product?</p>
+      <p class="prototype-yes">yes</p>
+      <p class="prototype-no">no</p>
+      <input id="prototype-input" type="hidden" name="prototype" value="<%= company.checklist.checklistData.prototype %>">
+    </div>
+
+    <div class="prototype-resources checklist-item">
+      <p>recommend resources for building a cheap prototype and testing a pre-MVP including third party services​</p>
+    </div>
+
+    <div class="checklist-item">
+      <button class="save">Save</button>
+    </div>
+
+  </form>
+
+</div>
+
+
+<script type="text/javascript" src="/scripts/company-dashboard/checklist/text-fields.js"></script>
+<% include ../partials/footer %>

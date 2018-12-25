@@ -1,0 +1,27 @@
+<% include ../partials/head-open %>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/company-dashboard/checklist/checklist.css">
+<% include ./partials/head-close %>
+
+<div class="content">
+
+  <form id="checklist-form" class="checklist-form" action="/company-dashboard/<%= company._id %>/checklist/financials" method="post">
+
+    <div class="financial-resources checklist-item">
+      <p>Do you have the financial resources needed to acquire initial customers?​​</p>
+      <p class="financial-resources-yes">yes</p>
+      <p class="financial-resources-no">no</p>
+      <input id="financial-resources-input" type="hidden" name="financialResources" value="<%= company.checklist.checklistData.financialResources %>">
+    </div>
+
+    <div class="financial-resources-advice checklist-item">
+      <p>**provide advice for sourcing capital and checklist of what is required by accelerators and/or VC/angel investors​</p>
+    </div>
+
+    <button class="save">Save</button>
+  </form>
+
+</div>
+
+
+<script type="text/javascript" src="/scripts/company-dashboard/checklist/text-fields.js"></script>
+<% include ../partials/footer %>

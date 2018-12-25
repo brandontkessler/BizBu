@@ -1,10 +1,21 @@
 <% include ./partials/header-open %>
 <% include ./partials/header-close %>
 
-<h1 id="home">Home</h1>
 
 <% if(currentUser){ %>
-	<a href="/homebase/user/<%= currentUser._id %>">Back to Profile</a>
+	<a href="/homebase/<%= currentUser._id %>/profile">Back to Profile</a>
 <% } %>
+
+<div class="home-content">
+	<img class="homepage-logo" src="https://i.imgur.com/IRCkipd.png" alt="BizBu Home Page">
+	<a class="start-a-business" href="
+	<% if(currentUser){ %>
+		<%= "/homebase/create" %>
+	<% } else { %>
+		<%= "login" %>
+	<% } %>
+	">Start a Business</a>
+</div>
+
 
 <% include ./partials/footer %>

@@ -1,0 +1,20 @@
+.companies-content ul {
+  padding: 0;
+  color: #33A4FB;
+  margin: 30px 0 0 20px;
+}
+
+.companies-content ul li {
+  list-style: none;
+  margin-left: 25px;
+  color: black;
+}
+
+.companies-content ul li a {
+  text-decoration: none;
+}
+
+.companies-content ul li a:hover {
+  text-decoration: none;
+  opacity: 0.6;
+}

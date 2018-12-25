@@ -9,23 +9,20 @@ let ChecklistSchema = new mongoose.Schema({
 
   checklistData: {
     tagline: String,
+		mission: String,
     description: String,
-    location: String,
-		needs: [String],
-		public: String,
-    assumptions: String,
-    endUser: String,
-		seekingCofounder: String,
 		founderBios: String,
 		introVideo: String,
-		prototype: String,
+    endUser: String,
 		competition: String,
 		revenue: String,
-		marketFinancialModel: String,
+		marketSize: String,
+		prototype: String,
 		userAcquisition: String,
+		acquisitionCost: String,
+		initialCustomersPlan: String,
 		legal: String,
-		financialResources: String,
-		initialCustomersPlan: String
+		financialResources: String
   }
 
 })

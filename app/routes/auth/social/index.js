@@ -13,7 +13,7 @@ let authLI = passport.authenticate('linkedin', {
 
 let authLIcbMiddleware = passport.authenticate('linkedin', {
   	failureFlash: 'unable to login',
-	  failureRedirect: '/get-started'
+	  failureRedirect: '/login'
 })
 
 let authLIcb = (req, res, next) => {

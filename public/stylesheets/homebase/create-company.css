@@ -1,0 +1,48 @@
+.create-intro {
+  position: relative;
+  margin: 30px auto 0 auto;
+  left: -50px;
+  width: 80%;
+}
+
+.company-name {
+  border: 1px solid #dcdcdc;
+  width: 300px;
+  padding: 20px 10px;
+  font-size: 1.4em;
+  margin: 0 auto;
+}
+
+.company-name:focus {
+  outline: none;
+}
+
+.company-create-btn {
+  width: 322px;
+  background-color: #33A4FB;
+  border: 1px solid #33a4fb;
+  color: white;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 10px;
+  margin: 10px auto 0 auto;
+}
+
+.company-create-btn:hover {
+  opacity: 0.6;
+}
+
+.company-name, .company-create-btn {
+  display: block;
+  position: relative;
+  left: -100px;
+}
+
+.create-tip {
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+  left: -50px;
+  color: #b7b7b7;
+  font-size: 0.9em;
+}

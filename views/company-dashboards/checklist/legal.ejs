@@ -1,0 +1,22 @@
+<% include ../partials/head-open %>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/company-dashboard/checklist/checklist.css">
+<% include ./partials/head-close %>
+
+<div class="content">
+
+  <form id="checklist-form" class="checklist-form" action="/company-dashboard/<%= company._id %>/checklist/legal" method="post">
+
+    <div class="legal checklist-item">
+      <p>Have you formed a legal entity? Established bank accounts? Payment systems?​</p>
+      <textarea class="checklist-text" name="legal"><%= company.checklist.checklistData.legal %></textarea>
+      <p>**provide recommendations on options for incorporation including third party services and tools</p>
+    </div>
+
+    <button class="save">Save</button>
+  </form>
+
+</div>
+
+
+<script type="text/javascript" src="/scripts/company-dashboard/checklist/text-fields.js"></script>
+<% include ../partials/footer %>

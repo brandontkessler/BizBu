@@ -31,9 +31,29 @@ module.exports = (req, route, param) => {
       msg = 'Bulletin posted'
       redirect = `/company-dashboard/${req.params.companyId}/bulletin-board`
       break
-    case 'checklistRoutes':
+    case 'checklistGeneral':
       msg = 'Checklist saved'
-      redirect = `/company-dashboard/${req.params.companyId}/checklist`
+      redirect = `/company-dashboard/${req.params.companyId}/checklist/general`
+      break
+    case 'checklistResearch':
+      msg = 'Checklist saved'
+      redirect = `/company-dashboard/${req.params.companyId}/checklist/research`
+      break
+    case 'checklistProduct':
+      msg = 'Checklist saved'
+      redirect = `/company-dashboard/${req.params.companyId}/checklist/product`
+      break
+    case 'checklistMarketing':
+      msg = 'Checklist saved'
+      redirect = `/company-dashboard/${req.params.companyId}/checklist/marketing`
+      break
+    case 'checklistLegal':
+      msg = 'Checklist saved'
+      redirect = `/company-dashboard/${req.params.companyId}/checklist/legal`
+      break
+    case 'checklistFinancials':
+      msg = 'Checklist saved'
+      redirect = `/company-dashboard/${req.params.companyId}/checklist/financials`
       break
     default:
       console.log('error at companyFactory')

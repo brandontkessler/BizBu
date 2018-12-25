@@ -1,26 +1,25 @@
 <div id="sidebar" class="sidebar">
   <ul class="sidebar-ul">
     <li>
-      <a href="/company-dashboard/<%= company._id %>"><span><i class="fas fa-object-group"></i></span>Dashboard</a>
+      <a href="/company-dashboard/<%= company._id %>">Dashboard</a>
     </li>
     <li>
-      <a href="/company-dashboard/<%= company._id %>/team"><span><i class="fas fa-users"></i></span>Team</a>
+      <a href="/company-dashboard/<%= company._id %>/team">Team</a>
     </li>
     <li>
-      <a href="/company-dashboard/<%= company._id %>/checklist"><span><i class="fas fa-tasks"></i></span>Checklist</a>
+      <a href="/company-dashboard/<%= company._id %>/checklist/general">Checklist</a>
     </li>
     <li>
-      <a href="/company-dashboard/<%= company._id %>/bulletin-board"><span><i class="fas fa-thumbtack"></i></span>Bulletin Board</a>
+      <a href="/company-dashboard/<%= company._id %>/bulletin-board">Bulletin Board</a>
     </li>
-    <br><br><br>
+
+    <hr>
+
     <li>
-      <a href="/homebase/user/<%= currentUser._id %>"><span><i class="fas fa-home"></i></span>Homebase</a>
+      <a href="/homebase/<%= currentUser._id %>/profile">Profile</a>
     </li>
     <li>
-      <a href="#"><span><i class="fas fa-cog"></i></span>Settings</a>
-    </li>
-    <li>
-      <a href="/logout"><span><i class="fas fa-sign-out-alt"></i></span>Sign Out</a>
+      <a href="/logout">Sign Out</a>
     </li>
   </ul>
 </div>

@@ -3,7 +3,8 @@ const path = require('path'),
   router = require('express').Router(),
   { getCompanyDashboard, postCompanyInfoToDashboard } = require(path.join(__dirname, 'dashboard')),
   team = require(path.join(__dirname, 'team')),
-  { getChecklist, saveChecklist } = require(path.join(__dirname, 'checklist')),
+  { getGeneral, getResearch, getProduct, getMarketing, getLegal, getFinancials,
+    postGeneral, postResearch, postProduct, postMarketing, postLegal, postFinancials} = require(path.join(__dirname, 'checklist')),
   { getBulletinBoard, postBulletin, updateBulletin, deleteBulletin,
     bulletinComment } = require(path.join(__dirname, 'bulletin')),
 	middleware = require(path.join(process.cwd(), 'app', 'middleware'))
@@ -51,13 +52,53 @@ router.route('/:companyId/team/remove')
 		team.removeMember)
 
 // ************************* CHECKLIST *************************
-router.route('/:companyId/checklist')
+router.route('/:companyId/checklist/general')
   .get(middleware.isLoggedIn,
     middleware.isCompanyAdminOrMember,
-    getChecklist)
+    getGeneral)
   .post(middleware.isLoggedIn,
     middleware.isCompanyAdminOrMember,
-    saveChecklist)
+    postGeneral)
+
+router.route('/:companyId/checklist/research')
+  .get(middleware.isLoggedIn,
+    middleware.isCompanyAdminOrMember,
+    getResearch)
+  .post(middleware.isLoggedIn,
+    middleware.isCompanyAdminOrMember,
+    postResearch)
+
+router.route('/:companyId/checklist/product')
+  .get(middleware.isLoggedIn,
+    middleware.isCompanyAdminOrMember,
+    getProduct)
+  .post(middleware.isLoggedIn,
+    middleware.isCompanyAdminOrMember,
+    postProduct)
+
+router.route('/:companyId/checklist/marketing')
+  .get(middleware.isLoggedIn,
+    middleware.isCompanyAdminOrMember,
+    getMarketing)
+  .post(middleware.isLoggedIn,
+    middleware.isCompanyAdminOrMember,
+    postMarketing)
+
+router.route('/:companyId/checklist/legal')
+  .get(middleware.isLoggedIn,
+    middleware.isCompanyAdminOrMember,
+    getLegal)
+  .post(middleware.isLoggedIn,
+    middleware.isCompanyAdminOrMember,
+    postLegal)
+
+router.route('/:companyId/checklist/financials')
+  .get(middleware.isLoggedIn,
+    middleware.isCompanyAdminOrMember,
+    getFinancials)
+  .post(middleware.isLoggedIn,
+    middleware.isCompanyAdminOrMember,
+    postFinancials)
 
 // ************************* BULLETIN BOARD *************************
 router.route('/:companyId/bulletin-board')
