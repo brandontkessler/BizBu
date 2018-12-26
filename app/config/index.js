@@ -12,7 +12,7 @@ if(process.env.NODE_ENV === 'production'){
     linkedin: {
       clientID: process.env.LINKED_CLIENT_ID,
       clientSecret: process.env.LINKED_CLIENT_SECRET,
-      callbackURL: `https://bizbu.herokuapp.com/auth/linkedin/callback`,
+      callbackURL: `/auth/linkedin/callback`,
       profileFields: ["id", "first-name", "last-name", "email-address"],
       state: true
     }
