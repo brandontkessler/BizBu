@@ -30,7 +30,6 @@ module.exports = () => {
   				'linkedin.id' : profile.id,
   				'linkedin.accessToken' : accessToken,
           'linkedin.url' : profile._json.publicProfileUrl,
-          'hideChat' : false,
           'publicProfile' : false
   			})
 
@@ -39,14 +38,7 @@ module.exports = () => {
   		} else {
   			// IF USER DOES EXIST, CHECK IF DONE WITH LINKEDIN
   			let linkedinUser =  await User.findOne({ 'linkedin.id' : profile.id })
-  			if(linkedinUser) return done(null, linkedinUser)
-
-  			// IF NOT, USER IS FB, CREATE LINKEDIN DATA
-  			user.linkedin.id = profile.id
-  			user.linkedin.accessToken = accessToken
-
-  			await user.save()
-  			return done(null, user)
+  			return done(null, linkedinUser)
   		}
   	} catch(e) {
       logger.log('error', `Linkedin auth error: ${e}`)

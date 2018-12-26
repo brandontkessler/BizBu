@@ -1,15 +1,12 @@
 'use strict';
 const path = require('path'),
-  crypto = require('crypto'),
   mongoose = require('mongoose'),
   config = require(path.join(process.cwd(), 'app', 'config')),
   h = require(path.join(process.cwd(), 'app', 'helpers'))
 
 let UserSchema = new mongoose.Schema({
   email: String,
-  url: String,
 	created: Date,
-	inviteCode: String,
 	name: String,
 
 	pic: {
@@ -21,6 +18,8 @@ let UserSchema = new mongoose.Schema({
 		accessToken: String,
     url: String
 	},
+
+  publicProfile: Boolean,
 
 	companiesAdmin: [
 		{
@@ -52,8 +51,7 @@ let UserSchema = new mongoose.Schema({
     }
   ],
 
-  hideChat: Boolean,
-  publicProfile: Boolean,
+
   myMessages: [
     {
       title: String,
@@ -63,19 +61,6 @@ let UserSchema = new mongoose.Schema({
       }
     }
   ]
-})
-
-UserSchema.pre('save', async function(next){
-	let user = this
-
-	// Only hash if unmodified
-	if(!user.isModified('email')) return next()
-
-  let cipher = crypto.createCipher('aes192', user.email)
-  let inviteCode = cipher.update(config.inviteEncrypter, 'utf8', 'hex')
-	user.inviteCode = inviteCode // += cipher.final('hex')
-
-	next()
 })
 
 
